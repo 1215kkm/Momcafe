@@ -3,376 +3,519 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>심박 — 전체 UI 프로토타입 (정적)</title>
+<title>심박 — 전체 UI 프로토타입 (Crowny Class 디자인 시스템)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root {
-  --moss: #3D5A47;
-  --moss-dark: #2D4A37;
-  --moss-light: #6B8473;
-  --clay: #C36B3C;
-  --clay-light: #FFF4E8;
-  --paper: #FAFAF7;
-  --soft: #F4F4EE;
-  --ink: #1F2A24;
-  --ink-soft: #2D3A33;
-  --line: #E4E4DD;
-  --mute: #6B7280;
-  --warn: #A65A4A;
-  --warn-bg: #FBE9E1;
-  --success: #2D6A4F;
-  --pm: #2563EB;
-  --abang: #C36B3C;
+  /* ===== 브랜드 (Crowny Class) ===== */
+  --primary: #8A38F5;
+  --primary-dark: #7030D4;
+  --primary-light: #A855F7;
+  --primary-rgb: 138, 56, 245;
+  --secondary: #D53A6B;
+  --secondary-light: #F472B6;
+  --gradient: linear-gradient(135deg, #8A38F5 0%, #D53A6B 100%);
+
+  /* ===== 다크 ===== */
+  --dark-bg: #1B1D21;
+  --dark-secondary: #1A1C22;
+  --dark-tertiary: #2B2D35;
+  --dark-border: #3D3D54;
+
+  /* ===== 라이트 ===== */
+  --light-bg: #F3F4F6;
+  --light-card: #FFFFFF;
+  --light-border: #E5E7EB;
+  --light-hover: #F9FAFB;
+
+  /* ===== 텍스트 ===== */
+  --text-primary: #FFFFFF;
+  --text-dark: #1F2937;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+
+  /* ===== 상태 ===== */
+  --success: #22C55E;  --success-light: #DCFCE7;
+  --warning: #F59E0B;  --warning-light: #FEF3C7;
+  --error:   #EF4444;  --error-light:   #FEE2E2;
+  --info:    #3B82F6;  --info-light:    #DBEAFE;
+
+  /* ===== 모서리 ===== */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* ===== 그림자 ===== */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.10);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+  --shadow-primary: 0 4px 14px rgba(138, 56, 245, 0.35);
+
+  /* ===== 간격 ===== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* ===== 폰트 ===== */
+  --font-xs: 11px;
+  --font-sm: 13px;
+  --font-md: 14px;
+  --font-lg: 16px;
+  --font-xl: 18px;
+  --font-2xl: 24px;
+  --font-3xl: 28px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
-  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  background: #ECEAE3;
-  color: var(--ink);
-  line-height: 1.55;
-  font-size: 14px;
+  font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--light-bg);
+  color: var(--text-dark);
+  line-height: 1.6;
+  font-size: var(--font-md);
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
 }
 
-/* ━━━ 페이지 레이아웃 ━━━ */
+/* ━━━ 페이지 헤더 ━━━ */
 .page-header {
-  background: var(--moss);
-  color: var(--paper);
-  padding: 20px 24px;
+  background: var(--gradient);
+  color: white;
+  padding: 24px;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: var(--shadow-lg);
 }
 .page-header h1 {
-  font-size: 22px;
+  font-size: var(--font-2xl);
   font-weight: 800;
   letter-spacing: -0.5px;
 }
-.page-header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+.page-header p { font-size: var(--font-sm); opacity: 0.9; margin-top: var(--spacing-xs); }
 
 .toc {
-  background: white;
-  border-bottom: 1px solid var(--line);
-  padding: 14px 24px;
+  background: var(--light-card);
+  border-bottom: 1px solid var(--light-border);
+  padding: var(--spacing-md) var(--spacing-lg);
   position: sticky;
-  top: 64px;
+  top: 80px;
   z-index: 99;
   overflow-x: auto;
   white-space: nowrap;
+  box-shadow: var(--shadow-sm);
 }
 .toc a {
-  display: inline-block;
-  margin-right: 8px;
-  padding: 6px 12px;
-  font-size: 12px;
-  background: var(--soft);
-  color: var(--ink);
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: var(--spacing-sm);
+  padding: 8px 14px;
+  font-size: var(--font-sm);
+  background: rgba(var(--primary-rgb), 0.08);
+  color: var(--primary);
+  border-radius: var(--radius-full);
   text-decoration: none;
   font-weight: 600;
+  transition: 0.15s ease;
 }
-.toc a:hover { background: var(--moss); color: white; }
+.toc a:hover {
+  background: var(--gradient);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
 
 .section-wrap {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 .section-title {
-  font-size: 20px;
+  font-size: var(--font-2xl);
   font-weight: 800;
-  margin: 40px 0 8px;
-  color: var(--moss);
+  margin: var(--spacing-xl) 0 var(--spacing-sm);
+  color: var(--text-dark);
   letter-spacing: -0.5px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 .section-desc {
-  font-size: 13px;
-  color: var(--mute);
-  margin-bottom: 20px;
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-lg);
 }
 
 .frames-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 24px;
+  gap: var(--spacing-lg);
 }
 
 /* ━━━ 모바일 프레임 ━━━ */
 .frame {
-  background: white;
-  border-radius: 24px;
+  background: var(--light-card);
+  border-radius: var(--radius-2xl);
   padding: 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 1px solid var(--light-border);
+  transition: 0.2s ease;
+}
+.frame:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 .frame-meta {
-  padding: 8px 14px;
-  background: #2D3A33;
-  color: #C8D2CB;
-  font-size: 11px;
+  padding: 10px 16px;
+  background: var(--gradient);
+  color: white;
+  font-size: var(--font-xs);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 600;
 }
-.frame-meta .id { font-weight: 700; color: white; letter-spacing: 0.5px; }
-.frame-meta .name { font-size: 11px; opacity: 0.85; }
+.frame-meta .id { letter-spacing: 0.5px; }
+.frame-meta .name { opacity: 0.9; }
 .phone {
   width: 100%;
-  min-height: 600px;
-  background: var(--paper);
+  min-height: 620px;
+  background: var(--light-bg);
   position: relative;
   overflow-y: auto;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: var(--font-sm);
 }
 
-/* ━━━ 공통 컴포넌트 ━━━ */
+/* ━━━ 공통 ━━━ */
 .statusbar {
-  background: white;
-  border-bottom: 1px solid var(--line);
+  background: var(--light-card);
+  border-bottom: 1px solid var(--light-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  font-size: 13px;
+  padding: 14px var(--spacing-md);
+  font-size: var(--font-md);
   position: sticky;
   top: 0;
   z-index: 1;
 }
-.statusbar h2 { font-size: 16px; font-weight: 700; }
-.statusbar .actions { display: flex; gap: 12px; color: var(--mute); font-size: 12px; }
-.statusbar .back { color: var(--mute); cursor: pointer; }
-.statusbar .logo { font-size: 17px; font-weight: 800; color: var(--moss); letter-spacing: -0.5px; }
+.statusbar h2 { font-size: var(--font-lg); font-weight: 700; }
+.statusbar .actions { display: flex; gap: var(--spacing-md); color: var(--text-muted); align-items: center; }
+.statusbar .actions svg { width: 18px; height: 18px; }
+.statusbar .back { color: var(--text-muted); cursor: pointer; }
+.statusbar .back svg { width: 20px; height: 20px; }
+.statusbar .logo { font-size: var(--font-lg); font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
 
 .tabbar {
   position: sticky;
   bottom: 0;
-  background: white;
-  border-top: 1px solid var(--line);
+  background: var(--light-card);
+  border-top: 1px solid var(--light-border);
   display: flex;
-  padding: 8px 0 12px;
+  padding: var(--spacing-sm) 0 12px;
+  box-shadow: 0 -1px 3px rgba(0,0,0,0.04);
 }
 .tabbar .tab {
   flex: 1;
   text-align: center;
-  font-size: 11px;
-  color: var(--mute);
+  font-size: var(--font-xs);
+  color: var(--text-muted);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--spacing-xs);
+  padding: 4px 0;
 }
-.tabbar .tab.active { color: var(--moss); font-weight: 700; }
-.tabbar .tab i { font-size: 18px; font-style: normal; }
+.tabbar .tab.active { color: var(--primary); font-weight: 700; }
+.tabbar .tab svg { width: 22px; height: 22px; }
 
-.content { padding: 16px; }
+.content { padding: var(--spacing-md); }
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--spacing-sm);
   min-height: 44px;
-  padding: 0 18px;
-  font-size: 14px;
+  padding: 10px 20px;
+  font-size: var(--font-md);
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   text-align: center;
+  transition: 0.2s ease;
+  border: 0;
+  font-family: inherit;
 }
-.btn-primary { background: var(--moss); color: white; }
-.btn-accent { background: var(--clay); color: white; }
-.btn-secondary { background: var(--soft); color: var(--ink); }
-.btn-danger { background: var(--warn); color: white; }
-.btn-ghost { background: transparent; color: var(--moss); }
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+.btn-secondary {
+  background: var(--light-bg);
+  color: #374151;
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid #D1D5DB;
+  color: var(--text-dark);
+}
+.btn-danger {
+  background: var(--error-light);
+  color: var(--error);
+  font-weight: 700;
+}
+.btn-success {
+  background: var(--success);
+  color: white;
+}
 .btn-block { display: flex; width: 100%; }
+.btn-sm { min-height: 36px; padding: 6px 14px; font-size: var(--font-sm); }
 
 .input, .textarea {
   width: 100%;
   min-height: 44px;
   padding: 10px 14px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
+  border: 1px solid var(--light-border);
+  border-radius: var(--radius-md);
   background: white;
-  font-size: 14px;
+  font-size: var(--font-md);
   font-family: inherit;
+  transition: 0.15s ease;
 }
-.textarea { min-height: 100px; resize: none; }
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(138, 56, 245, 0.12);
+}
+.textarea { min-height: 100px; resize: none; line-height: 1.6; }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: var(--soft);
-  font-size: 12px;
-  color: var(--mute);
-  margin: 0 4px 4px 0;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(var(--primary-rgb), 0.08);
+  color: var(--primary);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  margin: 0 var(--spacing-xs) var(--spacing-xs) 0;
 }
-.chip strong { color: var(--ink); margin-left: 4px; }
+.chip strong { margin-left: 4px; }
 
-.label { font-size: 11px; font-weight: 700; color: var(--mute); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.chip-gray {
+  background: var(--light-bg);
+  color: var(--text-muted);
+}
+.chip-gradient {
+  background: var(--gradient);
+  color: white;
+}
 
-.heart { color: var(--warn); }
-.heart strong { font-size: 15px; }
+.label {
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-sm);
+}
 
-/* 모임 카드 — A안 */
+/* 그라데이션 카드 */
+.gradient-card {
+  background: var(--gradient);
+  color: white;
+  padding: 20px;
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-primary);
+}
+.gradient-card .badge {
+  display: inline-block;
+  font-size: var(--font-xs);
+  background: rgba(255,255,255,0.18);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 0.3px;
+  font-weight: 600;
+}
+.gradient-card h3 { font-size: var(--font-lg); font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+.gradient-card p { font-size: var(--font-sm); opacity: 0.9; margin-bottom: var(--spacing-md); }
+
+/* 모임 카드 (사용자 명시 A안) */
 .cafe-card {
   display: flex;
-  gap: 12px;
-  padding: 12px;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
   background: white;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  margin-bottom: 10px;
+  border: 1px solid var(--light-border);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--spacing-sm);
+  transition: 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+.cafe-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 .cafe-logo {
-  width: 54px; height: 54px;
-  border-radius: 10px;
-  background: var(--moss);
-  color: white;
+  width: 56px; height: 56px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 28px;
   flex-shrink: 0;
+  color: white;
 }
 .cafe-body { flex: 1; min-width: 0; }
-.cafe-preview { list-style: none; margin: 0 0 8px; }
+.cafe-preview { list-style: none; margin: 0 0 var(--spacing-sm); }
 .cafe-preview li {
-  font-size: 12px;
-  color: var(--ink-soft);
+  font-size: var(--font-xs);
+  color: var(--text-dark);
   display: flex;
   gap: 6px;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  align-items: center;
 }
-.cafe-preview li span { flex-shrink: 0; }
+.cafe-preview li svg { flex-shrink: 0; width: 11px; height: 11px; color: var(--text-muted); }
+.cafe-preview li.hot svg { color: var(--secondary); }
 .cafe-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 6px;
-  border-top: 1px solid var(--line);
-  font-size: 12px;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--light-border);
+  font-size: var(--font-sm);
 }
 .cafe-foot .name { font-weight: 600; }
+.cafe-foot .heart {
+  color: var(--secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cafe-foot .heart svg { width: 14px; height: 14px; }
+.cafe-foot .heart strong { font-size: var(--font-md); }
 .badge-genesis {
   display: inline-block;
   font-size: 9px;
   font-weight: 700;
-  background: var(--clay);
+  background: var(--gradient);
   color: white;
-  padding: 1px 5px;
-  border-radius: 3px;
-  margin-right: 4px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  margin-right: var(--spacing-xs);
   letter-spacing: 0.3px;
 }
 
-/* 오늘의 결정 카드 */
-.daily-card {
-  background: linear-gradient(135deg, var(--moss-dark) 0%, var(--moss) 100%);
-  color: white;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 18px;
-}
-.daily-card .badge {
-  display: inline-block;
-  font-size: 10px;
-  background: rgba(255,255,255,0.18);
-  padding: 3px 8px;
-  border-radius: 999px;
-  margin-bottom: 10px;
-  letter-spacing: 0.5px;
-}
-.daily-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-.daily-card p { font-size: 12px; opacity: 0.85; margin-bottom: 14px; }
-
 /* 결핍 카드 */
 .gap-card {
-  background: var(--clay-light);
-  border-left: 3px solid var(--clay);
-  padding: 14px;
-  border-radius: 10px;
-  margin-top: 16px;
+  background: var(--warning-light);
+  border-left: 3px solid var(--warning);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  margin-top: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-md);
 }
-.gap-card h4 { font-size: 14px; margin-bottom: 4px; }
-.gap-card p { font-size: 12px; color: var(--mute); margin-bottom: 10px; }
+.gap-card .gap-icon {
+  width: 36px; height: 36px;
+  background: var(--warning);
+  color: white;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.gap-card .gap-icon svg { width: 18px; height: 18px; }
+.gap-card h4 { font-size: var(--font-md); margin-bottom: var(--spacing-xs); font-weight: 700; }
+.gap-card p { font-size: var(--font-sm); color: var(--text-dark); margin-bottom: var(--spacing-md); }
 
-/* 정체성 카드 — Serif */
+/* 정체성 회복 카드 (보라톤 차분) */
 .identity-card {
-  background: linear-gradient(135deg, #FAF6EC 0%, #F4ECDA 100%);
+  background: linear-gradient(135deg, rgba(138, 56, 245, 0.08) 0%, rgba(213, 58, 107, 0.06) 100%);
+  border: 1px solid rgba(138, 56, 245, 0.15);
   padding: 32px 20px;
   text-align: center;
-  border-radius: 14px;
-  margin: 20px 0;
+  border-radius: var(--radius-xl);
+  margin: var(--spacing-lg) 0;
 }
-.identity-card .greet { font-size: 12px; color: var(--mute); margin-bottom: 8px; }
+.identity-card .greet { font-size: var(--font-sm); color: var(--text-muted); margin-bottom: var(--spacing-sm); }
 .identity-card .name {
-  font-family: "Noto Serif KR", serif;
-  font-size: 28px;
-  color: var(--clay);
+  font-size: 30px;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
-  margin-bottom: 8px;
-  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
 }
-.identity-card .desc { font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.identity-card .desc { font-size: var(--font-sm); color: var(--text-dark); line-height: 1.6; }
 
 /* 옐로/레드 카드 */
 .yellow-card {
   background: #F4C430;
   color: #5C4A00;
-  padding: 14px 18px;
-  border-radius: 8px;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
   text-align: center;
   font-weight: 700;
-  margin: 16px 0;
+  margin: var(--spacing-md) 0;
   transform: rotate(-1.5deg);
-  box-shadow: 0 4px 12px rgba(244,196,48,0.3);
+  box-shadow: 0 6px 16px rgba(244,196,48,0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
-.red-card {
-  background: #DC2626;
-  color: white;
-  padding: 14px 18px;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 700;
-  margin: 16px 0;
-  transform: rotate(1.5deg);
-  box-shadow: 0 4px 12px rgba(220,38,38,0.3);
-}
+.yellow-card svg { width: 22px; height: 22px; }
 
 /* 봉인 두루마리 */
 .scroll-seal {
-  background: #6B4C2E;
-  background-image: repeating-linear-gradient(135deg, #6B4C2E 0, #6B4C2E 10px, #5A3F26 10px, #5A3F26 20px);
+  background: linear-gradient(135deg, #4C1D95 0%, #6B21A8 100%);
   color: #F4E4C1;
-  padding: 30px 20px;
-  border-radius: 12px;
+  padding: 32px 20px;
+  border-radius: var(--radius-xl);
   text-align: center;
-  margin: 20px 0;
+  margin: var(--spacing-lg) 0;
   position: relative;
+  box-shadow: var(--shadow-lg);
 }
-.scroll-seal .seal {
-  font-size: 32px;
-  display: block;
-  margin-bottom: 10px;
-}
-.scroll-seal .title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.scroll-seal .countdown { font-size: 12px; opacity: 0.8; font-family: monospace; }
+.scroll-seal .seal { font-size: 36px; display: block; margin-bottom: var(--spacing-sm); }
+.scroll-seal .title { font-size: var(--font-lg); font-weight: 700; margin-bottom: 6px; }
+.scroll-seal .countdown { font-size: var(--font-sm); opacity: 0.8; font-family: monospace; }
 
 /* 셋로그 그리드 */
 .settlog-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 4px;
-  margin: 12px 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: var(--spacing-sm) 0;
 }
 .settlog-cell {
   aspect-ratio: 3/4;
-  background: linear-gradient(135deg, #888 0%, #555 100%);
-  border-radius: 6px;
+  background: linear-gradient(135deg, #6B7280 0%, #1F2937 100%);
+  border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -397,131 +540,256 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--line);
-  font-size: 13px;
+  padding: 12px var(--spacing-md);
+  border-bottom: 1px solid var(--light-border);
+  font-size: var(--font-md);
 }
 .board-list li:last-child { border-bottom: 0; }
-.board-list .count { color: var(--mute); font-size: 11px; }
-.board-list .icon { display: inline-block; width: 22px; }
+.board-list .left { display: flex; align-items: center; gap: var(--spacing-sm); }
+.board-list .left svg { width: 16px; height: 16px; color: var(--text-muted); }
+.board-list .count { color: var(--text-muted); font-size: var(--font-xs); font-weight: 600; }
 
 /* 모듈 박스 */
 .module-box {
-  background: var(--soft);
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 8px;
+  background: white;
+  border: 1px solid var(--light-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 12px;
+  gap: var(--spacing-md);
+  font-size: var(--font-sm);
+  transition: 0.15s ease;
 }
-.module-box .icon { font-size: 18px; }
+.module-box.active {
+  border-color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.04);
+}
+.module-box .module-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--light-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.module-box.active .module-icon {
+  background: var(--gradient);
+  color: white;
+}
+.module-box .module-icon svg { width: 18px; height: 18px; }
+.module-box .module-info { flex: 1; }
+.module-box .module-info .ttl { font-weight: 600; }
+.module-box .module-info .sub { font-size: var(--font-xs); color: var(--text-muted); margin-top: 2px; }
+.module-box .module-state { font-size: var(--font-xs); font-weight: 700; }
+.module-box .module-state.on { color: var(--success); }
+.module-box .module-state.off { color: var(--text-muted); }
 
 /* 게시글 카드 */
 .post-card {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--light-border);
 }
-.post-card .title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-.post-card .summary { font-size: 12px; color: var(--mute); margin-bottom: 6px; }
+.post-card .title { font-size: var(--font-md); font-weight: 600; margin-bottom: var(--spacing-xs); display: flex; align-items: center; gap: 6px; }
+.post-card .summary { font-size: var(--font-sm); color: var(--text-muted); margin-bottom: 6px; }
 .post-card .meta {
   display: flex;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--mute);
+  gap: 10px;
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  align-items: center;
+  flex-wrap: wrap;
 }
-.post-card .temp { color: var(--warn); }
+.post-card .meta svg { width: 11px; height: 11px; }
+.post-card .temp-hot { color: var(--secondary); font-weight: 700; }
 
 /* 단계 인디케이터 */
 .stepper {
   display: flex;
   gap: 4px;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-md);
 }
 .stepper .dot {
   flex: 1;
   height: 4px;
-  background: var(--line);
+  background: var(--light-border);
   border-radius: 2px;
 }
-.stepper .dot.active { background: var(--moss); }
+.stepper .dot.active { background: var(--gradient); }
 
 /* 활동 로그 */
 .log-item {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 12px;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--light-border);
+  font-size: var(--font-sm);
 }
-.log-item .when { color: var(--mute); font-size: 10px; }
-.log-item .what strong { color: var(--warn); }
+.log-item .when {
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.log-item .when svg { width: 11px; height: 11px; }
+.log-item .what strong { color: var(--primary); font-weight: 700; }
+.log-item .what em { color: var(--error); font-style: normal; font-weight: 600; }
 
-/* 푸시 알림 */
+/* 푸시 카드 */
 .push-card {
   background: white;
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  margin: 14px 0;
+  border-radius: var(--radius-xl);
+  padding: 14px var(--spacing-md);
+  box-shadow: var(--shadow-lg);
+  margin: var(--spacing-md) 0;
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 .push-card .app-icon {
-  width: 32px; height: 32px;
-  background: var(--moss);
-  border-radius: 8px;
+  width: 36px; height: 36px;
+  background: var(--gradient);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 700;
-  font-size: 13px;
+  font-weight: 800;
+  font-size: var(--font-md);
   flex-shrink: 0;
 }
-.push-card .body .name { font-size: 12px; font-weight: 700; }
-.push-card .body .text { font-size: 12px; color: var(--ink-soft); }
+.push-card .body .name { font-size: var(--font-xs); font-weight: 700; color: var(--text-muted); }
+.push-card .body .text { font-size: var(--font-sm); color: var(--text-dark); margin-top: 2px; }
 
-/* 그래프 (심박) */
+/* 심박 그래프 */
 .heartbeat-graph {
   display: flex;
   align-items: end;
-  height: 80px;
+  height: 96px;
   gap: 4px;
-  margin: 16px 0;
+  margin: var(--spacing-md) 0;
 }
 .heartbeat-graph .bar {
   flex: 1;
-  background: var(--warn);
+  background: var(--gradient);
   border-radius: 3px 3px 0 0;
 }
 
+/* 멤버 행 */
+.member-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--light-border);
+}
+.member-avatar {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-md);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.role-pill {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  margin-left: var(--spacing-xs);
+}
+.role-owner { background: var(--gradient); color: white; }
+.role-co { background: rgba(var(--primary-rgb), 0.1); color: var(--primary); }
+
+/* 다이얼로그 */
+.dialog {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 88%;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-xl);
+}
+.dialog h3 {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  color: var(--error);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 푸터 */
 footer.foot {
   margin-top: 80px;
-  padding: 30px 20px;
-  background: var(--moss);
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: var(--gradient);
   color: white;
   text-align: center;
-  font-size: 12px;
+  font-size: var(--font-sm);
+  line-height: 1.8;
 }
+footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-bottom: 4px; }
+
+/* 강조 색 변형 */
+.color-purple { color: var(--primary); }
+.color-pink { color: var(--secondary); }
+.color-error { color: var(--error); }
+.color-warning { color: var(--warning); }
+.color-success { color: var(--success); }
+.bg-soft { background: var(--light-bg); padding: 12px 14px; border-radius: var(--radius-md); }
+
+/* 통계 박스 */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--spacing-sm);
+  text-align: center;
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md);
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--light-border);
+}
+.stats .stat .v { font-size: var(--font-xl); font-weight: 800; }
+.stats .stat .l { font-size: var(--font-xs); color: var(--text-muted); margin-top: 2px; }
+
+/* 다크 풀스크린 모달 */
+.dark-full {
+  background: var(--dark-bg);
+  color: white;
+}
+.dark-full .statusbar { background: transparent; border: 0; color: white; }
+.dark-full .statusbar .back { color: white; }
+.dark-full .label { color: var(--text-secondary); }
 </style>
 </head>
 <body>
 
 <header class="page-header">
   <h1>심박 — 전체 UI 프로토타입</h1>
-  <p>강팀이 정의한 모든 핵심 화면을 모바일 프레임에 담은 정적 목업. 인터랙션 없음.</p>
+  <p>Crowny Class 디자인 시스템 적용 · 보라→분홍 그라데이션 + Pretendard + Lucide</p>
 </header>
 
 <nav class="toc">
-  <a href="#auth">① 인증·온보딩</a>
-  <a href="#discovery">② 발견</a>
-  <a href="#create">③ 모임 만들기</a>
-  <a href="#cafe">④ 카페 내부</a>
-  <a href="#board">⑤ 게시판</a>
-  <a href="#modules">⑥ 4번째 안 모듈</a>
-  <a href="#settlog">⑦ 셋로그</a>
-  <a href="#power">⑧ 운영자 도구</a>
-  <a href="#fun">⑨ 재미 요소</a>
+  <a href="#auth"><i data-lucide="user-plus"></i>① 인증·온보딩</a>
+  <a href="#discovery"><i data-lucide="compass"></i>② 발견</a>
+  <a href="#create"><i data-lucide="plus-circle"></i>③ 모임 만들기</a>
+  <a href="#cafe"><i data-lucide="home"></i>④ 카페 내부</a>
+  <a href="#board"><i data-lucide="message-square"></i>⑤ 게시판</a>
+  <a href="#modules"><i data-lucide="zap"></i>⑥ 모듈</a>
+  <a href="#settlog"><i data-lucide="video"></i>⑦ 셋로그</a>
+  <a href="#power"><i data-lucide="shield"></i>⑧ 운영자</a>
+  <a href="#fun"><i data-lucide="sparkles"></i>⑨ 재미 요소</a>
 </nav>
 
 <div class="section-wrap">
@@ -531,101 +799,94 @@ footer.foot {
 <p class="section-desc">정체성 데이터 수집이 핵심. 호혜성 프레임으로 자연스럽게.</p>
 <div class="frames-grid">
 
-  <!-- S01 -->
   <div class="frame"><div class="frame-meta"><span class="id">S01</span><span class="name">회원가입</span></div><div class="phone">
-    <div class="statusbar"><span class="logo">심박</span><span class="actions">로그인</span></div>
+    <div class="statusbar"><span class="logo">심박</span><span class="actions" style="font-size:var(--font-sm)">로그인</span></div>
     <div class="content">
-      <h3 style="font-size:18px;font-weight:800;margin:24px 0 6px">반가워요.</h3>
-      <p style="font-size:13px;color:var(--mute);margin-bottom:24px">모임의 생사를 책임지는 곳에 오셨어요.</p>
+      <h3 style="font-size:var(--font-2xl);font-weight:800;margin:var(--spacing-lg) 0 var(--spacing-sm);letter-spacing:-0.5px">반가워요.</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-lg)">모임의 생사를 책임지는 곳에 오셨어요.</p>
       <div class="label">이메일</div>
-      <input class="input" value="me@example.com" readonly style="margin-bottom:12px">
+      <input class="input" value="me@example.com" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">비밀번호</div>
-      <input class="input" type="password" value="••••••••" readonly style="margin-bottom:20px">
+      <input class="input" type="password" value="••••••••" readonly style="margin-bottom:var(--spacing-lg)">
       <button class="btn btn-primary btn-block">시작하기</button>
-      <p style="text-align:center;font-size:12px;color:var(--mute);margin-top:14px">이미 계정이 있으세요? <span style="color:var(--moss);font-weight:600">로그인</span></p>
+      <p style="text-align:center;font-size:var(--font-sm);color:var(--text-muted);margin-top:var(--spacing-md)">이미 계정이 있으세요? <span class="color-purple" style="font-weight:600">로그인</span></p>
     </div>
   </div></div>
 
-  <!-- S02 -->
   <div class="frame"><div class="frame-meta"><span class="id">S02</span><span class="name">로그인</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><span class="logo">심박</span><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><span class="logo">심박</span><span></span></div>
     <div class="content">
-      <h3 style="font-size:18px;font-weight:800;margin:24px 0 24px">다시 오셨네요</h3>
+      <h3 style="font-size:var(--font-2xl);font-weight:800;margin:var(--spacing-lg) 0 var(--spacing-lg)">다시 오셨네요</h3>
       <div class="label">이메일</div>
-      <input class="input" value="me@example.com" readonly style="margin-bottom:12px">
+      <input class="input" value="me@example.com" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">비밀번호</div>
-      <input class="input" type="password" value="••••••••" readonly style="margin-bottom:8px">
-      <p style="font-size:12px;color:var(--moss);text-align:right;margin-bottom:20px">비밀번호를 잊으셨나요?</p>
+      <input class="input" type="password" value="••••••••" readonly style="margin-bottom:var(--spacing-sm)">
+      <p style="font-size:var(--font-sm);color:var(--primary);text-align:right;margin-bottom:var(--spacing-lg);font-weight:600">비밀번호를 잊으셨나요?</p>
       <button class="btn btn-primary btn-block">로그인</button>
     </div>
   </div></div>
 
-  <!-- S03 -->
   <div class="frame"><div class="frame-meta"><span class="id">S03</span><span class="name">온보딩 1/5 — 닉네임</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><span></span><span style="color:var(--mute);font-size:12px">건너뛰기</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><span></span><span style="color:var(--text-muted);font-size:var(--font-sm)">건너뛰기</span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <h3 style="font-size:18px;font-weight:800;margin-bottom:6px">어떻게 불러드릴까요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:20px">일반 게시판에서는 이 닉네임이 보여요.</p>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">어떻게 불러드릴까요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-lg)">일반 게시판에서는 이 닉네임이 보여요.</p>
       <div class="label">닉네임</div>
       <input class="input" value="민지" readonly>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
-  <!-- S04 -->
   <div class="frame"><div class="frame-meta"><span class="id">S04</span><span class="name">온보딩 2/5 — 결혼 전 이름</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><span></span><span style="color:var(--mute);font-size:12px">건너뛰기</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><span></span><span style="color:var(--text-muted);font-size:var(--font-sm)">건너뛰기</span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">예전의 당신은 어떻게 불렸나요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:20px">이름 회복실 같은 모듈에서만 노출돼요. 다른 모임 멤버는 못 봐요. 호혜성 프레임으로 *나로 머무는 시간*을 만들어드릴게요.</p>
-      <div class="label">결혼 전 이름 (또는 학교 때 이름)</div>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">예전의 당신은 어떻게 불렸나요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-lg)">이름 회복실 같은 모듈에서만 노출돼요. 다른 모임 멤버는 못 봐요.</p>
+      <div class="label">결혼 전 이름</div>
       <input class="input" value="박지영" readonly>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
-  <!-- S05 -->
   <div class="frame"><div class="frame-meta"><span class="id">S05</span><span class="name">온보딩 3/5 — 예전 직업</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><span></span><span style="color:var(--mute);font-size:12px">건너뛰기</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><span></span><span style="color:var(--text-muted);font-size:var(--font-sm)">건너뛰기</span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">예전에 어떤 일을 하셨어요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:20px">같은 길을 걸어온 분들 옆에 묶어드릴게요.</p>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">예전에 어떤 일을 하셨어요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-lg)">같은 길을 걸어온 분들 옆에 묶어드릴게요.</p>
       <div class="label">예전 직업</div>
-      <input class="input" value="UI 디자이너" readonly style="margin-bottom:12px">
+      <input class="input" value="UI 디자이너" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">전공 (선택)</div>
       <input class="input" value="시각디자인" readonly>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
-  <!-- S07 -->
   <div class="frame"><div class="frame-meta"><span class="id">S07</span><span class="name">온보딩 4/5 — 동네</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><span></span><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><span></span><span></span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">어느 동네에 사세요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:20px">동네 단위로만 매칭돼요. 정확한 주소는 받지 않아요.</p>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">어느 동네에 사세요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-lg)">동네 단위로만 매칭돼요. 정확한 주소는 받지 않아요.</p>
       <div class="label">시·도</div>
-      <input class="input" value="서울특별시" readonly style="margin-bottom:10px">
+      <input class="input" value="서울특별시" readonly style="margin-bottom:var(--spacing-sm)">
       <div class="label">구</div>
-      <input class="input" value="강서구" readonly style="margin-bottom:10px">
+      <input class="input" value="강서구" readonly style="margin-bottom:var(--spacing-sm)">
       <div class="label">동 (선택)</div>
       <input class="input" value="화곡동" readonly>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
-  <!-- S08 -->
   <div class="frame"><div class="frame-meta"><span class="id">S08</span><span class="name">온보딩 5/5 — 완료</span></div><div class="phone">
     <div class="statusbar"><span></span><span></span><span></span></div>
     <div class="content" style="text-align:center;padding-top:60px">
-      <div style="font-size:54px;margin-bottom:18px">🌿</div>
-      <h3 style="font-size:20px;font-weight:800;margin-bottom:8px">민지님, 환영해요.</h3>
-      <p style="font-size:13px;color:var(--mute);line-height:1.6">강서구 화곡동에 살고,<br>예전 UI 디자이너였던<br><strong style="font-family:'Noto Serif KR',serif;color:var(--clay);font-size:18px">박지영</strong>님이시군요.<br><br>같은 길을 걸어온 분들이<br>기다리고 있어요.</p>
-      <button class="btn btn-primary btn-block" style="margin-top:30px">발견 홈으로</button>
+      <div style="width:80px;height:80px;background:var(--gradient);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;margin:0 auto var(--spacing-md);box-shadow:var(--shadow-primary);color:white"><i data-lucide="sparkles" style="width:36px;height:36px"></i></div>
+      <h3 style="font-size:var(--font-2xl);font-weight:800;margin-bottom:var(--spacing-sm)">민지님, 환영해요.</h3>
+      <p style="font-size:var(--font-md);color:var(--text-dark);line-height:1.7">강서구 화곡동에 살고,<br>예전 UI 디자이너였던<br><span style="background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:var(--font-xl)">박지영</span>님이시군요.<br><br>같은 길을 걸어온 분들이<br>기다리고 있어요.</p>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-xl)">발견 홈으로</button>
     </div>
   </div></div>
 
@@ -636,45 +897,44 @@ footer.foot {
 <p class="section-desc">사용자 명시 카드 A안 + 매일 19시 오늘의 모임 결정 + 결핍 카드.</p>
 <div class="frames-grid">
 
-  <!-- D01 -->
   <div class="frame"><div class="frame-meta"><span class="id">D01</span><span class="name">발견 홈 (메인)</span></div><div class="phone">
-    <div class="statusbar"><span class="logo">심박</span><span class="actions">🔍 🔔</span></div>
+    <div class="statusbar"><span class="logo">심박</span><span class="actions"><i data-lucide="search"></i><i data-lucide="bell"></i></span></div>
     <div class="content">
-      <div class="daily-card">
+      <div class="gradient-card">
         <span class="badge">오늘의 모임 결정 · 매일 19시</span>
         <h3>강서구 디자인 엄마 모임에 가입할까?</h3>
         <p>응답 전엔 다른 분들 결과를 못 봐요</p>
-        <div style="display:flex;gap:8px">
-          <button class="btn" style="flex:1;background:rgba(255,255,255,0.15);color:white">A. 가입</button>
-          <button class="btn" style="flex:1;background:rgba(255,255,255,0.15);color:white">B. 보류</button>
+        <div style="display:flex;gap:var(--spacing-sm)">
+          <button class="btn btn-sm" style="flex:1;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3)">A. 가입</button>
+          <button class="btn btn-sm" style="flex:1;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3)">B. 보류</button>
         </div>
       </div>
 
       <div class="label">내 모임</div>
-      <div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:18px;padding-bottom:4px">
-        <div style="flex-shrink:0;width:72px;height:72px;border-radius:10px;background:var(--moss);color:white;display:flex;align-items:center;justify-content:center;font-size:24px">👶</div>
-        <div style="flex-shrink:0;width:72px;height:72px;border-radius:10px;background:#0D9488;color:white;display:flex;align-items:center;justify-content:center;font-size:24px">🌱</div>
-        <div style="flex-shrink:0;width:72px;height:72px;border-radius:10px;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mute);font-size:10px;gap:2px"><span style="font-size:20px;color:var(--moss)">+</span>새 모임</div>
+      <div style="display:flex;gap:var(--spacing-sm);overflow-x:auto;margin-bottom:var(--spacing-lg);padding-bottom:4px">
+        <div style="flex-shrink:0;width:72px;height:72px;border-radius:var(--radius-lg);background:var(--gradient);color:white;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow-sm)">👶</div>
+        <div style="flex-shrink:0;width:72px;height:72px;border-radius:var(--radius-lg);background:#0D9488;color:white;display:flex;align-items:center;justify-content:center;font-size:24px">🌱</div>
+        <div style="flex-shrink:0;width:72px;height:72px;border-radius:var(--radius-lg);border:2px dashed var(--light-border);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);font-size:var(--font-xs);gap:2px"><i data-lucide="plus" style="width:20px;height:20px;color:var(--primary)"></i>새 모임</div>
       </div>
 
-      <div style="display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px">
-        <span class="chip">지역<strong>강서구</strong>▾</span>
-        <span class="chip">인기<strong>활발한 순</strong>▾</span>
-        <span class="chip">회원수<strong>전체</strong>▾</span>
+      <div style="display:flex;gap:6px;overflow-x:auto;margin-bottom:var(--spacing-md);padding-bottom:4px">
+        <span class="chip">지역<strong>강서구</strong><i data-lucide="chevron-down" style="width:11px;height:11px;margin-left:4px"></i></span>
+        <span class="chip">인기<strong>활발한 순</strong><i data-lucide="chevron-down" style="width:11px;height:11px;margin-left:4px"></i></span>
+        <span class="chip">회원수<strong>전체</strong><i data-lucide="chevron-down" style="width:11px;height:11px;margin-left:4px"></i></span>
       </div>
 
       <div class="cafe-card">
-        <div class="cafe-logo" style="background:var(--moss)">👶</div>
+        <div class="cafe-logo" style="background:var(--gradient)">👶</div>
         <div class="cafe-body">
           <ul class="cafe-preview">
-            <li><span>📰</span><span>아이 처음 어린이집 보내는 분</span></li>
-            <li><span>📰</span><span>강서구 정형외과 추천 부탁</span></li>
-            <li><span>🔥</span><span>7세 한글 떼기 어떻게 했나요</span></li>
-            <li><span>🔥</span><span>학원 다니다 너무 힘들어요</span></li>
+            <li><i data-lucide="newspaper"></i><span>아이 처음 어린이집 보내는 분</span></li>
+            <li><i data-lucide="newspaper"></i><span>강서구 정형외과 추천 부탁</span></li>
+            <li class="hot"><i data-lucide="flame"></i><span>7세 한글 떼기 어떻게 했나요</span></li>
+            <li class="hot"><i data-lucide="flame"></i><span>학원 다니다 너무 힘들어요</span></li>
           </ul>
           <div class="cafe-foot">
             <span class="name"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</span>
-            <span class="heart">♥ <strong>32</strong></span>
+            <span class="heart"><i data-lucide="heart-pulse"></i><strong>32</strong></span>
           </div>
         </div>
       </div>
@@ -683,100 +943,106 @@ footer.foot {
         <div class="cafe-logo" style="background:#0D9488">🌱</div>
         <div class="cafe-body">
           <ul class="cafe-preview">
-            <li><span>📰</span><span>비건 이유식 조리법 공유</span></li>
-            <li><span>📰</span><span>강서구 비건 카페 추천</span></li>
-            <li><span>🔥</span><span>남편이 비건 반대해요</span></li>
-            <li><span>🔥</span><span>아이도 비건으로 키우시나요?</span></li>
+            <li><i data-lucide="newspaper"></i><span>비건 이유식 조리법 공유</span></li>
+            <li><i data-lucide="newspaper"></i><span>강서구 비건 카페 추천</span></li>
+            <li class="hot"><i data-lucide="flame"></i><span>남편이 비건 반대해요</span></li>
+            <li class="hot"><i data-lucide="flame"></i><span>아이도 비건으로 키우시나요?</span></li>
           </ul>
           <div class="cafe-foot">
             <span class="name">강서구 비건 엄마</span>
-            <span class="heart">♥ <strong>19</strong></span>
+            <span class="heart"><i data-lucide="heart-pulse"></i><strong>19</strong></span>
           </div>
         </div>
       </div>
 
       <div class="cafe-card">
-        <div class="cafe-logo" style="background:#7C3AED">✏️</div>
+        <div class="cafe-logo" style="background:#A855F7">✏️</div>
         <div class="cafe-body">
           <ul class="cafe-preview">
-            <li><span>📰</span><span>프리랜서 복귀 고민</span></li>
-            <li><span>📰</span><span>아이 그림책 추천</span></li>
-            <li><span>🔥</span><span>10년 만에 다시 디자인 시작</span></li>
-            <li><span>🔥</span><span>포트폴리오 어떻게 정리하셨나요</span></li>
+            <li><i data-lucide="newspaper"></i><span>프리랜서 복귀 고민</span></li>
+            <li><i data-lucide="newspaper"></i><span>아이 그림책 추천</span></li>
+            <li class="hot"><i data-lucide="flame"></i><span>10년 만에 다시 디자인 시작</span></li>
+            <li class="hot"><i data-lucide="flame"></i><span>포트폴리오 어떻게 정리하셨나요</span></li>
           </ul>
           <div class="cafe-foot">
             <span class="name">30대 디자이너 출신 엄마</span>
-            <span class="heart">♥ <strong>47</strong></span>
+            <span class="heart"><i data-lucide="heart-pulse"></i><strong>47</strong></span>
           </div>
         </div>
       </div>
 
       <div class="gap-card">
-        <h4>⚠ 이 동네에 [3-7세 한부모 엄마] 모임이 없어요</h4>
-        <p>지난 7일간 53명이 검색했어요. 첫 운영자가 되시겠어요?</p>
-        <button class="btn btn-secondary" style="font-size:12px;padding:8px 14px;min-height:32px">모임 만들기</button>
+        <div class="gap-icon"><i data-lucide="alert-triangle"></i></div>
+        <div style="flex:1">
+          <h4>이 동네에 [3-7세 한부모 엄마] 모임이 없어요</h4>
+          <p>지난 7일간 53명이 검색했어요. 첫 운영자가 되시겠어요?</p>
+          <button class="btn btn-primary btn-sm">모임 만들기</button>
+        </div>
       </div>
     </div>
     <div class="tabbar">
-      <span class="tab active"><i>🏠</i>발견</span>
-      <span class="tab"><i>🔔</i>알림</span>
-      <span class="tab"><i>👤</i>나</span>
+      <span class="tab active"><i data-lucide="compass"></i>발견</span>
+      <span class="tab"><i data-lucide="bell"></i>알림</span>
+      <span class="tab"><i data-lucide="user"></i>나</span>
     </div>
   </div></div>
 
-  <!-- D02 -->
   <div class="frame"><div class="frame-meta"><span class="id">D02</span><span class="name">내 모임 전체</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>내 모임</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>내 모임</h2><span></span></div>
     <div class="content">
       <div class="label">내가 만든 모임 (1)</div>
-      <div class="cafe-card" style="margin-bottom:18px">
-        <div class="cafe-logo" style="background:var(--moss)">👶</div>
+      <div class="cafe-card" style="margin-bottom:var(--spacing-lg)">
+        <div class="cafe-logo" style="background:var(--gradient)">👶</div>
         <div class="cafe-body">
-          <ul class="cafe-preview"><li><span>📰</span>오늘 어린이집 잘 갔어요</li><li><span>🔥</span>한글 떼기 후기</li></ul>
-          <div class="cafe-foot"><span class="name"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</span><span class="heart">♥ <strong>32</strong></span></div>
+          <ul class="cafe-preview"><li><i data-lucide="newspaper"></i>오늘 어린이집 잘 갔어요</li><li class="hot"><i data-lucide="flame"></i>한글 떼기 후기</li></ul>
+          <div class="cafe-foot"><span class="name"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>32</strong></span></div>
         </div>
       </div>
 
       <div class="label">가입한 모임 (3)</div>
-      <div class="cafe-card"><div class="cafe-logo" style="background:#0D9488">🌱</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">강서구 비건 엄마</span><span class="heart">♥ <strong>19</strong></span></div></div></div>
-      <div class="cafe-card"><div class="cafe-logo" style="background:#7C3AED">✏️</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">디자이너 출신 엄마</span><span class="heart">♥ <strong>47</strong></span></div></div></div>
-      <div class="cafe-card"><div class="cafe-logo" style="background:#92400E">🥾</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">서울 등산 동호회</span><span class="heart">♥ <strong>62</strong></span></div></div></div>
+      <div class="cafe-card"><div class="cafe-logo" style="background:#0D9488">🌱</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">강서구 비건 엄마</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>19</strong></span></div></div></div>
+      <div class="cafe-card"><div class="cafe-logo" style="background:#A855F7">✏️</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">디자이너 출신 엄마</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>47</strong></span></div></div></div>
+      <div class="cafe-card"><div class="cafe-logo" style="background:#92400E">🥾</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">서울 등산 동호회</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>62</strong></span></div></div></div>
     </div>
   </div></div>
 
-  <!-- D03 -->
   <div class="frame"><div class="frame-meta"><span class="id">D03</span><span class="name">검색</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><span></span><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><span></span><span></span></div>
     <div class="content">
-      <input class="input" placeholder="🔍 모임·키워드 검색" value="비건 엄마">
-      <div style="margin-top:18px">
+      <div style="position:relative">
+        <i data-lucide="search" style="position:absolute;top:14px;left:14px;width:16px;height:16px;color:var(--text-muted)"></i>
+        <input class="input" placeholder="모임·키워드 검색" value="비건 엄마" style="padding-left:38px">
+      </div>
+      <div style="margin-top:var(--spacing-lg)">
         <div class="label">최근 검색</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">강서구</span><span class="chip">디자인</span><span class="chip">7세</span></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip chip-gray">강서구</span><span class="chip chip-gray">디자인</span><span class="chip chip-gray">7세</span></div>
       </div>
-      <div style="margin-top:24px">
+      <div style="margin-top:var(--spacing-lg)">
         <div class="label">인기 키워드 (강서구)</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">🔥 어린이집</span><span class="chip">한글</span><span class="chip">비건</span><span class="chip">한부모</span></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i data-lucide="flame" style="width:11px;height:11px"></i> 어린이집</span><span class="chip">한글</span><span class="chip">비건</span><span class="chip">한부모</span></div>
       </div>
-      <div class="gap-card" style="margin-top:30px">
-        <h4>"비건 엄마" 강서구에 1개 있어요</h4>
-        <p>그 외 동네: 강남구 3 / 마포구 1 / 송파구 2</p>
-        <button class="btn btn-secondary" style="font-size:12px;padding:8px 14px;min-height:32px">강서구 비건 엄마 모임 보기</button>
+      <div class="gap-card" style="margin-top:var(--spacing-xl)">
+        <div class="gap-icon"><i data-lucide="info"></i></div>
+        <div style="flex:1">
+          <h4>"비건 엄마" 강서구에 1개 있어요</h4>
+          <p>그 외 동네: 강남구 3 · 마포구 1 · 송파구 2</p>
+          <button class="btn btn-primary btn-sm">강서구 비건 엄마 모임 보기</button>
+        </div>
       </div>
     </div>
   </div></div>
 
-  <!-- D06 -->
-  <div class="frame"><div class="frame-meta"><span class="id">D06</span><span class="name">오늘의 모임 결정 풀스크린</span></div><div class="phone" style="background:#1C2A23;color:#F4ECDA">
-    <div class="statusbar" style="background:transparent;border:0;color:#F4ECDA"><span class="back" style="color:#F4ECDA">✕</span><span></span><span style="font-size:11px;opacity:0.7">19:00 ~ 23:59</span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">D06</span><span class="name">오늘의 모임 결정 풀스크린</span></div><div class="phone dark-full">
+    <div class="statusbar"><span class="back"><i data-lucide="x"></i></span><span></span><span style="font-size:var(--font-xs);opacity:0.7">19:00 ~ 23:59</span></div>
     <div class="content" style="padding-top:30px">
-      <p style="font-size:11px;opacity:0.7;letter-spacing:0.5px;margin-bottom:12px;text-transform:uppercase">오늘의 모임 결정 · 매일 19시</p>
-      <h2 style="font-size:24px;font-weight:800;line-height:1.4;margin-bottom:14px">강서구 디자인 엄마 모임,<br>지금 가입할까?</h2>
-      <p style="font-size:13px;opacity:0.8;line-height:1.6">최근 7일 심박 폭증 모임이에요.<br>회원 142명, 어제 가입 19명.<br><br>응답 전엔 다른 분들 결과를 못 봐요.</p>
-      <div style="margin:32px 0">
-        <button class="btn btn-block" style="background:rgba(244,236,218,0.15);color:#F4ECDA;margin-bottom:10px">A. 가입한다</button>
-        <button class="btn btn-block" style="background:rgba(244,236,218,0.15);color:#F4ECDA">B. 보류한다</button>
+      <p style="font-size:var(--font-xs);opacity:0.7;letter-spacing:0.5px;margin-bottom:12px;text-transform:uppercase">오늘의 모임 결정 · 매일 19시</p>
+      <h2 style="font-size:var(--font-3xl);font-weight:800;line-height:1.4;margin-bottom:var(--spacing-md)">강서구 디자인<br>엄마 모임,<br>지금 가입할까?</h2>
+      <p style="font-size:var(--font-md);opacity:0.8;line-height:1.6">최근 7일 심박 폭증 모임이에요.<br>회원 142명, 어제 가입 19명.<br><br>응답 전엔 다른 분들 결과를 못 봐요.</p>
+      <div style="margin:var(--spacing-xl) 0">
+        <button class="btn btn-block" style="background:var(--gradient);color:white;margin-bottom:var(--spacing-sm);box-shadow:var(--shadow-primary)">A. 가입한다</button>
+        <button class="btn btn-block btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;background:rgba(255,255,255,0.05)">B. 보류한다</button>
       </div>
-      <p style="text-align:center;font-size:11px;opacity:0.6">한 줄 이유는 응답 후에</p>
+      <p style="text-align:center;font-size:var(--font-xs);opacity:0.6">한 줄 이유는 응답 후에</p>
     </div>
   </div></div>
 
@@ -788,89 +1054,92 @@ footer.foot {
 <div class="frames-grid">
 
   <div class="frame"><div class="frame-meta"><span class="id">M01</span><span class="name">1/5 — 카테고리</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>모임 만들기</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>모임 만들기</h2><span></span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">어떤 모임이에요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:18px">분류만 잡으면 돼요. 세부는 다음 단계.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <button class="btn btn-primary" style="padding:18px 0;flex-direction:column">👶<br><span style="font-size:11px">엄마·육아</span></button>
-        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column">🥾<br><span style="font-size:11px">동호회·취미</span></button>
-        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column">🏠<br><span style="font-size:11px">동네·이웃</span></button>
-        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column">💼<br><span style="font-size:11px">회사·직장</span></button>
-        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column">👨‍👩‍👧‍👦<br><span style="font-size:11px">가족·친척</span></button>
-        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column">❓<br><span style="font-size:11px">기타</span></button>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">어떤 모임이에요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-md)">분류만 잡으면 돼요. 세부는 다음 단계.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-sm)">
+        <button class="btn btn-primary" style="padding:18px 0;flex-direction:column;font-size:var(--font-sm);height:auto"><i data-lucide="baby"></i>엄마·육아</button>
+        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column;font-size:var(--font-sm);height:auto"><i data-lucide="mountain"></i>동호회·취미</button>
+        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column;font-size:var(--font-sm);height:auto"><i data-lucide="home"></i>동네·이웃</button>
+        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column;font-size:var(--font-sm);height:auto"><i data-lucide="briefcase"></i>회사·직장</button>
+        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column;font-size:var(--font-sm);height:auto"><i data-lucide="users"></i>가족·친척</button>
+        <button class="btn btn-secondary" style="padding:18px 0;flex-direction:column;font-size:var(--font-sm);height:auto"><i data-lucide="help-circle"></i>기타</button>
       </div>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
   <div class="frame"><div class="frame-meta"><span class="id">M02</span><span class="name">2/5 — 세부 태그</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>모임 만들기</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>모임 만들기</h2><span></span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">누가 모일까요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:18px">좁을수록 살아남기 쉬워요. "강서구 7세 비건 엄마"처럼.</p>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">누가 모일까요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-md)">좁을수록 살아남기 쉬워요. "강서구 7세 비건 엄마"처럼.</p>
       <div class="label">지역</div>
-      <input class="input" value="강서구 화곡동" readonly style="margin-bottom:12px">
+      <input class="input" value="강서구 화곡동" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">대상 (자유 입력)</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-        <span class="chip">7세 ✕</span><span class="chip">엄마 ✕</span><span class="chip">비건 ✕</span><span class="chip" style="background:var(--soft)">+ 추가</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:var(--spacing-sm)">
+        <span class="chip">7세 <i data-lucide="x" style="width:10px;height:10px;margin-left:2px"></i></span>
+        <span class="chip">엄마 <i data-lucide="x" style="width:10px;height:10px;margin-left:2px"></i></span>
+        <span class="chip">비건 <i data-lucide="x" style="width:10px;height:10px;margin-left:2px"></i></span>
+        <span class="chip chip-gray"><i data-lucide="plus" style="width:11px;height:11px"></i> 추가</span>
       </div>
-      <p style="font-size:11px;color:var(--mute);margin-top:14px">💡 강서구·7세·엄마·비건 같은 좁은 조합은 검색 0회로 출발해도 *진짜 같은 처지*의 30명만 모이면 살아남아요.</p>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <div class="bg-soft" style="margin-top:var(--spacing-md);font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="lightbulb" style="width:14px;height:14px;color:var(--warning);flex-shrink:0"></i><span>강서구·7세·엄마·비건 같은 좁은 조합은 검색 0회로 출발해도 진짜 같은 처지의 30명만 모이면 살아남아요.</span></div>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
   <div class="frame"><div class="frame-meta"><span class="id">M03</span><span class="name">3/5 — 이름·로고</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>모임 만들기</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>모임 만들기</h2><span></span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
       <div class="label">모임 이름</div>
-      <input class="input" value="강서구 7세 비건 엄마 모임" readonly style="margin-bottom:14px">
+      <input class="input" value="강서구 7세 비건 엄마 모임" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">한 줄 소개</div>
-      <input class="input" value="비건 식단으로 7세 키우는 엄마 모임" readonly style="margin-bottom:14px">
-      <div class="label">로고 (이모지 + 색 자동 추천)</div>
-      <div style="display:flex;align-items:center;gap:14px;background:var(--soft);padding:14px;border-radius:10px">
-        <div style="width:60px;height:60px;border-radius:10px;background:#0D9488;color:white;display:flex;align-items:center;justify-content:center;font-size:30px">🌱</div>
-        <div>
-          <p style="font-size:13px;font-weight:600">🌱 + 청록 #0D9488</p>
-          <p style="font-size:11px;color:var(--mute)">강팀이 추천해드린 조합. 바꾸려면 탭.</p>
+      <input class="input" value="비건 식단으로 7세 키우는 엄마 모임" readonly style="margin-bottom:var(--spacing-md)">
+      <div class="label">로고 (이모지 + 자동 색)</div>
+      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:var(--light-bg);padding:var(--spacing-md);border-radius:var(--radius-lg)">
+        <div style="width:60px;height:60px;border-radius:var(--radius-lg);background:#0D9488;color:white;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:var(--shadow-sm)">🌱</div>
+        <div style="flex:1">
+          <p style="font-size:var(--font-md);font-weight:600">🌱 + 청록 #0D9488</p>
+          <p style="font-size:var(--font-xs);color:var(--text-muted)">강팀이 추천한 조합. 바꾸려면 탭.</p>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
   <div class="frame"><div class="frame-meta"><span class="id">M04</span><span class="name">4/5 — 첫 게시판</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>모임 만들기</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>모임 만들기</h2><span></span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">첫 게시판은요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:18px">자유 게시판은 기본으로 만들어드려요. 더 필요한 건 나중에 추가.</p>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">첫 게시판은요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-md)">자유 게시판은 기본으로 만들어드려요.</p>
       <ul class="board-list">
-        <li><span><span class="icon">💬</span>자유 게시판</span><span style="color:var(--success);font-weight:700;font-size:11px">기본</span></li>
-        <li><span><span class="icon">📌</span>공지</span><span style="color:var(--mute);font-size:11px">선택</span></li>
-        <li><span><span class="icon">❓</span>질문</span><span style="color:var(--mute);font-size:11px">선택</span></li>
-        <li><span><span class="icon">💡</span>아이디어 게시판</span><span style="color:var(--mute);font-size:11px">선택</span></li>
+        <li><div class="left"><i data-lucide="message-square"></i>자유 게시판</div><span style="color:var(--success);font-weight:700;font-size:var(--font-xs);background:var(--success-light);padding:2px 8px;border-radius:var(--radius-full)">기본</span></li>
+        <li><div class="left"><i data-lucide="pin"></i>공지</div><span class="count">선택</span></li>
+        <li><div class="left"><i data-lucide="help-circle"></i>질문</div><span class="count">선택</span></li>
+        <li><div class="left"><i data-lucide="lightbulb"></i>아이디어 게시판</div><span class="count">선택</span></li>
       </ul>
-      <p style="font-size:11px;color:var(--mute);margin-top:16px">💡 게시판은 *필요할 때마다* 추가할 수 있어요. 처음엔 자유 1개로 시작해도 충분해요.</p>
-      <button class="btn btn-primary btn-block" style="margin-top:24px">다음</button>
+      <div class="bg-soft" style="margin-top:var(--spacing-md);font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="info" style="width:14px;height:14px;color:var(--info);flex-shrink:0"></i><span>게시판은 필요할 때마다 추가할 수 있어요.</span></div>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">다음</button>
     </div>
   </div></div>
 
   <div class="frame"><div class="frame-meta"><span class="id">M05</span><span class="name">5/5 — 모듈 (옵션)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>모임 만들기</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>모임 만들기</h2><span></span></div>
     <div class="content">
       <div class="stepper"><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div><div class="dot active"></div></div>
-      <h3 style="font-size:17px;font-weight:800;margin-bottom:6px">특수 모듈을 켤까요?</h3>
-      <p style="font-size:12px;color:var(--mute);margin-bottom:18px">처음엔 다 OFF여도 돼요. 14일 뒤 *처방*을 받고 켜도 충분.</p>
-      <div class="module-box"><span class="icon">🎯</span><div style="flex:1"><p style="font-weight:600">오늘의 결정</p><p style="color:var(--mute);font-size:11px">눈팅을 응답자로</p></div><span style="color:var(--mute)">OFF</span></div>
-      <div class="module-box"><span class="icon">🌿</span><div style="flex:1"><p style="font-weight:600">이름 회복실</p><p style="color:var(--mute);font-size:11px">예전 정체성으로 만남</p></div><span style="color:var(--mute)">OFF</span></div>
-      <div class="module-box"><span class="icon">✉</span><div style="flex:1"><p style="font-weight:600">내일의 나에게</p><p style="color:var(--mute);font-size:11px">콘텐츠 자생 루프</p></div><span style="color:var(--mute)">OFF</span></div>
-      <div class="module-box"><span class="icon">♥</span><div style="flex:1"><p style="font-weight:600">심박 진단판</p><p style="color:var(--mute);font-size:11px">기본 ON · 운영자만</p></div><span style="color:var(--success);font-weight:700">ON</span></div>
-      <div class="module-box"><span class="icon">📹</span><div style="flex:1"><p style="font-weight:600">동시 영상 (셋로그)</p><p style="color:var(--mute);font-size:11px">기본 ON · 영상은 폰 저장</p></div><span style="color:var(--success);font-weight:700">ON</span></div>
-      <button class="btn btn-accent btn-block" style="margin-top:24px">모임 만들기</button>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:6px">특수 모듈을 켤까요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-md)">처음엔 다 OFF여도 돼요. 14일 뒤 처방을 받고 켜도 충분.</p>
+      <div class="module-box"><div class="module-icon"><i data-lucide="target"></i></div><div class="module-info"><div class="ttl">오늘의 결정</div><div class="sub">눈팅을 응답자로</div></div><span class="module-state off">OFF</span></div>
+      <div class="module-box"><div class="module-icon"><i data-lucide="sprout"></i></div><div class="module-info"><div class="ttl">이름 회복실</div><div class="sub">예전 정체성으로 만남</div></div><span class="module-state off">OFF</span></div>
+      <div class="module-box"><div class="module-icon"><i data-lucide="mail"></i></div><div class="module-info"><div class="ttl">내일의 나에게</div><div class="sub">콘텐츠 자생 루프</div></div><span class="module-state off">OFF</span></div>
+      <div class="module-box active"><div class="module-icon"><i data-lucide="heart-pulse"></i></div><div class="module-info"><div class="ttl">심박 진단판</div><div class="sub">기본 ON · 운영자만</div></div><span class="module-state on">ON</span></div>
+      <div class="module-box active"><div class="module-icon"><i data-lucide="video"></i></div><div class="module-info"><div class="ttl">동시 영상 (셋로그)</div><div class="sub">기본 ON · 영상은 폰</div></div><span class="module-state on">ON</span></div>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-lg)">모임 만들기</button>
     </div>
   </div></div>
 
@@ -881,114 +1150,115 @@ footer.foot {
 <p class="section-desc">게시판 위, 모듈 아래(켜진 것만). 운영자 권력 행사 공개 로그.</p>
 <div class="frames-grid">
 
-  <!-- C01 -->
   <div class="frame"><div class="frame-meta"><span class="id">C01</span><span class="name">카페 홈</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>강서구 7세 엄마</h2><span style="color:var(--moss);font-weight:700">⚙</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>강서구 7세 엄마</h2><span class="color-purple" style="font-weight:700"><i data-lucide="settings"></i></span></div>
     <div class="content">
-      <div style="display:flex;align-items:center;gap:12px;background:var(--soft);padding:12px;border-radius:10px;margin-bottom:14px">
-        <div style="width:50px;height:50px;border-radius:10px;background:var(--moss);color:white;display:flex;align-items:center;justify-content:center;font-size:24px">👶</div>
+      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+        <div style="width:52px;height:52px;border-radius:var(--radius-lg);background:var(--gradient);color:white;display:flex;align-items:center;justify-content:center;font-size:24px">👶</div>
         <div style="flex:1">
-          <p style="font-weight:600;font-size:13px"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</p>
-          <p style="font-size:11px;color:var(--mute)">회원 87명 · 심박 <strong style="color:var(--warn)">32</strong> ▲▲▲</p>
+          <p style="font-weight:700;font-size:var(--font-md)"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</p>
+          <p style="font-size:var(--font-xs);color:var(--text-muted);margin-top:4px">회원 87명 · 심박 <span class="color-pink" style="font-weight:700">32</span> ↑↑↑</p>
         </div>
       </div>
 
-      <!-- 셋로그 영역 (상시) -->
-      <div style="background:#2D3A33;color:white;padding:12px;border-radius:10px;margin-bottom:14px">
-        <p style="font-size:11px;opacity:0.7;margin-bottom:8px">📹 오후 3시 동시 영상 · 12분 남음</p>
-        <div class="settlog-grid" style="margin:8px 0">
+      <div style="background:var(--dark-bg);color:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md)">
+        <p style="font-size:var(--font-xs);opacity:0.8;margin-bottom:var(--spacing-sm);display:flex;align-items:center;gap:4px"><i data-lucide="video" style="width:13px;height:13px"></i> 오후 3시 동시 영상 · 12분 남음</p>
+        <div class="settlog-grid" style="margin:var(--spacing-sm) 0">
           <div class="settlog-cell"><span class="who">미나맘</span></div>
           <div class="settlog-cell"><span class="who">지호맘</span></div>
           <div class="settlog-cell"><span class="who">수아맘</span></div>
         </div>
-        <button class="btn btn-block" style="background:var(--clay);color:white;min-height:36px;font-size:12px">📷 지금 촬영</button>
+        <button class="btn btn-primary btn-block btn-sm">지금 촬영</button>
       </div>
 
       <div class="label">게시판</div>
-      <ul class="board-list">
-        <li><span><span class="icon">📌</span>공지</span><span class="count">5</span></li>
-        <li><span><span class="icon">💬</span>자유</span><span class="count">47</span></li>
-        <li><span><span class="icon">❓</span>질문</span><span class="count">23</span></li>
-        <li><span><span class="icon">💡</span>아이디어</span><span class="count">14</span></li>
+      <ul class="board-list" style="background:white;border:1px solid var(--light-border);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md)">
+        <li><div class="left"><i data-lucide="pin"></i>공지</div><span class="count">5</span></li>
+        <li><div class="left"><i data-lucide="message-square"></i>자유</div><span class="count">47</span></li>
+        <li><div class="left"><i data-lucide="help-circle"></i>질문</div><span class="count">23</span></li>
+        <li><div class="left"><i data-lucide="lightbulb"></i>아이디어</div><span class="count">14</span></li>
       </ul>
 
-      <div class="label" style="margin-top:18px">모듈 (켜진 것)</div>
-      <div class="module-box"><span class="icon">🎯</span><div style="flex:1"><p style="font-weight:600">오늘의 결정</p><p style="color:var(--mute);font-size:11px">24h 뒤 결과 받기</p></div></div>
-      <div class="module-box"><span class="icon">🌿</span><div style="flex:1"><p style="font-weight:600">이름 회복실</p><p style="color:var(--mute);font-size:11px">이번 주 토 21:00</p></div></div>
+      <div class="label">모듈 (켜진 것)</div>
+      <div class="module-box active"><div class="module-icon"><i data-lucide="target"></i></div><div class="module-info"><div class="ttl">오늘의 결정</div><div class="sub">24h 뒤 결과 받기</div></div></div>
+      <div class="module-box active"><div class="module-icon"><i data-lucide="sprout"></i></div><div class="module-info"><div class="ttl">이름 회복실</div><div class="sub">이번 주 토 21:00</div></div></div>
     </div>
     <div class="tabbar">
-      <span class="tab"><i>🏠</i>홈</span>
-      <span class="tab active"><i>📌</i>모임</span>
-      <span class="tab"><i>🔔</i>알림</span>
-      <span class="tab"><i>👤</i>나</span>
+      <span class="tab"><i data-lucide="home"></i>홈</span>
+      <span class="tab active"><i data-lucide="users"></i>모임</span>
+      <span class="tab"><i data-lucide="bell"></i>알림</span>
+      <span class="tab"><i data-lucide="user"></i>나</span>
     </div>
   </div></div>
 
-  <!-- C02 -->
   <div class="frame"><div class="frame-meta"><span class="id">C02</span><span class="name">카페 정보</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>카페 정보</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>카페 정보</h2><span></span></div>
     <div class="content">
-      <div style="text-align:center;padding:20px 0">
-        <div style="width:80px;height:80px;border-radius:14px;background:var(--moss);color:white;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 12px">👶</div>
-        <h3 style="font-size:18px;font-weight:800"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</h3>
-        <p style="font-size:12px;color:var(--mute);margin-top:4px">강서구·7세·엄마 (좁은 모임)</p>
+      <div style="text-align:center;padding:var(--spacing-lg) 0">
+        <div style="width:84px;height:84px;border-radius:var(--radius-xl);background:var(--gradient);color:white;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto var(--spacing-md);box-shadow:var(--shadow-md)">👶</div>
+        <h3 style="font-size:var(--font-xl);font-weight:800"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</h3>
+        <p style="font-size:var(--font-sm);color:var(--text-muted);margin-top:4px">강서구·7세·엄마 (좁은 모임)</p>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin:20px 0;padding:14px;background:var(--soft);border-radius:10px">
-        <div><p style="font-size:18px;font-weight:800;color:var(--warn)">32</p><p style="font-size:11px;color:var(--mute)">심박 24h</p></div>
-        <div><p style="font-size:18px;font-weight:800">87</p><p style="font-size:11px;color:var(--mute)">회원</p></div>
-        <div><p style="font-size:18px;font-weight:800">14</p><p style="font-size:11px;color:var(--mute)">아이디어</p></div>
+      <div class="stats">
+        <div class="stat"><p class="v color-pink">32</p><p class="l">심박 24h</p></div>
+        <div class="stat"><p class="v">87</p><p class="l">회원</p></div>
+        <div class="stat"><p class="v">14</p><p class="l">아이디어</p></div>
       </div>
       <div class="label">소개</div>
-      <p style="font-size:13px;line-height:1.6;margin-bottom:16px">강서구에 사는 7세 자녀를 둔 엄마들의 모임. 초등 입학 준비, 동네 정보, 일상 공유.</p>
+      <p style="font-size:var(--font-md);line-height:1.6;margin-bottom:var(--spacing-md)">강서구에 사는 7세 자녀를 둔 엄마들의 모임. 초등 입학 준비, 동네 정보, 일상 공유.</p>
       <div class="label">운영자</div>
-      <p style="font-size:13px;margin-bottom:16px">민지 (Genesis 운영자)</p>
-      <button class="btn btn-primary btn-block">가입 신청</button>
+      <div class="member-row" style="border:0;padding:var(--spacing-sm) 0">
+        <div class="member-avatar">민</div>
+        <div><p style="font-weight:600">민지<span class="role-pill role-owner">운영자</span></p><p style="font-size:var(--font-xs);color:var(--text-muted)">Genesis 운영자</p></div>
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--spacing-md)">가입 신청</button>
     </div>
   </div></div>
 
-  <!-- C03 -->
   <div class="frame"><div class="frame-meta"><span class="id">C03</span><span class="name">멤버 리스트</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>멤버 (87)</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>멤버 (87)</h2><span></span></div>
     <div class="content">
-      <input class="input" placeholder="🔍 멤버 검색" style="margin-bottom:14px">
+      <div style="position:relative;margin-bottom:var(--spacing-md)">
+        <i data-lucide="search" style="position:absolute;top:14px;left:14px;width:16px;height:16px;color:var(--text-muted)"></i>
+        <input class="input" placeholder="멤버 검색" style="padding-left:38px">
+      </div>
       <div class="label">운영자 · 부운영자</div>
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--moss);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">민</div>
-        <div style="flex:1"><p style="font-weight:600;font-size:13px">민지 <span style="background:var(--moss);color:white;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:4px">운영자</span></p><p style="font-size:11px;color:var(--mute)">2025-03-01 가입</p></div>
+      <div class="member-row">
+        <div class="member-avatar">민</div>
+        <div style="flex:1"><p style="font-weight:600">민지<span class="role-pill role-owner">운영자</span></p><p style="font-size:var(--font-xs);color:var(--text-muted)">2025-03-01 가입</p></div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)">
-        <div style="width:36px;height:36px;border-radius:50%;background:#0D9488;color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">수</div>
-        <div style="flex:1"><p style="font-weight:600;font-size:13px">수아맘 <span style="background:var(--info);color:white;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:4px">부운영자</span></p><p style="font-size:11px;color:var(--mute)">강퇴 권한</p></div>
+      <div class="member-row">
+        <div class="member-avatar" style="background:#0D9488">수</div>
+        <div style="flex:1"><p style="font-weight:600">수아맘<span class="role-pill role-co">부운영자</span></p><p style="font-size:var(--font-xs);color:var(--text-muted)">강퇴 권한</p></div>
       </div>
-      <div class="label" style="margin-top:14px">일반 멤버 (85)</div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
-        <div style="width:36px;height:36px;border-radius:50%;background:#7C3AED;color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">지</div>
-        <div style="flex:1"><p style="font-size:13px">지호맘</p><p style="font-size:10px;color:var(--mute);font-family:'Noto Serif KR',serif">— 예전 광고기획자</p></div>
-        <span style="color:var(--clay);font-size:11px">옐로 1</span>
+      <div class="label" style="margin-top:var(--spacing-md)">일반 멤버 (85)</div>
+      <div class="member-row">
+        <div class="member-avatar" style="background:#A855F7">지</div>
+        <div style="flex:1"><p style="font-weight:600">지호맘</p><p style="font-size:var(--font-xs);color:var(--text-muted)">예전 광고기획자</p></div>
+        <span class="chip" style="background:var(--warning-light);color:var(--warning);font-weight:700">옐로 1</span>
       </div>
     </div>
   </div></div>
 
-  <!-- C06 -->
   <div class="frame"><div class="frame-meta"><span class="id">C06</span><span class="name">모임 활동 로그 (공개)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>활동 로그</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>활동 로그</h2><span></span></div>
     <div class="content">
-      <p style="font-size:11px;color:var(--mute);margin-bottom:12px;background:var(--soft);padding:10px;border-radius:8px">💡 운영자의 모든 권력 행사는 멤버에게 공개돼요 (헌법 견제 4종 중 2번).</p>
+      <div class="bg-soft" style="margin-bottom:var(--spacing-md);font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="eye" style="width:14px;height:14px;color:var(--info);flex-shrink:0"></i><span>운영자의 모든 권력 행사는 멤버에게 공개돼요 (헌법 견제 4종 중 2번).</span></div>
       <div class="log-item">
-        <p class="when">2026-05-22 14:30</p>
-        <p class="what"><strong>민지</strong>(운영자)가 <strong>도배맨</strong>을 옐로카드 7일. 사유: "광고 글 도배"</p>
+        <p class="when"><i data-lucide="clock"></i>2026-05-22 14:30</p>
+        <p class="what"><strong>민지</strong>(운영자)가 <em>도배맨</em>을 옐로카드 7일. 사유: "광고 글 도배"</p>
       </div>
       <div class="log-item">
-        <p class="when">2026-05-21 09:15</p>
-        <p class="what"><strong>민지</strong>가 <strong>수아맘</strong>을 부운영자로 임명 (강퇴 권한 부여)</p>
+        <p class="when"><i data-lucide="clock"></i>2026-05-21 09:15</p>
+        <p class="what"><strong>민지</strong>가 <em>수아맘</em>을 부운영자로 임명 (강퇴 권한 부여)</p>
       </div>
       <div class="log-item">
-        <p class="when">2026-05-20 18:00</p>
-        <p class="what">아이디어 #14 "월 1회 오프 모임" 자동 채택 (찬성 31명 / 반대 4명)</p>
+        <p class="when"><i data-lucide="clock"></i>2026-05-20 18:00</p>
+        <p class="what">아이디어 #14 "월 1회 오프 모임" 자동 채택 (찬성 31 / 반대 4)</p>
       </div>
       <div class="log-item">
-        <p class="when">2026-05-19 21:42</p>
-        <p class="what"><strong>민지</strong>가 자유 게시판에 "한글 떼기 후기" 글 삭제. 사유: "광고성 글"</p>
+        <p class="when"><i data-lucide="clock"></i>2026-05-19 21:42</p>
+        <p class="what"><strong>민지</strong>가 자유 게시판에서 글 삭제. 사유: "광고성 글"</p>
       </div>
     </div>
   </div></div>
@@ -1000,100 +1270,92 @@ footer.foot {
 <p class="section-desc">F1 글 자동 만료 + F2 한 줄 요약 + F3 온도계 + F4 미니 투표.</p>
 <div class="frames-grid">
 
-  <!-- B01 -->
   <div class="frame"><div class="frame-meta"><span class="id">B01</span><span class="name">자유 게시판 리스트</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>💬 자유</h2><span style="color:var(--moss);font-weight:700">✎</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>💬 자유</h2><span class="color-purple" style="font-weight:700"><i data-lucide="pencil"></i></span></div>
     <div class="content" style="padding-top:0">
       <div class="post-card" style="padding-top:14px">
-        <div style="display:flex;justify-content:space-between;align-items:start;gap:8px">
-          <div style="flex:1">
-            <p class="title">🔥 7세 한글 떼기 어떻게 했나요?</p>
-            <p class="summary">아이가 한글 떼기 싫어해서요...</p>
-            <p class="meta"><span>지호맘</span><span>·</span><span>2시간 전</span><span class="temp">🔥 뜨거움</span><span>댓글 12</span></p>
-          </div>
-        </div>
+        <p class="title"><i data-lucide="flame" style="width:14px;height:14px;color:var(--secondary)"></i>7세 한글 떼기 어떻게 했나요?</p>
+        <p class="summary">아이가 한글 떼기 싫어해서요...</p>
+        <p class="meta"><span>지호맘</span><span>·</span><span>2시간 전</span><span class="temp-hot"><i data-lucide="flame"></i>뜨거움</span><span><i data-lucide="message-circle"></i>12</span></p>
       </div>
       <div class="post-card">
-        <p class="title">📊 이번 주말 키즈카페 vs 도서관 <span style="font-size:10px;color:var(--clay);background:var(--clay-light);padding:2px 6px;border-radius:3px">투표중</span></p>
+        <p class="title">이번 주말 키즈카페 vs 도서관 <span class="chip" style="font-size:10px;padding:1px 6px">투표중</span></p>
         <p class="summary">A 키즈카페 · B 도서관 — 한 줄 이유 받습니다</p>
-        <p class="meta"><span>민지</span><span>·</span><span>4시간 전</span><span>응답 23</span></p>
+        <p class="meta"><span>민지</span><span>·</span><span>4시간 전</span><span><i data-lucide="check-circle"></i>응답 23</span></p>
       </div>
       <div class="post-card">
         <p class="title">강서구 정형외과 추천 부탁해요</p>
         <p class="summary">7살 아이가 발목을 다쳐서...</p>
-        <p class="meta"><span>수아맘</span><span>·</span><span>어제</span><span class="temp">미지근</span><span>댓글 5</span><span style="color:var(--clay)">⏱ 7일 후 만료</span></p>
+        <p class="meta"><span>수아맘</span><span>·</span><span>어제</span><span><i data-lucide="message-circle"></i>5</span><span class="color-warning"><i data-lucide="clock"></i>7일 후 만료</span></p>
       </div>
       <div class="post-card">
         <p class="title">아이 처음 어린이집 보내는 분 계세요?</p>
         <p class="summary">월요일부터 보내는데 너무 걱정돼서요</p>
-        <p class="meta"><span>익명</span><span>·</span><span>3일 전</span><span>댓글 8</span></p>
+        <p class="meta"><span>익명</span><span>·</span><span>3일 전</span><span><i data-lucide="message-circle"></i>8</span></p>
       </div>
     </div>
   </div></div>
 
-  <!-- B02 -->
   <div class="frame"><div class="frame-meta"><span class="id">B02</span><span class="name">게시글 상세</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>💬 자유</h2><span>⋯</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>💬 자유</h2><span><i data-lucide="more-horizontal"></i></span></div>
     <div class="content">
-      <p style="font-size:11px;color:var(--mute);margin-bottom:6px"><span class="temp" style="color:var(--warn)">🔥 뜨거움</span> · 댓글 12 · <span style="color:var(--clay)">⏱ 영구</span></p>
-      <h3 style="font-size:17px;font-weight:700;line-height:1.4;margin-bottom:8px">7세 한글 떼기 어떻게 했나요?</h3>
-      <p style="font-size:12px;color:var(--mute);background:var(--soft);padding:8px 12px;border-radius:6px;margin-bottom:14px">📝 아이가 한글 떼기 싫어해서 도움 요청</p>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7C3AED;color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">지</div>
-        <div><p style="font-size:12px;font-weight:600">지호맘</p><p style="font-size:10px;color:var(--mute)">2시간 전</p></div>
+      <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:6px;display:flex;gap:10px;align-items:center"><span class="temp-hot"><i data-lucide="flame" style="width:11px;height:11px"></i>뜨거움</span><span><i data-lucide="message-circle" style="width:11px;height:11px"></i>12</span><span class="color-purple"><i data-lucide="infinity" style="width:11px;height:11px"></i>영구</span></p>
+      <h3 style="font-size:var(--font-xl);font-weight:700;line-height:1.4;margin-bottom:var(--spacing-sm)">7세 한글 떼기 어떻게 했나요?</h3>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);background:var(--light-bg);padding:10px 12px;border-radius:var(--radius-md);margin-bottom:var(--spacing-md)"><i data-lucide="file-text" style="width:13px;height:13px;display:inline;margin-right:4px"></i>아이가 한글 떼기 싫어해서 도움 요청</p>
+      <div style="display:flex;align-items:center;gap:var(--spacing-sm);margin-bottom:var(--spacing-md)">
+        <div class="member-avatar" style="width:32px;height:32px;background:#A855F7;font-size:var(--font-sm)">지</div>
+        <div><p style="font-size:var(--font-sm);font-weight:600">지호맘</p><p style="font-size:var(--font-xs);color:var(--text-muted)">2시간 전</p></div>
       </div>
-      <p style="font-size:13px;line-height:1.7;margin-bottom:20px">우리 아이는 한글에 관심이 1도 없어요. 7살인데 ㅁ도 못 알아봐요. 다른 엄마들은 어떻게 떼셨는지 진심으로 궁금합니다. 학원? 책? 그냥 기다리기?</p>
-      <div style="display:flex;gap:6px;margin-bottom:20px">
-        <button class="btn btn-secondary" style="flex:1;font-size:12px;min-height:36px">😊 12</button>
-        <button class="btn btn-secondary" style="flex:1;font-size:12px;min-height:36px">🤔 3</button>
-        <button class="btn btn-secondary" style="flex:1;font-size:12px;min-height:36px">💪 5</button>
+      <p style="font-size:var(--font-md);line-height:1.7;margin-bottom:var(--spacing-lg)">우리 아이는 한글에 관심이 1도 없어요. 7살인데 ㅁ도 못 알아봐요. 다른 엄마들은 어떻게 떼셨는지 진심으로 궁금합니다. 학원? 책? 그냥 기다리기?</p>
+      <div style="display:flex;gap:6px;margin-bottom:var(--spacing-lg)">
+        <button class="btn btn-secondary btn-sm" style="flex:1">😊 12</button>
+        <button class="btn btn-secondary btn-sm" style="flex:1">🤔 3</button>
+        <button class="btn btn-secondary btn-sm" style="flex:1">💪 5</button>
       </div>
       <div class="label">댓글 12</div>
-      <div style="padding:10px 0;border-bottom:1px solid var(--line);font-size:12px">
-        <p style="font-weight:600;margin-bottom:4px">민지<span style="color:var(--clay);font-size:10px;margin-left:4px">+공감</span></p>
+      <div style="padding:var(--spacing-sm) 0;border-bottom:1px solid var(--light-border);font-size:var(--font-sm)">
+        <p style="font-weight:600;margin-bottom:4px">민지<span class="chip" style="font-size:9px;padding:1px 6px;margin-left:6px;background:var(--gradient);color:white">+공감</span></p>
         <p>저는 학원 안 보내고 책으로 했는데 6살부터 시작했어요</p>
       </div>
-      <div style="padding:10px 0;border-bottom:1px solid var(--line);font-size:12px">
+      <div style="padding:var(--spacing-sm) 0;border-bottom:1px solid var(--light-border);font-size:var(--font-sm)">
         <p style="font-weight:600;margin-bottom:4px">수아맘</p>
-        <p>저는 7살까지 안 가르치다가 학교 가기 직전 학원 단기로 ㅎㅎ</p>
+        <p>저는 7살까지 안 가르치다가 학교 가기 직전 학원 단기로</p>
       </div>
     </div>
   </div></div>
 
-  <!-- B03 -->
   <div class="frame"><div class="frame-meta"><span class="id">B03</span><span class="name">글쓰기</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>글쓰기</h2><span style="color:var(--moss);font-weight:700;font-size:13px">올리기</span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>글쓰기</h2><span class="color-purple" style="font-weight:700;font-size:var(--font-sm)">올리기</span></div>
     <div class="content">
       <div class="label">제목</div>
-      <input class="input" value="7세 한글 떼기 어떻게 했나요?" readonly style="margin-bottom:14px">
-      <div class="label">한 줄 요약 <span style="color:var(--clay)">(F2)</span></div>
-      <input class="input" value="아이가 한글 떼기 싫어해서 도움 요청" readonly style="margin-bottom:14px">
+      <input class="input" value="7세 한글 떼기 어떻게 했나요?" readonly style="margin-bottom:var(--spacing-md)">
+      <div class="label">한 줄 요약 <span class="color-purple">(F2)</span></div>
+      <input class="input" value="아이가 한글 떼기 싫어해서 도움 요청" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">본문</div>
       <textarea class="textarea" readonly>우리 아이는 한글에 관심이 1도 없어요...</textarea>
-      <div class="label" style="margin-top:14px">옵션</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-        <span class="chip">⏱ 영구</span>
-        <span class="chip">👁 실명</span>
+      <div class="label" style="margin-top:var(--spacing-md)">옵션</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:var(--spacing-sm)">
+        <span class="chip"><i data-lucide="infinity" style="width:11px;height:11px"></i> 영구</span>
+        <span class="chip"><i data-lucide="user" style="width:11px;height:11px"></i> 실명</span>
       </div>
-      <div style="padding:10px;background:var(--soft);border-radius:8px;font-size:11px;color:var(--mute)">
+      <div class="bg-soft" style="font-size:var(--font-xs);color:var(--text-muted)">
         <p>F1 만료: 영구 / 3일 / 7일 / 30일</p>
         <p>F4 미니 투표 추가 가능 (A/B + 한 줄 이유)</p>
       </div>
     </div>
   </div></div>
 
-  <!-- B07 셋로그 -->
-  <div class="frame"><div class="frame-meta"><span class="id">B07</span><span class="name">셋로그 동시 영상</span></div><div class="phone" style="background:#1C2A23;color:white">
-    <div class="statusbar" style="background:transparent;border:0;color:white"><span class="back" style="color:white">←</span><h2 style="color:white">📹 동시 영상</h2><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">B07</span><span class="name">셋로그 동시 영상</span></div><div class="phone dark-full">
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2 style="color:white"><i data-lucide="video" style="width:16px;height:16px;display:inline;margin-right:4px"></i>동시 영상</h2><span></span></div>
     <div class="content">
-      <p style="font-size:11px;opacity:0.7;margin-bottom:10px">오후 3시 · 강서구 현지 시간 · 윈도우 ±5분</p>
-      <div style="background:rgba(255,255,255,0.1);padding:12px;border-radius:10px;margin-bottom:14px;text-align:center">
-        <p style="font-size:13px;font-weight:700">⏱ 12분 22초</p>
-        <p style="font-size:11px;opacity:0.7;margin-top:2px">남은 시간</p>
+      <p style="font-size:var(--font-xs);opacity:0.7;margin-bottom:var(--spacing-sm)">오후 3시 · 강서구 현지 시간 · 윈도우 ±5분</p>
+      <div style="background:rgba(255,255,255,0.08);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);text-align:center">
+        <p style="font-size:var(--font-md);font-weight:700;font-family:monospace">12:22</p>
+        <p style="font-size:var(--font-xs);opacity:0.7;margin-top:2px">남은 시간</p>
       </div>
-      <button class="btn btn-block" style="background:var(--clay);color:white;margin-bottom:14px">📷 지금 촬영 (2~10초)</button>
+      <button class="btn btn-block" style="background:var(--gradient);color:white;margin-bottom:var(--spacing-md);box-shadow:var(--shadow-primary)"><i data-lucide="camera"></i>지금 촬영 (2~10초)</button>
 
-      <div class="label" style="color:rgba(255,255,255,0.5)">지금 모임 풍경 (12명 참여 중)</div>
+      <div class="label">지금 모임 풍경 (12명 참여 중)</div>
       <div class="settlog-grid">
         <div class="settlog-cell"><span class="who">미나맘<br>놀이터</span></div>
         <div class="settlog-cell"><span class="who">지호맘<br>하원길</span></div>
@@ -1102,78 +1364,74 @@ footer.foot {
         <div class="settlog-cell"><span class="who">서연맘<br>어린이집</span></div>
         <div class="settlog-cell"><span class="who">태오맘<br>병원앞</span></div>
       </div>
-      <p style="text-align:center;font-size:11px;opacity:0.6;margin-top:14px">영상은 폰에만 저장 · 우리 서버엔 썸네일·시간 메타만<br>같은 모임 사람만 볼 수 있어요</p>
+      <p style="text-align:center;font-size:var(--font-xs);opacity:0.6;margin-top:var(--spacing-md)">영상은 폰에만 저장 · 서버엔 썸네일·메타만<br>같은 모임 사람만 볼 수 있어요</p>
     </div>
   </div></div>
 
 </div>
 
-<!-- ━━━━━━━━━━ ⑥ 4번째 안 모듈 ━━━━━━━━━━ -->
-<h2 class="section-title" id="modules">⑥ 4번째 안 모듈 (오늘의 결정 / 이름 회복실 / 내일의 나에게 / 심박)</h2>
+<!-- ━━━━━━━━━━ ⑥ 모듈 ━━━━━━━━━━ -->
+<h2 class="section-title" id="modules">⑥ 4번째 안 모듈</h2>
 <p class="section-desc">매일 30초 결정 → 1분 정체성 카드 → 24h 후 결과 푸시 → 어제→내일 메모.</p>
 <div class="frames-grid">
 
-  <!-- S10 응답 전 (커튼) -->
-  <div class="frame"><div class="frame-meta"><span class="id">S10</span><span class="name">오늘의 결정 — 응답 전 (커튼)</span></div><div class="phone" style="background:#2D3A33;color:#E6E1D2">
-    <div class="statusbar" style="background:transparent;border:0;color:#E6E1D2"><span class="back" style="color:#E6E1D2">✕</span><span></span><span style="font-size:10px;opacity:0.6">30초 안에</span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">S10</span><span class="name">오늘의 결정 — 응답 전 (커튼)</span></div><div class="phone dark-full">
+    <div class="statusbar"><span class="back"><i data-lucide="x"></i></span><span></span><span style="font-size:var(--font-xs);opacity:0.6">30초 안에</span></div>
     <div class="content" style="padding-top:30px">
-      <p style="font-size:11px;letter-spacing:0.5px;opacity:0.6;margin-bottom:10px;text-transform:uppercase">오늘의 결정 · 강서구 7세 엄마</p>
-      <h2 style="font-size:22px;font-weight:700;line-height:1.4;margin-bottom:14px">이번 주말<br>키즈카페 vs 도서관?</h2>
-      <p style="font-size:12px;opacity:0.7;margin-bottom:24px">민지님(운영자)이 던진 결정. 응답 전엔 다른 분들 결과를 못 봐요.</p>
-      <button class="btn btn-block" style="background:rgba(230,225,210,0.15);color:#E6E1D2;margin-bottom:10px">A. 키즈카페</button>
-      <button class="btn btn-block" style="background:rgba(230,225,210,0.15);color:#E6E1D2">B. 도서관</button>
-      <p style="font-size:11px;opacity:0.4;text-align:center;margin-top:24px">한 줄 이유는 응답 후에</p>
+      <p style="font-size:var(--font-xs);letter-spacing:0.5px;opacity:0.6;margin-bottom:10px;text-transform:uppercase">오늘의 결정 · 강서구 7세 엄마</p>
+      <h2 style="font-size:var(--font-3xl);font-weight:800;line-height:1.4;margin-bottom:var(--spacing-md)">이번 주말<br>키즈카페 vs 도서관?</h2>
+      <p style="font-size:var(--font-sm);opacity:0.8;margin-bottom:var(--spacing-xl)">민지님(운영자)이 던진 결정. 응답 전엔 다른 분들 결과를 못 봐요.</p>
+      <button class="btn btn-block" style="background:var(--gradient);color:white;margin-bottom:var(--spacing-sm);box-shadow:var(--shadow-primary)">A. 키즈카페</button>
+      <button class="btn btn-block btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;background:rgba(255,255,255,0.05)">B. 도서관</button>
+      <p style="font-size:var(--font-xs);opacity:0.4;text-align:center;margin-top:var(--spacing-lg)">한 줄 이유는 응답 후에</p>
     </div>
   </div></div>
 
-  <!-- S12 정체성 카드 -->
-  <div class="frame"><div class="frame-meta"><span class="id">S12</span><span class="name">정체성 회복 카드 (1분)</span></div><div class="phone" style="background:linear-gradient(135deg, #FAF6EC 0%, #F4ECDA 100%)">
-    <div class="statusbar" style="background:transparent;border:0"><span></span><span></span><span style="font-size:10px;color:var(--mute)">잠시만요 · 1분</span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">S12</span><span class="name">정체성 회복 카드 (1분)</span></div><div class="phone">
+    <div class="statusbar"><span></span><span></span><span style="font-size:var(--font-xs);color:var(--text-muted)">잠시만요 · 1분</span></div>
     <div class="content" style="padding-top:40px;text-align:center">
-      <p style="font-size:12px;color:var(--mute);margin-bottom:14px">당신이 결정한 분은</p>
-      <p class="identity-line" style="font-size:32px;color:var(--clay);font-family:'Noto Serif KR',serif;font-weight:500;margin-bottom:12px">박지영</p>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.7">— 예전 UI 디자이너 ·<br>시각디자인 전공</p>
-      <div style="margin:32px 0;padding:18px;background:rgba(255,255,255,0.6);border-radius:14px">
-        <p style="font-size:12px;color:var(--mute);margin-bottom:6px">같은 디자이너였던 분들 중</p>
-        <p style="font-size:18px;font-weight:700;color:var(--moss)">12명이 A를 골랐어요</p>
-        <p style="font-size:11px;color:var(--mute);margin-top:6px">(전체 47명 응답)</p>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:var(--spacing-md)">당신이 결정한 분은</p>
+      <p style="font-size:36px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:var(--spacing-sm)">박지영</p>
+      <p style="font-size:var(--font-sm);color:var(--text-dark);line-height:1.7">— 예전 UI 디자이너 ·<br>시각디자인 전공</p>
+      <div class="identity-card" style="margin:var(--spacing-xl) 0">
+        <p style="font-size:var(--font-sm);color:var(--text-muted);margin-bottom:6px">같은 디자이너였던 분들 중</p>
+        <p style="font-size:var(--font-xl);font-weight:800;color:var(--primary)">12명이 A를 골랐어요</p>
+        <p style="font-size:var(--font-xs);color:var(--text-muted);margin-top:6px">(전체 47명 응답)</p>
       </div>
-      <button class="btn btn-secondary btn-block" style="background:white">결과 보기</button>
+      <button class="btn btn-primary btn-block">결과 보기</button>
     </div>
   </div></div>
 
-  <!-- S13 결과 -->
   <div class="frame"><div class="frame-meta"><span class="id">S13</span><span class="name">결과 (커튼 해제)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>오늘의 결정</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>오늘의 결정</h2><span></span></div>
     <div class="content">
-      <h3 style="font-size:15px;font-weight:700;line-height:1.4;margin-bottom:14px">이번 주말 키즈카페 vs 도서관?</h3>
-      <div style="background:var(--soft);padding:16px;border-radius:10px;margin-bottom:18px">
-        <p style="font-size:12px;color:var(--mute);margin-bottom:10px">전체 응답 47명</p>
+      <h3 style="font-size:var(--font-md);font-weight:700;line-height:1.4;margin-bottom:var(--spacing-md)">이번 주말 키즈카페 vs 도서관?</h3>
+      <div style="background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+        <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:10px">전체 응답 47명</p>
         <div style="margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="font-weight:700">A. 키즈카페</span><span style="font-weight:700">62%</span></div>
-          <div style="height:8px;background:var(--line);border-radius:4px;overflow:hidden"><div style="width:62%;height:100%;background:var(--moss)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:var(--font-sm);margin-bottom:4px"><span style="font-weight:700">A. 키즈카페</span><span style="font-weight:700;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">62%</span></div>
+          <div style="height:8px;background:var(--light-bg);border-radius:4px;overflow:hidden"><div style="width:62%;height:100%;background:var(--gradient)"></div></div>
         </div>
         <div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>B. 도서관</span><span>38%</span></div>
-          <div style="height:8px;background:var(--line);border-radius:4px;overflow:hidden"><div style="width:38%;height:100%;background:var(--mute)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:var(--font-sm);margin-bottom:4px"><span>B. 도서관</span><span>38%</span></div>
+          <div style="height:8px;background:var(--light-bg);border-radius:4px;overflow:hidden"><div style="width:38%;height:100%;background:var(--text-muted)"></div></div>
         </div>
       </div>
       <div class="label">한 줄 이유 TOP 5 (공감순)</div>
-      <div style="padding:10px 12px;background:white;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;font-size:12px">
+      <div style="padding:10px 12px;background:white;border:1px solid var(--light-border);border-radius:var(--radius-md);margin-bottom:var(--spacing-sm);font-size:var(--font-sm)">
         <p style="margin-bottom:6px">"비 와도 갈 수 있고 친구도 만남" — 수아맘</p>
-        <div style="display:flex;gap:6px"><span style="font-size:11px;color:var(--clay)">😊 +12</span><span style="font-size:11px;color:var(--mute)">🤔 1</span></div>
+        <div style="display:flex;gap:6px"><span class="chip" style="background:rgba(213,58,107,0.1);color:var(--secondary)">😊 +12</span></div>
       </div>
-      <div style="padding:10px 12px;background:white;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;font-size:12px">
+      <div style="padding:10px 12px;background:white;border:1px solid var(--light-border);border-radius:var(--radius-md);margin-bottom:var(--spacing-sm);font-size:var(--font-sm)">
         <p style="margin-bottom:6px">"독서 습관 들이고 싶어요" — 민지</p>
-        <div style="display:flex;gap:6px"><span style="font-size:11px;color:var(--clay)">😊 +9</span></div>
+        <div style="display:flex;gap:6px"><span class="chip" style="background:rgba(213,58,107,0.1);color:var(--secondary)">😊 +9</span></div>
       </div>
-      <p style="font-size:11px;text-align:center;color:var(--mute);margin-top:14px">더 보기 (15)</p>
+      <p style="font-size:var(--font-xs);text-align:center;color:var(--primary);margin-top:var(--spacing-md);font-weight:600">더 보기 (15)</p>
     </div>
   </div></div>
 
-  <!-- 24h 결과 푸시 -->
-  <div class="frame"><div class="frame-meta"><span class="id">PUSH</span><span class="name">24h 후 결과 푸시</span></div><div class="phone" style="background:linear-gradient(180deg, #B8C5BC 0%, #8FA396 100%)">
-    <div class="statusbar" style="background:transparent;border:0"><span></span><span style="font-size:11px;color:#2D3A33">오전 8:00</span><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">PUSH</span><span class="name">24h 후 결과 푸시</span></div><div class="phone" style="background:linear-gradient(180deg, #C7D2FE 0%, #A5B4FC 100%)">
+    <div class="statusbar" style="background:transparent;border:0"><span></span><span style="font-size:var(--font-xs);color:#3730A3;font-weight:600">오전 8:00</span><span></span></div>
     <div class="content" style="padding-top:40px">
       <div class="push-card">
         <div class="app-icon">심</div>
@@ -1189,65 +1447,60 @@ footer.foot {
           <p class="text">박지영님, 어제 한 결정을 평가해주세요 →</p>
         </div>
       </div>
-      <p style="text-align:center;font-size:11px;color:#2D3A33;opacity:0.7;margin-top:20px">탭해서 평가</p>
+      <p style="text-align:center;font-size:var(--font-xs);color:#3730A3;opacity:0.7;margin-top:var(--spacing-md);font-weight:600">탭해서 평가</p>
     </div>
   </div></div>
 
-  <!-- S25 이름 회복실 -->
-  <div class="frame"><div class="frame-meta"><span class="id">S25</span><span class="name">이름 회복실 — 라운지</span></div><div class="phone" style="background:#1A2620;color:#E6E1D2">
-    <div class="statusbar" style="background:transparent;border:0;color:#E6E1D2"><span class="back" style="color:#E6E1D2">✕</span><h2 style="color:#E6E1D2;font-size:14px">이름 회복실 · 27분 남음</h2><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">S25</span><span class="name">이름 회복실 — 라운지</span></div><div class="phone dark-full">
+    <div class="statusbar"><span class="back"><i data-lucide="x"></i></span><h2 style="color:white;font-size:var(--font-md)">이름 회복실 · 27분 남음</h2><span></span></div>
     <div class="content">
-      <p style="font-size:11px;opacity:0.6;text-align:center;margin-bottom:20px">규칙: 자녀·남편·시댁 얘기 금지<br>예전 이름·전공·꿈으로만</p>
+      <p style="font-size:var(--font-xs);opacity:0.6;text-align:center;margin-bottom:var(--spacing-lg)">규칙: 자녀·남편·시댁 얘기 금지<br>예전 이름·전공·꿈으로만</p>
       <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)">
-        <div style="width:32px;height:32px;border-radius:50%;background:var(--clay);color:white;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:13px">박</div>
+        <div class="member-avatar" style="width:32px;height:32px;font-size:var(--font-sm);background:var(--gradient)">박</div>
         <div style="flex:1">
-          <p style="font-family:'Noto Serif KR',serif;font-size:14px;color:var(--clay);margin-bottom:2px">박지영 — 예전 디자이너</p>
-          <p style="font-size:13px;line-height:1.5">안녕하세요. 10년 만에 디자인 다시 시작했어요</p>
+          <p style="font-size:var(--font-md);background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;margin-bottom:2px">박지영 — 예전 디자이너</p>
+          <p style="font-size:var(--font-sm);line-height:1.5">안녕하세요. 10년 만에 디자인 다시 시작했어요</p>
         </div>
       </div>
       <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)">
-        <div style="width:32px;height:32px;border-radius:50%;background:#0D9488;color:white;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:13px">김</div>
+        <div class="member-avatar" style="width:32px;height:32px;font-size:var(--font-sm);background:#0D9488">김</div>
         <div style="flex:1">
-          <p style="font-family:'Noto Serif KR',serif;font-size:14px;color:#0D9488;margin-bottom:2px">김수정 — 예전 광고기획자</p>
-          <p style="font-size:13px;line-height:1.5">와 제가 카피라이팅했던 시절 떠올라요</p>
+          <p style="font-size:var(--font-md);color:#5EEAD4;font-weight:700;margin-bottom:2px">김수정 — 예전 광고기획자</p>
+          <p style="font-size:var(--font-sm);line-height:1.5">와 제가 카피라이팅했던 시절 떠올라요</p>
         </div>
       </div>
       <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)">
-        <div style="width:32px;height:32px;border-radius:50%;background:#7C3AED;color:white;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:13px">이</div>
+        <div class="member-avatar" style="width:32px;height:32px;font-size:var(--font-sm);background:#A855F7">이</div>
         <div style="flex:1">
-          <p style="font-family:'Noto Serif KR',serif;font-size:14px;color:#7C3AED;margin-bottom:2px">이미라 — 예전 출판사 편집자</p>
-          <p style="font-size:13px;line-height:1.5">우리 같은 분야였네요...</p>
+          <p style="font-size:var(--font-md);color:#C4B5FD;font-weight:700;margin-bottom:2px">이미라 — 예전 출판사 편집자</p>
+          <p style="font-size:var(--font-sm);line-height:1.5">우리 같은 분야였네요...</p>
         </div>
       </div>
-      <input class="input" placeholder="당신의 이야기를..." style="background:rgba(255,255,255,0.1);color:white;border-color:rgba(255,255,255,0.2);margin-top:20px">
+      <input class="input" placeholder="당신의 이야기를..." style="background:rgba(255,255,255,0.1);color:white;border-color:rgba(255,255,255,0.2);margin-top:var(--spacing-lg)">
     </div>
   </div></div>
 
-  <!-- S16 내일의 나에게 -->
-  <div class="frame"><div class="frame-meta"><span class="id">S16</span><span class="name">내일의 나에게 메모</span></div><div class="phone" style="background:#FBE9E1">
-    <div class="statusbar" style="background:transparent;border:0"><span class="back">←</span><h2 style="color:var(--warn)">✉ 내일의 나에게</h2><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">S16</span><span class="name">내일의 나에게 메모</span></div><div class="phone" style="background:linear-gradient(180deg, #FCE7F3 0%, #FBCFE8 100%)">
+    <div class="statusbar" style="background:transparent;border:0"><span class="back"><i data-lucide="arrow-left"></i></span><h2 class="color-pink"><i data-lucide="mail" style="width:16px;height:16px;display:inline;margin-right:4px"></i>내일의 나에게</h2><span></span></div>
     <div class="content">
-      <p style="font-size:12px;color:var(--mute);margin-bottom:18px;background:white;padding:10px 12px;border-radius:8px">
-        💡 어제 키즈카페를 골랐는데 *후회*하셨네요.<br>내일 같은 결정을 할 사람에게 메모를 남겨주세요.
-      </p>
+      <div style="background:white;padding:12px 14px;border-radius:var(--radius-lg);font-size:var(--font-sm);margin-bottom:var(--spacing-lg);display:flex;gap:8px"><i data-lucide="lightbulb" style="width:16px;height:16px;color:var(--secondary);flex-shrink:0;margin-top:2px"></i><span>어제 키즈카페를 골랐는데 <strong>후회</strong>하셨네요.<br>내일 같은 결정을 할 사람에게 메모를 남겨주세요.</span></div>
       <div class="label">제목 (자동)</div>
-      <input class="input" value="[내일 키즈카페 갈 강서구 7세 엄마에게]" readonly style="margin-bottom:14px">
+      <input class="input" value="[내일 키즈카페 갈 강서구 7세 엄마에게]" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">후회한 점 (1줄)</div>
-      <input class="input" value="너무 시끄럽고 아이가 친구 못 사귐" readonly style="margin-bottom:14px">
+      <input class="input" value="너무 시끄럽고 아이가 친구 못 사귐" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">다음에 할 사람이 할 것 (1줄)</div>
-      <input class="input" value="평일 오전 가세요. 사람 적음" readonly style="margin-bottom:14px">
-      <button class="btn btn-accent btn-block">메모 남기기</button>
-      <p style="font-size:11px;color:var(--mute);text-align:center;margin-top:14px">시간 차 호혜성 · 다음 사람에게 자동 노출</p>
+      <input class="input" value="평일 오전 가세요. 사람 적음" readonly style="margin-bottom:var(--spacing-md)">
+      <button class="btn btn-primary btn-block">메모 남기기</button>
+      <p style="font-size:var(--font-xs);color:var(--text-muted);text-align:center;margin-top:var(--spacing-md)">시간 차 호혜성 · 다음 사람에게 자동 노출</p>
     </div>
   </div></div>
 
-  <!-- 심박 진단판 -->
   <div class="frame"><div class="frame-meta"><span class="id">HB</span><span class="name">심박 진단판 (운영자)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>♥ 심박 진단</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2><i data-lucide="heart-pulse" style="width:16px;height:16px;display:inline;margin-right:4px;color:var(--secondary)"></i>심박 진단</h2><span></span></div>
     <div class="content">
-      <p style="font-size:11px;color:var(--mute);margin-bottom:10px">강서구 7세 엄마 · 지난 24h</p>
-      <p style="font-size:36px;font-weight:800;color:var(--warn);text-align:center;margin:10px 0">32</p>
-      <p style="text-align:center;font-size:11px;color:var(--mute);margin-bottom:14px">7일 평균 28 ↑</p>
+      <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:10px">강서구 7세 엄마 · 지난 24h</p>
+      <p style="font-size:40px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin:10px 0">32</p>
+      <p style="text-align:center;font-size:var(--font-xs);color:var(--text-muted);margin-bottom:var(--spacing-md)">7일 평균 28 <span class="color-success">↑</span></p>
       <div class="heartbeat-graph">
         <div class="bar" style="height:30%"></div>
         <div class="bar" style="height:45%"></div>
@@ -1257,56 +1510,54 @@ footer.foot {
         <div class="bar" style="height:90%"></div>
         <div class="bar" style="height:100%"></div>
       </div>
-      <div class="label" style="margin-top:14px">강팀 진단</div>
-      <div style="background:var(--soft);padding:14px;border-radius:10px;font-size:12px">
-        <p style="font-weight:700;color:var(--success);margin-bottom:6px">✓ 건강합니다</p>
-        <p style="color:var(--mute);line-height:1.5">최근 응답률 67%. 오늘의 결정 모듈이 잘 작동 중. 이대로 유지하세요.</p>
+      <div class="label" style="margin-top:var(--spacing-md)">강팀 진단</div>
+      <div style="background:var(--success-light);padding:var(--spacing-md);border-radius:var(--radius-lg);font-size:var(--font-sm);border-left:3px solid var(--success)">
+        <p style="font-weight:700;color:var(--success);margin-bottom:6px;display:flex;align-items:center;gap:4px"><i data-lucide="check-circle" style="width:14px;height:14px"></i>건강합니다</p>
+        <p style="color:var(--text-dark);line-height:1.5">최근 응답률 67%. 오늘의 결정 모듈이 잘 작동 중. 이대로 유지하세요.</p>
       </div>
-      <div class="label" style="margin-top:16px">최근 사망 경고</div>
-      <p style="font-size:11px;color:var(--mute);padding:10px 0">없음. 마지막 경고: 14일 전 ✓ 회복됨</p>
+      <div class="label" style="margin-top:var(--spacing-md)">최근 사망 경고</div>
+      <p style="font-size:var(--font-xs);color:var(--text-muted);padding:10px 0">없음. 마지막 경고: 14일 전 <span class="color-success">✓ 회복됨</span></p>
     </div>
   </div></div>
 
 </div>
 
-<!-- ━━━━━━━━━━ ⑦ 셋로그 ━━━━━━━━━━ -->
-<h2 class="section-title" id="settlog">⑦ 셋로그 — 별도 화면들 (이미 B07에서 보였지만 다양한 상태)</h2>
+<!-- ━━━━━━━━━━ ⑦ 셋로그 추가 ━━━━━━━━━━ -->
+<h2 class="section-title" id="settlog">⑦ 셋로그 — 추가 화면</h2>
 <p class="section-desc">시간 윈도우 설정 (운영자) + 풀스크린 보기 + 영상이 사라지는 정신.</p>
 <div class="frames-grid">
 
-  <!-- M21 -->
   <div class="frame"><div class="frame-meta"><span class="id">M21</span><span class="name">동시 영상 시간 설정 (운영자)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>📹 동시 영상 설정</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2><i data-lucide="video" style="width:16px;height:16px;display:inline;margin-right:4px"></i>동시 영상 설정</h2><span></span></div>
     <div class="content">
-      <p style="font-size:11px;color:var(--mute);margin-bottom:14px;background:var(--soft);padding:10px 12px;border-radius:8px">⏰ 모임 동네 시간 기준 (강서구 시간)</p>
+      <div class="bg-soft" style="margin-bottom:var(--spacing-md);font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="clock" style="width:14px;height:14px;color:var(--info);flex-shrink:0"></i>모임 동네 시간 기준 (강서구 시간)</div>
       <div class="label">시간 윈도우</div>
-      <div style="display:flex;align-items:center;gap:10px;background:var(--soft);padding:14px;border-radius:10px;margin-bottom:12px">
-        <span style="font-size:24px">⏰</span>
+      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+        <div style="width:48px;height:48px;background:var(--gradient);color:white;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center"><i data-lucide="clock" style="width:24px;height:24px"></i></div>
         <div style="flex:1">
-          <p style="font-weight:700">오후 3:00</p>
-          <p style="font-size:11px;color:var(--mute)">±5분 윈도우 (2:55~3:05)</p>
+          <p style="font-weight:700;font-size:var(--font-lg)">오후 3:00</p>
+          <p style="font-size:var(--font-xs);color:var(--text-muted)">±5분 윈도우 (2:55~3:05)</p>
         </div>
       </div>
       <div class="label">반복</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
-        <span class="chip" style="background:var(--moss);color:white">월</span>
-        <span class="chip" style="background:var(--moss);color:white">화</span>
-        <span class="chip" style="background:var(--moss);color:white">수</span>
-        <span class="chip" style="background:var(--moss);color:white">목</span>
-        <span class="chip" style="background:var(--moss);color:white">금</span>
-        <span class="chip">토</span>
-        <span class="chip">일</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:var(--spacing-md)">
+        <span class="chip chip-gradient">월</span>
+        <span class="chip chip-gradient">화</span>
+        <span class="chip chip-gradient">수</span>
+        <span class="chip chip-gradient">목</span>
+        <span class="chip chip-gradient">금</span>
+        <span class="chip chip-gray">토</span>
+        <span class="chip chip-gray">일</span>
       </div>
       <div class="label">영상 길이</div>
-      <input class="input" value="2 ~ 10초" readonly style="margin-bottom:14px">
+      <input class="input" value="2 ~ 10초" readonly style="margin-bottom:var(--spacing-md)">
       <button class="btn btn-primary btn-block">저장</button>
-      <p style="font-size:11px;color:var(--mute);text-align:center;margin-top:14px">멤버에게 자동 알림 발송</p>
+      <p style="font-size:var(--font-xs);color:var(--text-muted);text-align:center;margin-top:var(--spacing-md)">멤버에게 자동 알림 발송</p>
     </div>
   </div></div>
 
-  <!-- C07 풀스크린 -->
   <div class="frame"><div class="frame-meta"><span class="id">C07</span><span class="name">동시 영상 풀스크린</span></div><div class="phone" style="background:#000;color:white">
-    <div class="statusbar" style="background:transparent;border:0;color:white"><span class="back" style="color:white">←</span><h2 style="color:white;font-size:13px">📹 오후 3시 · 12명</h2><span></span></div>
+    <div class="statusbar" style="background:transparent;border:0;color:white"><span class="back"><i data-lucide="arrow-left"></i></span><h2 style="color:white;font-size:var(--font-sm)"><i data-lucide="video" style="width:14px;height:14px;display:inline;margin-right:4px"></i>오후 3시 · 12명</h2><span></span></div>
     <div class="content" style="padding:6px">
       <div class="settlog-grid" style="grid-template-columns:1fr 1fr;gap:6px">
         <div class="settlog-cell" style="aspect-ratio:9/16"><span class="who">미나맘<br>놀이터 · 2초</span></div>
@@ -1314,7 +1565,7 @@ footer.foot {
         <div class="settlog-cell" style="aspect-ratio:9/16"><span class="who">수아맘<br>재래시장 · 4초</span></div>
         <div class="settlog-cell" style="aspect-ratio:9/16"><span class="who">준우맘<br>카페 · 2초</span></div>
       </div>
-      <p style="text-align:center;font-size:11px;opacity:0.6;margin-top:12px">영상은 폰에만 · 6개월 후 사라짐</p>
+      <p style="text-align:center;font-size:var(--font-xs);opacity:0.6;margin-top:var(--spacing-md)">영상은 폰에만 · 6개월 후 사라짐</p>
     </div>
   </div></div>
 
@@ -1325,63 +1576,59 @@ footer.foot {
 <p class="section-desc">막강한 권력 + 공개된 권력. 견제 4종 동시 작동.</p>
 <div class="frames-grid">
 
-  <!-- M20 -->
   <div class="frame"><div class="frame-meta"><span class="id">M20</span><span class="name">모듈 허브 (처방)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>⚙ 모듈 허브</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2><i data-lucide="settings" style="width:16px;height:16px;display:inline;margin-right:4px"></i>모듈 허브</h2><span></span></div>
     <div class="content">
-      <div style="background:var(--clay-light);padding:14px;border-radius:10px;margin-bottom:18px;border-left:3px solid var(--clay)">
-        <p style="font-size:11px;color:var(--clay);font-weight:700;margin-bottom:6px">⚠ 강팀의 처방</p>
-        <p style="font-size:13px;font-weight:600;margin-bottom:6px">멤버가 글을 안 쓰고 눈팅만 합니다.</p>
-        <p style="font-size:12px;color:var(--mute);margin-bottom:10px">처방: [오늘의 결정 모듈]<br>약속: 응답률 60%+ 시 2주 안에 심박 3배 (비슷한 모임 47개 데이터)</p>
-        <button class="btn btn-accent" style="font-size:12px;min-height:36px;padding:0 14px">모듈 켜기 — 14일 무료 체험</button>
+      <div style="background:var(--warning-light);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border-left:3px solid var(--warning)">
+        <p style="font-size:var(--font-xs);color:var(--warning);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:4px"><i data-lucide="alert-triangle" style="width:13px;height:13px"></i>강팀의 처방</p>
+        <p style="font-size:var(--font-md);font-weight:600;margin-bottom:6px">멤버가 글을 안 쓰고 눈팅만 합니다.</p>
+        <p style="font-size:var(--font-sm);color:var(--text-dark);margin-bottom:var(--spacing-sm)">처방: <strong>오늘의 결정 모듈</strong><br>약속: 응답률 60%+ 시 2주 안에 심박 3배 (비슷한 모임 47개 데이터)</p>
+        <button class="btn btn-primary btn-sm">모듈 켜기 — 14일 무료 체험</button>
       </div>
       <div class="label">켤 수 있는 모듈</div>
-      <div class="module-box"><span class="icon">🎯</span><div style="flex:1"><p style="font-weight:600">오늘의 결정</p><p style="color:var(--mute);font-size:11px">눈팅을 응답자로</p></div><span class="btn btn-secondary" style="font-size:11px;min-height:28px;padding:0 10px">켜기</span></div>
-      <div class="module-box"><span class="icon">🌿</span><div style="flex:1"><p style="font-weight:600">이름 회복실</p><p style="color:var(--mute);font-size:11px">월 결제 모듈</p></div><span class="btn btn-secondary" style="font-size:11px;min-height:28px;padding:0 10px">켜기</span></div>
-      <div class="module-box"><span class="icon">✉</span><div style="flex:1"><p style="font-weight:600">내일의 나에게</p><p style="color:var(--mute);font-size:11px">콘텐츠 자생</p></div><span class="btn btn-secondary" style="font-size:11px;min-height:28px;padding:0 10px">켜기</span></div>
+      <div class="module-box"><div class="module-icon"><i data-lucide="target"></i></div><div class="module-info"><div class="ttl">오늘의 결정</div><div class="sub">눈팅을 응답자로</div></div><button class="btn btn-secondary btn-sm">켜기</button></div>
+      <div class="module-box"><div class="module-icon"><i data-lucide="sprout"></i></div><div class="module-info"><div class="ttl">이름 회복실</div><div class="sub">월 결제 모듈</div></div><button class="btn btn-secondary btn-sm">켜기</button></div>
+      <div class="module-box"><div class="module-icon"><i data-lucide="mail"></i></div><div class="module-info"><div class="ttl">내일의 나에게</div><div class="sub">콘텐츠 자생</div></div><button class="btn btn-secondary btn-sm">켜기</button></div>
     </div>
   </div></div>
 
-  <!-- M40 -->
   <div class="frame"><div class="frame-meta"><span class="id">M40</span><span class="name">부운영자 초대</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>부운영자 초대</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>부운영자 초대</h2><span></span></div>
     <div class="content">
       <div class="label">초대할 멤버</div>
-      <input class="input" value="수아맘" readonly style="margin-bottom:18px">
+      <input class="input" value="수아맘" readonly style="margin-bottom:var(--spacing-lg)">
       <div class="label">권한 프리셋</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
-        <div class="module-box" style="background:var(--soft);border:2px solid var(--moss)"><div style="flex:1"><p style="font-weight:600">일반 부운영자</p><p style="color:var(--mute);font-size:11px">글삭제·강퇴·게시판 다 가능</p></div><span style="color:var(--moss);font-weight:700">✓</span></div>
-        <div class="module-box"><div style="flex:1"><p style="font-weight:600">강퇴 전담</p><p style="color:var(--mute);font-size:11px">강퇴만 가능</p></div></div>
-        <div class="module-box"><div style="flex:1"><p style="font-weight:600">게시판 전담</p><p style="color:var(--mute);font-size:11px">게시판 관리만</p></div></div>
-        <div class="module-box"><div style="flex:1"><p style="font-weight:600">커스텀 ▾</p><p style="color:var(--mute);font-size:11px">5종 체크박스로 직접</p></div></div>
+      <div style="display:flex;flex-direction:column;gap:var(--spacing-sm);margin-bottom:var(--spacing-md)">
+        <div class="module-box active"><div class="module-info"><div class="ttl">일반 부운영자</div><div class="sub">글삭제·강퇴·게시판 다 가능</div></div><i data-lucide="check" style="color:var(--primary)"></i></div>
+        <div class="module-box"><div class="module-info"><div class="ttl">강퇴 전담</div><div class="sub">강퇴만 가능</div></div></div>
+        <div class="module-box"><div class="module-info"><div class="ttl">게시판 전담</div><div class="sub">게시판 관리만</div></div></div>
+        <div class="module-box"><div class="module-info"><div class="ttl">커스텀</div><div class="sub">5종 체크박스로 직접</div></div><i data-lucide="chevron-down"></i></div>
       </div>
       <button class="btn btn-primary btn-block">초대 발송</button>
     </div>
   </div></div>
 
-  <!-- M50 -->
   <div class="frame"><div class="frame-meta"><span class="id">M50</span><span class="name">자동 규칙</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>자동 규칙</h2><span></span></div>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>자동 규칙</h2><span></span></div>
     <div class="content">
-      <p style="font-size:11px;color:var(--mute);margin-bottom:14px;background:var(--soft);padding:10px 12px;border-radius:8px">💡 자동 처분 시 멤버에게 옐로/레드 카드 애니메이션 노출.</p>
-      <div class="module-box"><div style="flex:1"><p style="font-weight:600">욕설 자동 옐로</p><p style="color:var(--mute);font-size:11px">키워드 사전 매칭 시 → 7일</p></div><span style="color:var(--success);font-weight:700">ON</span></div>
-      <div class="module-box"><div style="flex:1"><p style="font-weight:600">도배 자동 옐로</p><p style="color:var(--mute);font-size:11px">5분 내 5개+ → 3일</p></div><span style="color:var(--success);font-weight:700">ON</span></div>
-      <div class="module-box"><div style="flex:1"><p style="font-weight:600">광고 자동 옐로</p><p style="color:var(--mute);font-size:11px">외부 URL → 7일</p></div><span style="color:var(--success);font-weight:700">ON</span></div>
-      <div class="module-box"><div style="flex:1"><p style="font-weight:600">신고 누적 옐로</p><p style="color:var(--mute);font-size:11px">5건+ → 14일 + 글 숨김</p></div><span style="color:var(--success);font-weight:700">ON</span></div>
-      <div class="module-box" style="background:var(--clay-light)"><div style="flex:1"><p style="font-weight:700;color:var(--clay)">3진 아웃</p><p style="color:var(--mute);font-size:11px">옐로 3장 → 자동 탈퇴 14일</p></div><span style="color:var(--clay);font-weight:700">ON</span></div>
+      <div class="bg-soft" style="margin-bottom:var(--spacing-md);font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="info" style="width:14px;height:14px;color:var(--info);flex-shrink:0"></i><span>자동 처분 시 멤버에게 옐로/레드 카드 애니메이션 노출.</span></div>
+      <div class="module-box active"><div class="module-info"><div class="ttl">욕설 자동 옐로</div><div class="sub">키워드 사전 매칭 시 → 7일</div></div><span class="module-state on">ON</span></div>
+      <div class="module-box active"><div class="module-info"><div class="ttl">도배 자동 옐로</div><div class="sub">5분 내 5개+ → 3일</div></div><span class="module-state on">ON</span></div>
+      <div class="module-box active"><div class="module-info"><div class="ttl">광고 자동 옐로</div><div class="sub">외부 URL → 7일</div></div><span class="module-state on">ON</span></div>
+      <div class="module-box active"><div class="module-info"><div class="ttl">신고 누적 옐로</div><div class="sub">5건+ → 14일 + 글 숨김</div></div><span class="module-state on">ON</span></div>
+      <div class="module-box" style="background:var(--error-light);border-color:var(--error)"><div class="module-info"><div class="ttl color-error">3진 아웃</div><div class="sub">옐로 3장 → 자동 탈퇴 14일</div></div><span class="module-state" style="color:var(--error)">ON</span></div>
     </div>
   </div></div>
 
-  <!-- B06 강퇴 -->
   <div class="frame"><div class="frame-meta"><span class="id">B06</span><span class="name">강제 탈퇴 다이얼로그</span></div><div class="phone" style="background:rgba(31,42,36,0.6)">
     <div class="statusbar" style="background:transparent;border:0"><span></span><span></span><span></span></div>
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88%;background:white;border-radius:14px;padding:20px">
-      <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;color:var(--warn)">⚠ 강제 탈퇴</h3>
-      <p style="font-size:13px;margin-bottom:14px">광고남님을 모임에서 추방하시겠어요?</p>
+    <div class="dialog">
+      <h3><i data-lucide="alert-triangle" style="width:18px;height:18px"></i>강제 탈퇴</h3>
+      <p style="font-size:var(--font-md);margin-bottom:var(--spacing-md)">광고남님을 모임에서 추방하시겠어요?</p>
       <div class="label">사유 (필수, 공개됨)</div>
       <textarea class="textarea" style="min-height:60px" readonly>같은 광고 글 7회 반복</textarea>
-      <p style="font-size:11px;color:var(--mute);margin:10px 0">📢 활동 로그에 공개됩니다.<br>강퇴 당한 분은 14일 재가입 불가.</p>
-      <div style="display:flex;gap:8px;margin-top:14px">
+      <div class="bg-soft" style="margin:var(--spacing-sm) 0;font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="megaphone" style="width:13px;height:13px;color:var(--warning);flex-shrink:0"></i><span>활동 로그에 공개됩니다. 강퇴 당한 분은 14일 재가입 불가.</span></div>
+      <div style="display:flex;gap:var(--spacing-sm);margin-top:var(--spacing-md)">
         <button class="btn btn-secondary" style="flex:1">취소</button>
         <button class="btn btn-danger" style="flex:1">강제 탈퇴</button>
       </div>
@@ -1395,66 +1642,62 @@ footer.foot {
 <p class="section-desc">옐로/레드 카드 · 봉인 두루마리 · 공개 재판 · 회복의 길.</p>
 <div class="frames-grid">
 
-  <!-- 옐로카드 -->
-  <div class="frame"><div class="frame-meta"><span class="id">FUN-1</span><span class="name">옐로카드 솟구침 (애니메이션)</span></div><div class="phone" style="background:#1F2A24">
-    <div class="statusbar" style="background:transparent;border:0;color:white"><span></span><span></span><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">FUN-1</span><span class="name">옐로카드 솟구침</span></div><div class="phone dark-full">
+    <div class="statusbar"><span></span><span></span><span></span></div>
     <div class="content" style="padding-top:80px;text-align:center">
-      <div class="yellow-card" style="font-size:18px;letter-spacing:2px">⚠ 옐로카드</div>
-      <p style="color:white;font-size:14px;margin-top:16px;font-weight:700">광고남님</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:8px">사유: 광고 글 도배</p>
-      <p style="color:rgba(255,255,255,0.5);font-size:11px;margin-top:14px">7일 정지 · 봉인 시작</p>
-      <p style="color:var(--clay);font-size:11px;margin-top:30px">⏱ 6일 23시간 59분 후 해제</p>
+      <div class="yellow-card" style="font-size:var(--font-xl);letter-spacing:2px"><i data-lucide="alert-triangle"></i>옐로카드</div>
+      <p style="color:white;font-size:var(--font-md);margin-top:var(--spacing-md);font-weight:700">광고남님</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:var(--font-sm);margin-top:var(--spacing-sm)">사유: 광고 글 도배</p>
+      <p style="color:rgba(255,255,255,0.5);font-size:var(--font-xs);margin-top:var(--spacing-md)">7일 정지 · 봉인 시작</p>
+      <p style="color:var(--secondary-light);font-size:var(--font-xs);margin-top:var(--spacing-xl);font-family:monospace"><i data-lucide="clock" style="width:11px;height:11px;display:inline"></i> 6일 23시간 59분 후 해제</p>
     </div>
   </div></div>
 
-  <!-- 봉인 두루마리 -->
-  <div class="frame"><div class="frame-meta"><span class="id">FUN-2</span><span class="name">봉인된 두루마리 (글쓰기 차단)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>글쓰기</h2><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">FUN-2</span><span class="name">봉인된 두루마리</span></div><div class="phone">
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>글쓰기</h2><span></span></div>
     <div class="content">
       <div class="scroll-seal">
-        <span class="seal">📜🔒</span>
+        <span class="seal">📜</span>
         <p class="title">당신의 글은 봉인됐어요</p>
-        <p class="countdown">⏱ 6일 23:42 후 해제</p>
+        <p class="countdown">6일 23:42 후 해제</p>
       </div>
-      <p style="font-size:12px;color:var(--mute);text-align:center;line-height:1.7;margin-top:20px">옐로카드 1장 보유 중.<br>이 동안엔 읽기만 가능해요.</p>
-      <div style="background:var(--clay-light);padding:14px;border-radius:10px;margin-top:24px">
-        <p style="font-size:12px;font-weight:700;color:var(--clay);margin-bottom:6px">💌 반성문 모드 (선택)</p>
-        <p style="font-size:11px;color:var(--mute);margin-bottom:10px">1줄 반성문을 쓰면 정지 기간이 *50% 단축*돼요. 강요는 아니에요.</p>
-        <button class="btn btn-accent" style="font-size:12px;min-height:32px;padding:0 14px">반성문 쓰기</button>
+      <p style="font-size:var(--font-sm);color:var(--text-muted);text-align:center;line-height:1.7;margin-top:var(--spacing-md)">옐로카드 1장 보유 중.<br>이 동안엔 읽기만 가능해요.</p>
+      <div style="background:var(--secondary-light);background:rgba(213,58,107,0.08);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-top:var(--spacing-lg);border-left:3px solid var(--secondary)">
+        <p style="font-size:var(--font-sm);font-weight:700;color:var(--secondary);margin-bottom:6px;display:flex;align-items:center;gap:4px"><i data-lucide="mail" style="width:14px;height:14px"></i>반성문 모드 (선택)</p>
+        <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:var(--spacing-sm)">1줄 반성문을 쓰면 정지 기간이 <strong>50% 단축</strong>돼요. 강요는 아니에요.</p>
+        <button class="btn btn-primary btn-sm">반성문 쓰기</button>
       </div>
     </div>
   </div></div>
 
-  <!-- 공개 재판 -->
-  <div class="frame"><div class="frame-meta"><span class="id">FUN-3</span><span class="name">공개 재판 (3번째 위반)</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>⚖ 공개 재판</h2><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">FUN-3</span><span class="name">공개 재판</span></div><div class="phone">
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2><i data-lucide="scale" style="width:16px;height:16px;display:inline;margin-right:4px"></i>공개 재판</h2><span></span></div>
     <div class="content">
-      <div style="background:var(--clay-light);padding:14px;border-radius:10px;margin-bottom:18px">
-        <p style="font-weight:700;color:var(--warn);margin-bottom:6px;font-size:13px">3번째 위반 · 멤버 판결 필요</p>
-        <p style="font-size:12px;color:var(--mute)">광고남님이 옐로카드 2장 누적된 상태에서 추가 위반. 운영자 단독 강퇴 불가. 멤버 30%+ 찬성이 필요해요.</p>
+      <div style="background:var(--error-light);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border-left:3px solid var(--error)">
+        <p style="font-weight:700;color:var(--error);margin-bottom:6px;font-size:var(--font-sm)">3번째 위반 · 멤버 판결 필요</p>
+        <p style="font-size:var(--font-xs);color:var(--text-dark)">광고남님이 옐로카드 2장 누적된 상태에서 추가 위반. 운영자 단독 강퇴 불가. 멤버 30%+ 찬성이 필요해요.</p>
       </div>
       <div class="label">위반 글</div>
-      <p style="padding:10px 12px;background:var(--soft);border-radius:8px;font-size:12px;line-height:1.5;margin-bottom:14px">"여러분 이 좋은 학원 한번 가보세요~ 강서구 ○○학원..."</p>
+      <p style="padding:10px 12px;background:white;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:var(--font-sm);line-height:1.5;margin-bottom:var(--spacing-md)">"여러분 이 좋은 학원 한번 가보세요~ 강서구 ○○학원..."</p>
       <div class="label">지금 투표 (응답 전 결과 비공개)</div>
-      <button class="btn btn-danger btn-block" style="margin-bottom:8px">🔴 강제 탈퇴</button>
-      <button class="btn btn-secondary btn-block">🟢 한 번 더 기회</button>
-      <p style="font-size:11px;color:var(--mute);text-align:center;margin-top:14px">현재 47명 중 28명 응답 (목표 30%)</p>
+      <button class="btn btn-danger btn-block" style="margin-bottom:var(--spacing-sm)"><i data-lucide="x-circle"></i>강제 탈퇴</button>
+      <button class="btn btn-secondary btn-block"><i data-lucide="rotate-ccw"></i>한 번 더 기회</button>
+      <p style="font-size:var(--font-xs);color:var(--text-muted);text-align:center;margin-top:var(--spacing-md)">현재 47명 중 28명 응답 (목표 30%)</p>
     </div>
   </div></div>
 
-  <!-- 회복의 길 -->
   <div class="frame"><div class="frame-meta"><span class="id">FUN-4</span><span class="name">회복의 길</span></div><div class="phone">
-    <div class="statusbar"><span class="back">←</span><h2>회복의 길</h2><span></span></div>
-    <div class="content" style="text-align:center;padding-top:30px">
-      <div style="font-size:50px;margin-bottom:14px">🌱</div>
-      <h3 style="font-size:18px;font-weight:800;margin-bottom:10px">15일 무위반</h3>
-      <p style="font-size:13px;color:var(--mute);line-height:1.6;margin-bottom:24px">잘 회복하고 있어요.<br>30일 무위반 시 옐로카드 1장 차감.</p>
-      <div style="background:var(--soft);padding:16px;border-radius:12px;margin-bottom:20px">
-        <p style="font-size:11px;color:var(--mute);margin-bottom:8px">진행도</p>
-        <div style="height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:8px"><div style="width:50%;height:100%;background:var(--success)"></div></div>
-        <p style="font-size:11px;color:var(--success);font-weight:700">15 / 30일</p>
+    <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>회복의 길</h2><span></span></div>
+    <div class="content" style="text-align:center;padding-top:var(--spacing-lg)">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--success-light) 0%, #BBF7D0 100%);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;margin:0 auto var(--spacing-md);color:var(--success)"><i data-lucide="sprout" style="width:40px;height:40px"></i></div>
+      <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:var(--spacing-sm)">15일 무위반</h3>
+      <p style="font-size:var(--font-md);color:var(--text-muted);line-height:1.6;margin-bottom:var(--spacing-lg)">잘 회복하고 있어요.<br>30일 무위반 시 옐로카드 1장 차감.</p>
+      <div style="background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+        <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:var(--spacing-sm)">진행도</p>
+        <div style="height:8px;background:var(--light-bg);border-radius:4px;overflow:hidden;margin-bottom:var(--spacing-sm)"><div style="width:50%;height:100%;background:var(--success)"></div></div>
+        <p style="font-size:var(--font-xs);color:var(--success);font-weight:700">15 / 30일</p>
       </div>
-      <p style="font-size:11px;color:var(--clay)">현재 옐로 보유: 2장<br>30일 후 → 1장</p>
+      <p style="font-size:var(--font-xs);color:var(--secondary)">현재 옐로 보유: 2장<br>30일 후 → 1장</p>
     </div>
   </div></div>
 
@@ -1463,10 +1706,14 @@ footer.foot {
 </div>
 
 <footer class="foot">
-  <p style="font-size:13px;margin-bottom:6px">심박 — 모임의 생사를 책임지는 곳</p>
-  <p>강팀(9명) 회의 13건 + 결정 12건 반영 · 정적 프로토타입 · 2026-05-22</p>
-  <p style="margin-top:12px;opacity:0.6">검토 후 R1 구현으로 진행. 인터랙션·실제 데이터 연결은 다음 단계.</p>
+  <p>심박 — 모임의 생사를 책임지는 곳</p>
+  <p>강팀(9명) 회의 13건 + 결정 12건 반영 · Crowny Class 디자인 시스템 · 2026-05-22</p>
+  <p style="margin-top:var(--spacing-md);opacity:0.85">검토 후 코드 구현으로 진행. 인터랙션·실제 데이터 연결은 다음 단계.</p>
 </footer>
 
+<script>
+  // Lucide 아이콘 초기화
+  lucide.createIcons();
+</script>
 </body>
 </html>
