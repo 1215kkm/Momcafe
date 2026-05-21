@@ -17,29 +17,33 @@
   --secondary-light: #FBCFE8;     /* Pink 200 — 더 부드러운 핑크 */
   --gradient: linear-gradient(135deg, #A78BFA 0%, #F4A6C7 100%);
 
-  /* ===== 다크 (살짝 보라 기운, 차가운 검정 회피) ===== */
-  --dark-bg: #2A2538;
-  --dark-secondary: #251F32;
-  --dark-tertiary: #3A3349;
-  --dark-border: #4A4259;
+  /* ━━━ 다크모드 ━━━
+     주의: 변수 이름은 'light-*' 그대로 두되 값은 다크로.
+     라벤더 그라데이션과 어울리는 보라 기운 다크 베이스. */
 
-  /* ===== 라이트 (오프-화이트, 눈 부드러움) ===== */
-  --light-bg: #FAFAFC;             /* 차가운 회색 → 따뜻한 오프화이트 */
-  --light-card: #FFFFFF;
-  --light-border: #EDEDF2;
-  --light-hover: #F4F4F8;
+  /* 페이지·카드 다크 (눈 안 부심, 라벤더 톤 보존) */
+  --light-bg: #1A1726;             /* 페이지 배경 — 보라 기운 다크 */
+  --light-card: #252136;           /* 카드 배경 */
+  --light-border: #3A3349;         /* 보더 — 살짝 보임 */
+  --light-hover: #2D2840;          /* 호버 */
 
-  /* ===== 텍스트 — 진검정 회피 ===== */
+  /* 다크 영역 추가 토큰 */
+  --dark-bg: #14111F;              /* 풀스크린·사이드바 — 더 진한 다크 */
+  --dark-secondary: #1A1726;
+  --dark-tertiary: #2D2840;
+  --dark-border: #3A3349;
+
+  /* 텍스트 — 다크 배경 위 밝은 톤 (순백 회피, 부드러움) */
   --text-primary: #FFFFFF;
-  --text-dark: #2D3748;            /* #1F2937 → #2D3748 (덜 진함) */
-  --text-secondary: #A0AEC0;
-  --text-muted: #718096;           /* #6B7280 → #718096 (덜 차가움) */
+  --text-dark: #F1F5F9;            /* 본문 — 오프화이트 */
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;           /* 캡션·보조 */
 
-  /* ===== 상태 — 비비드 회피 (소프트 톤) ===== */
-  --success: #68D391;  --success-light: #E6FFFA;
-  --warning: #F6AD55;  --warning-light: #FEF5E7;
-  --error:   #FC8181;  --error-light:   #FED7D7;
-  --info:    #63B3ED;  --info-light:    #EBF8FF;
+  /* 상태 — 다크에서도 보이는 소프트 톤 (light 변형은 darker로) */
+  --success: #68D391;  --success-light: #2A4A3A;
+  --warning: #F6AD55;  --warning-light: #4A3A20;
+  --error:   #FC8181;  --error-light:   #4A2A2A;
+  --info:    #63B3ED;  --info-light:    #1F3A5A;
 
   /* ===== 모서리 ===== */
   --radius-sm: 6px;
@@ -49,12 +53,12 @@
   --radius-2xl: 20px;
   --radius-full: 9999px;
 
-  /* ===== 그림자 — 더 흐릿하게, 큰 블러 ===== */
-  --shadow-sm: 0 1px 3px rgba(45, 55, 72, 0.04);
-  --shadow-md: 0 4px 12px rgba(45, 55, 72, 0.06);
-  --shadow-lg: 0 12px 24px rgba(45, 55, 72, 0.08);
-  --shadow-xl: 0 24px 40px rgba(45, 55, 72, 0.12);
-  --shadow-primary: 0 6px 20px rgba(167, 139, 250, 0.28);
+  /* 그림자 — 다크 배경엔 더 진한 alpha (위계 확보) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.20);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 24px 40px rgba(0, 0, 0, 0.50);
+  --shadow-primary: 0 6px 24px rgba(167, 139, 250, 0.40);
 
   /* ===== 간격 ===== */
   --spacing-xs: 4px;
@@ -293,7 +297,7 @@ body {
   padding: 10px 14px;
   border: 1px solid var(--light-border);
   border-radius: var(--radius-md);
-  background: white;
+  background: var(--light-card);
   font-size: var(--font-md);
   font-family: inherit;
   transition: 0.15s ease;
@@ -301,7 +305,7 @@ body {
 .input:focus, .textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(138, 56, 245, 0.12);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.30);
 }
 .textarea { min-height: 100px; resize: none; line-height: 1.6; }
 
@@ -363,7 +367,7 @@ body {
   display: flex;
   gap: var(--spacing-md);
   padding: var(--spacing-md);
-  background: white;
+  background: var(--light-card);
   border: 1px solid var(--light-border);
   border-radius: var(--radius-xl);
   margin-bottom: var(--spacing-sm);
@@ -454,8 +458,8 @@ body {
 
 /* 정체성 회복 카드 (보라톤 차분) */
 .identity-card {
-  background: linear-gradient(135deg, rgba(138, 56, 245, 0.08) 0%, rgba(213, 58, 107, 0.06) 100%);
-  border: 1px solid rgba(138, 56, 245, 0.15);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.14) 0%, rgba(244, 166, 199, 0.10) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.25);
   padding: 32px 20px;
   text-align: center;
   border-radius: var(--radius-xl);
@@ -552,7 +556,7 @@ body {
 
 /* 모듈 박스 */
 .module-box {
-  background: white;
+  background: var(--light-card);
   border: 1px solid var(--light-border);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
@@ -640,7 +644,7 @@ body {
 
 /* 푸시 카드 */
 .push-card {
-  background: white;
+  background: var(--light-card);
   border-radius: var(--radius-xl);
   padding: 14px var(--spacing-md);
   box-shadow: var(--shadow-lg);
@@ -714,7 +718,7 @@ body {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 88%;
-  background: white;
+  background: var(--light-card);
   border-radius: var(--radius-xl);
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-xl);
@@ -757,7 +761,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
   text-align: center;
   margin: var(--spacing-md) 0;
   padding: var(--spacing-md);
-  background: white;
+  background: var(--light-card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--light-border);
 }
@@ -1154,7 +1158,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
   <div class="frame"><div class="frame-meta"><span class="id">C01</span><span class="name">카페 홈</span></div><div class="phone">
     <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>강서구 7세 엄마</h2><span class="color-purple" style="font-weight:700"><i data-lucide="settings"></i></span></div>
     <div class="content">
-      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:var(--light-card);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
         <div style="width:52px;height:52px;border-radius:var(--radius-lg);background:var(--gradient);color:white;display:flex;align-items:center;justify-content:center;font-size:24px">👶</div>
         <div style="flex:1">
           <p style="font-weight:700;font-size:var(--font-md)"><span class="badge-genesis">Genesis</span>강서구 7세 엄마</p>
@@ -1173,7 +1177,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
       </div>
 
       <div class="label">게시판</div>
-      <ul class="board-list" style="background:white;border:1px solid var(--light-border);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md)">
+      <ul class="board-list" style="background:var(--light-card);border:1px solid var(--light-border);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md)">
         <li><div class="left"><i data-lucide="pin"></i>공지</div><span class="count">5</span></li>
         <li><div class="left"><i data-lucide="message-square"></i>자유</div><span class="count">47</span></li>
         <li><div class="left"><i data-lucide="help-circle"></i>질문</div><span class="count">23</span></li>
@@ -1407,7 +1411,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
     <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>오늘의 결정</h2><span></span></div>
     <div class="content">
       <h3 style="font-size:var(--font-md);font-weight:700;line-height:1.4;margin-bottom:var(--spacing-md)">이번 주말 키즈카페 vs 도서관?</h3>
-      <div style="background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+      <div style="background:var(--light-card);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
         <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:10px">전체 응답 47명</p>
         <div style="margin-bottom:10px">
           <div style="display:flex;justify-content:space-between;font-size:var(--font-sm);margin-bottom:4px"><span style="font-weight:700">A. 키즈카페</span><span style="font-weight:700;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">62%</span></div>
@@ -1419,11 +1423,11 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
         </div>
       </div>
       <div class="label">한 줄 이유 TOP 5 (공감순)</div>
-      <div style="padding:10px 12px;background:white;border:1px solid var(--light-border);border-radius:var(--radius-md);margin-bottom:var(--spacing-sm);font-size:var(--font-sm)">
+      <div style="padding:10px 12px;background:var(--light-card);border:1px solid var(--light-border);border-radius:var(--radius-md);margin-bottom:var(--spacing-sm);font-size:var(--font-sm)">
         <p style="margin-bottom:6px">"비 와도 갈 수 있고 친구도 만남" — 수아맘</p>
         <div style="display:flex;gap:6px"><span class="chip" style="background:rgba(213,58,107,0.1);color:var(--secondary)">😊 +12</span></div>
       </div>
-      <div style="padding:10px 12px;background:white;border:1px solid var(--light-border);border-radius:var(--radius-md);margin-bottom:var(--spacing-sm);font-size:var(--font-sm)">
+      <div style="padding:10px 12px;background:var(--light-card);border:1px solid var(--light-border);border-radius:var(--radius-md);margin-bottom:var(--spacing-sm);font-size:var(--font-sm)">
         <p style="margin-bottom:6px">"독서 습관 들이고 싶어요" — 민지</p>
         <div style="display:flex;gap:6px"><span class="chip" style="background:rgba(213,58,107,0.1);color:var(--secondary)">😊 +9</span></div>
       </div>
@@ -1431,8 +1435,8 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
     </div>
   </div></div>
 
-  <div class="frame"><div class="frame-meta"><span class="id">PUSH</span><span class="name">24h 후 결과 푸시</span></div><div class="phone" style="background:linear-gradient(180deg, #C7D2FE 0%, #A5B4FC 100%)">
-    <div class="statusbar" style="background:transparent;border:0"><span></span><span style="font-size:var(--font-xs);color:#3730A3;font-weight:600">오전 8:00</span><span></span></div>
+  <div class="frame"><div class="frame-meta"><span class="id">PUSH</span><span class="name">24h 후 결과 푸시</span></div><div class="phone" style="background:linear-gradient(180deg, #1E1B3A 0%, #14111F 100%)">
+    <div class="statusbar" style="background:transparent;border:0"><span></span><span style="font-size:var(--font-xs);color:var(--primary-light);font-weight:600">오전 8:00</span><span></span></div>
     <div class="content" style="padding-top:40px">
       <div class="push-card">
         <div class="app-icon">심</div>
@@ -1448,7 +1452,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
           <p class="text">박지영님, 어제 한 결정을 평가해주세요 →</p>
         </div>
       </div>
-      <p style="text-align:center;font-size:var(--font-xs);color:#3730A3;opacity:0.7;margin-top:var(--spacing-md);font-weight:600">탭해서 평가</p>
+      <p style="text-align:center;font-size:var(--font-xs);color:var(--primary-light);opacity:0.7;margin-top:var(--spacing-md);font-weight:600">탭해서 평가</p>
     </div>
   </div></div>
 
@@ -1481,10 +1485,10 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
     </div>
   </div></div>
 
-  <div class="frame"><div class="frame-meta"><span class="id">S16</span><span class="name">내일의 나에게 메모</span></div><div class="phone" style="background:linear-gradient(180deg, #FCE7F3 0%, #FBCFE8 100%)">
+  <div class="frame"><div class="frame-meta"><span class="id">S16</span><span class="name">내일의 나에게 메모</span></div><div class="phone" style="background:linear-gradient(180deg, #2D1A2A 0%, #14111F 100%)">
     <div class="statusbar" style="background:transparent;border:0"><span class="back"><i data-lucide="arrow-left"></i></span><h2 class="color-pink"><i data-lucide="mail" style="width:16px;height:16px;display:inline;margin-right:4px"></i>내일의 나에게</h2><span></span></div>
     <div class="content">
-      <div style="background:white;padding:12px 14px;border-radius:var(--radius-lg);font-size:var(--font-sm);margin-bottom:var(--spacing-lg);display:flex;gap:8px"><i data-lucide="lightbulb" style="width:16px;height:16px;color:var(--secondary);flex-shrink:0;margin-top:2px"></i><span>어제 키즈카페를 골랐는데 <strong>후회</strong>하셨네요.<br>내일 같은 결정을 할 사람에게 메모를 남겨주세요.</span></div>
+      <div style="background:var(--light-card);padding:12px 14px;border-radius:var(--radius-lg);font-size:var(--font-sm);margin-bottom:var(--spacing-lg);display:flex;gap:8px"><i data-lucide="lightbulb" style="width:16px;height:16px;color:var(--secondary);flex-shrink:0;margin-top:2px"></i><span>어제 키즈카페를 골랐는데 <strong>후회</strong>하셨네요.<br>내일 같은 결정을 할 사람에게 메모를 남겨주세요.</span></div>
       <div class="label">제목 (자동)</div>
       <input class="input" value="[내일 키즈카페 갈 강서구 7세 엄마에게]" readonly style="margin-bottom:var(--spacing-md)">
       <div class="label">후회한 점 (1줄)</div>
@@ -1533,7 +1537,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
     <div class="content">
       <div class="bg-soft" style="margin-bottom:var(--spacing-md);font-size:var(--font-xs);color:var(--text-muted);display:flex;gap:6px"><i data-lucide="clock" style="width:14px;height:14px;color:var(--info);flex-shrink:0"></i>모임 동네 시간 기준 (강서구 시간)</div>
       <div class="label">시간 윈도우</div>
-      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+      <div style="display:flex;align-items:center;gap:var(--spacing-md);background:var(--light-card);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
         <div style="width:48px;height:48px;background:var(--gradient);color:white;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center"><i data-lucide="clock" style="width:24px;height:24px"></i></div>
         <div style="flex:1">
           <p style="font-weight:700;font-size:var(--font-lg)">오후 3:00</p>
@@ -1679,7 +1683,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
         <p style="font-size:var(--font-xs);color:var(--text-dark)">광고남님이 옐로카드 2장 누적된 상태에서 추가 위반. 운영자 단독 강퇴 불가. 멤버 30%+ 찬성이 필요해요.</p>
       </div>
       <div class="label">위반 글</div>
-      <p style="padding:10px 12px;background:white;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:var(--font-sm);line-height:1.5;margin-bottom:var(--spacing-md)">"여러분 이 좋은 학원 한번 가보세요~ 강서구 ○○학원..."</p>
+      <p style="padding:10px 12px;background:var(--light-card);border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:var(--font-sm);line-height:1.5;margin-bottom:var(--spacing-md)">"여러분 이 좋은 학원 한번 가보세요~ 강서구 ○○학원..."</p>
       <div class="label">지금 투표 (응답 전 결과 비공개)</div>
       <button class="btn btn-danger btn-block" style="margin-bottom:var(--spacing-sm)"><i data-lucide="x-circle"></i>강제 탈퇴</button>
       <button class="btn btn-secondary btn-block"><i data-lucide="rotate-ccw"></i>한 번 더 기회</button>
@@ -1690,10 +1694,10 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
   <div class="frame"><div class="frame-meta"><span class="id">FUN-4</span><span class="name">회복의 길</span></div><div class="phone">
     <div class="statusbar"><span class="back"><i data-lucide="arrow-left"></i></span><h2>회복의 길</h2><span></span></div>
     <div class="content" style="text-align:center;padding-top:var(--spacing-lg)">
-      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--success-light) 0%, #BBF7D0 100%);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;margin:0 auto var(--spacing-md);color:var(--success)"><i data-lucide="sprout" style="width:40px;height:40px"></i></div>
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, #2A4A3A 0%, #1F3D2A 100%);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;margin:0 auto var(--spacing-md);color:var(--success)"><i data-lucide="sprout" style="width:40px;height:40px"></i></div>
       <h3 style="font-size:var(--font-xl);font-weight:800;margin-bottom:var(--spacing-sm)">15일 무위반</h3>
       <p style="font-size:var(--font-md);color:var(--text-muted);line-height:1.6;margin-bottom:var(--spacing-lg)">잘 회복하고 있어요.<br>30일 무위반 시 옐로카드 1장 차감.</p>
-      <div style="background:white;padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
+      <div style="background:var(--light-card);padding:var(--spacing-md);border-radius:var(--radius-lg);margin-bottom:var(--spacing-md);border:1px solid var(--light-border)">
         <p style="font-size:var(--font-xs);color:var(--text-muted);margin-bottom:var(--spacing-sm)">진행도</p>
         <div style="height:8px;background:var(--light-bg);border-radius:4px;overflow:hidden;margin-bottom:var(--spacing-sm)"><div style="width:50%;height:100%;background:var(--success)"></div></div>
         <p style="font-size:var(--font-xs);color:var(--success);font-weight:700">15 / 30일</p>
