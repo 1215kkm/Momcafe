@@ -63,11 +63,11 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
 
-  /* ===== 폰트 — 기본 본문 16px 보장 ===== */
-  --font-xs: 12px;                 /* 캡션·작은 라벨 (최소) */
-  --font-sm: 14px;                 /* 보조 텍스트 */
-  --font-md: 16px;                 /* ✅ 본문 기본 (사용자 지시) */
-  --font-lg: 18px;                 /* 강조 본문·사이드바 */
+  /* ===== 폰트 — 전부 16px 이상 보장 (사용자 지시) ===== */
+  --font-xs: 16px;                 /* 최소 = 16px */
+  --font-sm: 16px;                 /* 보조도 16 */
+  --font-md: 16px;                 /* ✅ 본문 기본 */
+  --font-lg: 18px;                 /* 강조 본문 */
   --font-xl: 20px;                 /* 카드 제목 */
   --font-2xl: 24px;                /* 섹션 제목·H2 */
   --font-3xl: 30px;                /* 페이지 H1 */
@@ -418,7 +418,7 @@ body {
 .cafe-foot .heart strong { font-size: var(--font-md); }
 .badge-genesis {
   display: inline-block;
-  font-size: 9px;
+  font-size: 16px;
   font-weight: 700;
   background: var(--gradient);
   color: white;
@@ -523,7 +523,7 @@ body {
   align-items: end;
   padding: 6px;
   color: white;
-  font-size: 9px;
+  font-size: 16px;
 }
 .settlog-cell::before {
   content: "▶";
@@ -699,7 +699,7 @@ body {
 }
 .role-pill {
   display: inline-block;
-  font-size: 9px;
+  font-size: 16px;
   font-weight: 700;
   padding: 2px 6px;
   border-radius: var(--radius-sm);
@@ -1280,7 +1280,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
         <p class="meta"><span>지호맘</span><span>·</span><span>2시간 전</span><span class="temp-hot"><i data-lucide="flame"></i>뜨거움</span><span><i data-lucide="message-circle"></i>12</span></p>
       </div>
       <div class="post-card">
-        <p class="title">이번 주말 키즈카페 vs 도서관 <span class="chip" style="font-size:12px;padding:2px 8px">투표중</span></p>
+        <p class="title">이번 주말 키즈카페 vs 도서관 <span class="chip" style="font-size:16px;padding:2px 8px">투표중</span></p>
         <p class="summary">A 키즈카페 · B 도서관 — 한 줄 이유 받습니다</p>
         <p class="meta"><span>민지</span><span>·</span><span>4시간 전</span><span><i data-lucide="check-circle"></i>응답 23</span></p>
       </div>
@@ -1315,7 +1315,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
       </div>
       <div class="label">댓글 12</div>
       <div style="padding:var(--spacing-sm) 0;border-bottom:1px solid var(--light-border);font-size:var(--font-sm)">
-        <p style="font-weight:600;margin-bottom:4px">민지<span class="chip" style="font-size:9px;padding:1px 6px;margin-left:6px;background:var(--gradient);color:white">+공감</span></p>
+        <p style="font-weight:600;margin-bottom:4px">민지<span class="chip" style="font-size:16px;padding:1px 6px;margin-left:6px;background:var(--gradient);color:white">+공감</span></p>
         <p>저는 학원 안 보내고 책으로 했는데 6살부터 시작했어요</p>
       </div>
       <div style="padding:var(--spacing-sm) 0;border-bottom:1px solid var(--light-border);font-size:var(--font-sm)">
