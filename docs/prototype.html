@@ -8,38 +8,38 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root {
-  /* ===== 브랜드 (Crowny Class) ===== */
-  --primary: #8A38F5;
-  --primary-dark: #7030D4;
-  --primary-light: #A855F7;
-  --primary-rgb: 138, 56, 245;
-  --secondary: #D53A6B;
-  --secondary-light: #F472B6;
-  --gradient: linear-gradient(135deg, #8A38F5 0%, #D53A6B 100%);
+  /* ===== 브랜드 — 부드러운 라벤더·핑크 (눈 안 아픈 톤) ===== */
+  --primary: #A78BFA;            /* Lavender 400 — 차분한 보라 */
+  --primary-dark: #8B5CF6;        /* Violet 500 — 호버·눌림 */
+  --primary-light: #C4B5FD;       /* Violet 300 — 보조 강조·배지 */
+  --primary-rgb: 167, 139, 250;
+  --secondary: #F4A6C7;            /* Dusty Pink — 부드러운 분홍 */
+  --secondary-light: #FBCFE8;     /* Pink 200 — 더 부드러운 핑크 */
+  --gradient: linear-gradient(135deg, #A78BFA 0%, #F4A6C7 100%);
 
-  /* ===== 다크 ===== */
-  --dark-bg: #1B1D21;
-  --dark-secondary: #1A1C22;
-  --dark-tertiary: #2B2D35;
-  --dark-border: #3D3D54;
+  /* ===== 다크 (살짝 보라 기운, 차가운 검정 회피) ===== */
+  --dark-bg: #2A2538;
+  --dark-secondary: #251F32;
+  --dark-tertiary: #3A3349;
+  --dark-border: #4A4259;
 
-  /* ===== 라이트 ===== */
-  --light-bg: #F3F4F6;
+  /* ===== 라이트 (오프-화이트, 눈 부드러움) ===== */
+  --light-bg: #FAFAFC;             /* 차가운 회색 → 따뜻한 오프화이트 */
   --light-card: #FFFFFF;
-  --light-border: #E5E7EB;
-  --light-hover: #F9FAFB;
+  --light-border: #EDEDF2;
+  --light-hover: #F4F4F8;
 
-  /* ===== 텍스트 ===== */
+  /* ===== 텍스트 — 진검정 회피 ===== */
   --text-primary: #FFFFFF;
-  --text-dark: #1F2937;
-  --text-secondary: #9CA3AF;
-  --text-muted: #6B7280;
+  --text-dark: #2D3748;            /* #1F2937 → #2D3748 (덜 진함) */
+  --text-secondary: #A0AEC0;
+  --text-muted: #718096;           /* #6B7280 → #718096 (덜 차가움) */
 
-  /* ===== 상태 ===== */
-  --success: #22C55E;  --success-light: #DCFCE7;
-  --warning: #F59E0B;  --warning-light: #FEF3C7;
-  --error:   #EF4444;  --error-light:   #FEE2E2;
-  --info:    #3B82F6;  --info-light:    #DBEAFE;
+  /* ===== 상태 — 비비드 회피 (소프트 톤) ===== */
+  --success: #68D391;  --success-light: #E6FFFA;
+  --warning: #F6AD55;  --warning-light: #FEF5E7;
+  --error:   #FC8181;  --error-light:   #FED7D7;
+  --info:    #63B3ED;  --info-light:    #EBF8FF;
 
   /* ===== 모서리 ===== */
   --radius-sm: 6px;
@@ -49,12 +49,12 @@
   --radius-2xl: 20px;
   --radius-full: 9999px;
 
-  /* ===== 그림자 ===== */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-  --shadow-lg: 0 10px 15px rgba(0,0,0,0.10);
-  --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
-  --shadow-primary: 0 4px 14px rgba(138, 56, 245, 0.35);
+  /* ===== 그림자 — 더 흐릿하게, 큰 블러 ===== */
+  --shadow-sm: 0 1px 3px rgba(45, 55, 72, 0.04);
+  --shadow-md: 0 4px 12px rgba(45, 55, 72, 0.06);
+  --shadow-lg: 0 12px 24px rgba(45, 55, 72, 0.08);
+  --shadow-xl: 0 24px 40px rgba(45, 55, 72, 0.12);
+  --shadow-primary: 0 6px 20px rgba(167, 139, 250, 0.28);
 
   /* ===== 간격 ===== */
   --spacing-xs: 4px;
@@ -63,22 +63,23 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
 
-  /* ===== 폰트 ===== */
-  --font-xs: 11px;
-  --font-sm: 13px;
-  --font-md: 14px;
-  --font-lg: 16px;
-  --font-xl: 18px;
-  --font-2xl: 24px;
-  --font-3xl: 28px;
+  /* ===== 폰트 — 기본 본문 16px 보장 ===== */
+  --font-xs: 12px;                 /* 캡션·작은 라벨 (최소) */
+  --font-sm: 14px;                 /* 보조 텍스트 */
+  --font-md: 16px;                 /* ✅ 본문 기본 (사용자 지시) */
+  --font-lg: 18px;                 /* 강조 본문·사이드바 */
+  --font-xl: 20px;                 /* 카드 제목 */
+  --font-2xl: 24px;                /* 섹션 제목·H2 */
+  --font-3xl: 30px;                /* 페이지 H1 */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
+html { font-size: 16px; }
+body {
   font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--light-bg);
   color: var(--text-dark);
-  line-height: 1.6;
-  font-size: var(--font-md);
+  line-height: 1.65;
+  font-size: var(--font-md);   /* 16px — 본문 기본 */
   -webkit-font-smoothing: antialiased;
   word-break: keep-all;
 }
@@ -514,7 +515,7 @@ html, body {
 }
 .settlog-cell {
   aspect-ratio: 3/4;
-  background: linear-gradient(135deg, #6B7280 0%, #1F2937 100%);
+  background: linear-gradient(135deg, #A0AEC0 0%, #4A4259 100%);
   border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
@@ -956,7 +957,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
       </div>
 
       <div class="cafe-card">
-        <div class="cafe-logo" style="background:#A855F7">✏️</div>
+        <div class="cafe-logo" style="background:#C4B5FD">✏️</div>
         <div class="cafe-body">
           <ul class="cafe-preview">
             <li><i data-lucide="newspaper"></i><span>프리랜서 복귀 고민</span></li>
@@ -1001,7 +1002,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
 
       <div class="label">가입한 모임 (3)</div>
       <div class="cafe-card"><div class="cafe-logo" style="background:#0D9488">🌱</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">강서구 비건 엄마</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>19</strong></span></div></div></div>
-      <div class="cafe-card"><div class="cafe-logo" style="background:#A855F7">✏️</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">디자이너 출신 엄마</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>47</strong></span></div></div></div>
+      <div class="cafe-card"><div class="cafe-logo" style="background:#C4B5FD">✏️</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">디자이너 출신 엄마</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>47</strong></span></div></div></div>
       <div class="cafe-card"><div class="cafe-logo" style="background:#92400E">🥾</div><div class="cafe-body"><div class="cafe-foot" style="border-top:0;padding-top:0"><span class="name">서울 등산 동호회</span><span class="heart"><i data-lucide="heart-pulse"></i><strong>62</strong></span></div></div></div>
     </div>
   </div></div>
@@ -1233,7 +1234,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
       </div>
       <div class="label" style="margin-top:var(--spacing-md)">일반 멤버 (85)</div>
       <div class="member-row">
-        <div class="member-avatar" style="background:#A855F7">지</div>
+        <div class="member-avatar" style="background:#C4B5FD">지</div>
         <div style="flex:1"><p style="font-weight:600">지호맘</p><p style="font-size:var(--font-xs);color:var(--text-muted)">예전 광고기획자</p></div>
         <span class="chip" style="background:var(--warning-light);color:var(--warning);font-weight:700">옐로 1</span>
       </div>
@@ -1279,7 +1280,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
         <p class="meta"><span>지호맘</span><span>·</span><span>2시간 전</span><span class="temp-hot"><i data-lucide="flame"></i>뜨거움</span><span><i data-lucide="message-circle"></i>12</span></p>
       </div>
       <div class="post-card">
-        <p class="title">이번 주말 키즈카페 vs 도서관 <span class="chip" style="font-size:10px;padding:1px 6px">투표중</span></p>
+        <p class="title">이번 주말 키즈카페 vs 도서관 <span class="chip" style="font-size:12px;padding:2px 8px">투표중</span></p>
         <p class="summary">A 키즈카페 · B 도서관 — 한 줄 이유 받습니다</p>
         <p class="meta"><span>민지</span><span>·</span><span>4시간 전</span><span><i data-lucide="check-circle"></i>응답 23</span></p>
       </div>
@@ -1303,7 +1304,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
       <h3 style="font-size:var(--font-xl);font-weight:700;line-height:1.4;margin-bottom:var(--spacing-sm)">7세 한글 떼기 어떻게 했나요?</h3>
       <p style="font-size:var(--font-sm);color:var(--text-muted);background:var(--light-bg);padding:10px 12px;border-radius:var(--radius-md);margin-bottom:var(--spacing-md)"><i data-lucide="file-text" style="width:13px;height:13px;display:inline;margin-right:4px"></i>아이가 한글 떼기 싫어해서 도움 요청</p>
       <div style="display:flex;align-items:center;gap:var(--spacing-sm);margin-bottom:var(--spacing-md)">
-        <div class="member-avatar" style="width:32px;height:32px;background:#A855F7;font-size:var(--font-sm)">지</div>
+        <div class="member-avatar" style="width:32px;height:32px;background:#C4B5FD;font-size:var(--font-sm)">지</div>
         <div><p style="font-size:var(--font-sm);font-weight:600">지호맘</p><p style="font-size:var(--font-xs);color:var(--text-muted)">2시간 전</p></div>
       </div>
       <p style="font-size:var(--font-md);line-height:1.7;margin-bottom:var(--spacing-lg)">우리 아이는 한글에 관심이 1도 없어요. 7살인데 ㅁ도 못 알아봐요. 다른 엄마들은 어떻게 떼셨는지 진심으로 궁금합니다. 학원? 책? 그냥 기다리기?</p>
@@ -1470,7 +1471,7 @@ footer.foot p:first-child { font-size: var(--font-md); font-weight: 700; margin-
         </div>
       </div>
       <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)">
-        <div class="member-avatar" style="width:32px;height:32px;font-size:var(--font-sm);background:#A855F7">이</div>
+        <div class="member-avatar" style="width:32px;height:32px;font-size:var(--font-sm);background:#C4B5FD">이</div>
         <div style="flex:1">
           <p style="font-size:var(--font-md);color:#C4B5FD;font-weight:700;margin-bottom:2px">이미라 — 예전 출판사 편집자</p>
           <p style="font-size:var(--font-sm);line-height:1.5">우리 같은 분야였네요...</p>
