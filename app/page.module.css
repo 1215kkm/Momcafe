@@ -1,0 +1,280 @@
+.main {
+  min-height: 100dvh;
+  padding-bottom: var(--sp-7);
+}
+
+/* ━━━ 상단 바 ━━━ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding-top: var(--safe-top);
+}
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.logo {
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  color: var(--moss);
+  letter-spacing: -1px;
+}
+.headerActions {
+  display: flex;
+  gap: var(--sp-3);
+}
+.iconBtn {
+  font-size: var(--fs-small);
+  color: var(--mute);
+  padding: var(--sp-2) var(--sp-3);
+}
+
+/* ━━━ 오늘의 모임 결정 ━━━ */
+.dailyDecision {
+  margin-top: var(--sp-5);
+  padding: var(--sp-5);
+  background: linear-gradient(135deg, var(--moss-dark) 0%, var(--moss) 100%);
+  color: var(--paper);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.dailyBadge {
+  display: inline-block;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: 999px;
+  margin-bottom: var(--sp-3);
+}
+.dailyTitle {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: var(--sp-2);
+}
+.dailySub {
+  font-size: var(--fs-small);
+  opacity: 0.85;
+  margin-bottom: var(--sp-4);
+}
+
+/* ━━━ 내 모임 카루셀 ━━━ */
+.mySection {
+  margin-top: var(--sp-6);
+}
+.sectionTitle {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--mute);
+  letter-spacing: 0.5px;
+  margin-bottom: var(--sp-3);
+  text-transform: uppercase;
+}
+.myList {
+  display: flex;
+  gap: var(--sp-3);
+  overflow-x: auto;
+  padding-bottom: var(--sp-2);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.myList::-webkit-scrollbar { display: none; }
+
+.myCardAdd {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-md);
+  border: 2px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: var(--fs-caption);
+  color: var(--mute);
+}
+.addIcon {
+  font-size: 24px;
+  color: var(--moss);
+}
+.myCardEmpty {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-4);
+  color: var(--mute);
+  font-size: var(--fs-small);
+}
+
+/* ━━━ 필터 ━━━ */
+.filters {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-5);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.filters::-webkit-scrollbar { display: none; }
+.filterChip {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 0 var(--sp-3);
+  border-radius: 999px;
+  background: var(--soft);
+  font-size: var(--fs-small);
+  color: var(--mute);
+  white-space: nowrap;
+}
+.filterChip strong {
+  color: var(--ink);
+  margin: 0 var(--sp-1);
+}
+
+/* ━━━ 모임 카드 (A안 — 사용자 명시) ━━━ */
+.cafeList {
+  margin-top: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.cafeCard {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.cafeCard:hover {
+  border-color: var(--card-accent, var(--moss));
+  box-shadow: var(--shadow-sm);
+}
+
+.cafeLogo {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  background: var(--card-accent, var(--moss));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.cafeBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.previewList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.previewItem {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+.previewIcon {
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.previewText {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cafeMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--sp-1);
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--line);
+}
+.cafeName {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.heartbeat {
+  flex-shrink: 0;
+  font-size: var(--fs-small);
+  color: var(--warn);
+  margin-left: var(--sp-2);
+}
+.heartbeat strong {
+  font-size: var(--fs-body);
+}
+
+.genesisBadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--clay);
+  color: white;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-right: var(--sp-1);
+  letter-spacing: 0.5px;
+}
+
+/* ━━━ 결핍 카드 ━━━ */
+.gapCard {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+  padding: var(--sp-4);
+  background: var(--clay-light);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--clay);
+}
+.gapIcon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.gapTitle {
+  font-weight: 600;
+  margin-bottom: var(--sp-1);
+  line-height: 1.4;
+}
+.gapBody {
+  font-size: var(--fs-small);
+  color: var(--mute);
+  margin-bottom: var(--sp-3);
+  line-height: 1.5;
+}
+
+/* ━━━ 푸터 ━━━ */
+.foot {
+  margin-top: var(--sp-7);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--mute);
+  font-size: var(--fs-small);
+  line-height: 1.8;
+}
