@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>심박 — 멀티 카페 플랫폼 기획안 · 강팀 회의록</title>
+<style>
+:root {
+  --moss: #3D5A47;
+  --clay: #C36B3C;
+  --paper: #FAFAF7;
+  --ink: #1F2A24;
+  --line: #E4E4DD;
+  --soft: #F4F4EE;
+  --mute: #6B7280;
+  --warn: #A65A4A;
+  /* 강팀 캐릭터별 색 */
+  --pm: #2563EB;
+  --abang: #C36B3C;
+  --advisor: #6B7280;
+  --ux: #0D9488;
+  --ui: #7C3AED;
+  --dev: #92400E;
+  --qa: #B91C1C;
+  --mkt: #BE185D;
+  --sec: #1F2937;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 880px; margin: 0 auto; padding: 24px 20px 80px; }
+header.hero {
+  border-bottom: 3px solid var(--moss);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+}
+header.hero .logo {
+  display: inline-block;
+  background: var(--moss);
+  color: var(--paper);
+  font-size: 28px; font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 6px;
+  letter-spacing: -0.5px;
+}
+header.hero .subtitle {
+  margin: 14px 0 6px;
+  font-size: 18px;
+  color: var(--mute);
+}
+header.hero h1 {
+  margin: 8px 0 12px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+header.hero .meta {
+  font-size: 14px; color: var(--mute);
+}
+header.hero .meta strong { color: var(--clay); }
+
+nav.toc {
+  background: var(--soft);
+  border-left: 4px solid var(--moss);
+  padding: 18px 22px;
+  margin: 32px 0;
+  border-radius: 0 8px 8px 0;
+}
+nav.toc h2 { font-size: 16px; margin: 0 0 12px; color: var(--moss); }
+nav.toc ol { margin: 0; padding-left: 18px; font-size: 15px; }
+nav.toc ol li { margin: 4px 0; }
+nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted transparent; }
+nav.toc a:hover { border-bottom-color: var(--clay); }
+
+section.block { margin: 56px 0; }
+section.block h2 {
+  font-size: 24px; font-weight: 800;
+  border-bottom: 2px solid var(--moss);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+section.block h3 {
+  font-size: 19px; font-weight: 700;
+  margin-top: 28px;
+  color: var(--moss);
+}
+section.block p { margin: 10px 0; }
+section.block ul, section.block ol { padding-left: 22px; }
+section.block li { margin: 4px 0; }
+section.block code {
+  background: var(--soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--warn);
+}
+section.block pre {
+  background: var(--ink);
+  color: #E6E1D2;
+  padding: 16px 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+}
+section.block pre code { background: transparent; color: inherit; padding: 0; }
+section.block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+section.block table th {
+  background: var(--moss);
+  color: var(--paper);
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+}
+section.block table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+section.block table tr:nth-child(even) td { background: var(--soft); }
+section.block table td strong { color: var(--clay); }
+
+/* 강조 박스 */
+.callout {
+  background: #FFF8EC;
+  border-left: 4px solid var(--clay);
+  padding: 14px 18px;
+  margin: 18px 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 15px;
+}
+.callout strong { color: var(--clay); }
+
+.constitution {
+  background: var(--soft);
+  padding: 18px 22px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.constitution ol { padding-left: 20px; }
+.constitution li { margin: 8px 0; }
+.constitution li strong { color: var(--moss); }
+
+/* 결정 분기 표 강조 */
+.q-row td:first-child {
+  font-weight: 700;
+  color: var(--moss);
+  width: 60px;
+}
+
+/* ━━━ 채팅 회의록 ━━━ */
+.meeting {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0;
+  margin: 24px 0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.meeting-header {
+  background: linear-gradient(135deg, var(--moss) 0%, #2D4A37 100%);
+  color: var(--paper);
+  padding: 16px 20px;
+}
+.meeting-header .num {
+  display: inline-block;
+  background: var(--clay);
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.meeting-header h3 {
+  margin: 4px 0 8px;
+  font-size: 17px;
+  color: white !important;
+  border: 0;
+}
+.meeting-header .info {
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+.meeting-header .info span { margin-right: 14px; }
+.meeting-body {
+  background: #F0EDE3;
+  padding: 16px 12px;
+}
+
+.msg {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  letter-spacing: -0.5px;
+}
+.bubble {
+  background: white;
+  border-radius: 0 12px 12px 12px;
+  padding: 8px 14px 10px;
+  max-width: 75%;
+  font-size: 14.5px;
+  line-height: 1.55;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+.bubble .name {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  display: block;
+}
+
+/* 캐릭터별 색 */
+.role-pm .avatar { background: var(--pm); }
+.role-pm .bubble .name { color: var(--pm); }
+.role-abang .avatar { background: var(--abang); }
+.role-abang .bubble { background: #FFF4E8; border: 1px solid #F2DCBE; }
+.role-abang .bubble .name { color: var(--abang); }
+.role-advisor .avatar { background: var(--advisor); }
+.role-advisor .bubble .name { color: var(--advisor); }
+.role-ux .avatar { background: var(--ux); }
+.role-ux .bubble .name { color: var(--ux); }
+.role-ui .avatar { background: var(--ui); }
+.role-ui .bubble .name { color: var(--ui); }
+.role-dev .avatar { background: var(--dev); }
+.role-dev .bubble .name { color: var(--dev); }
+.role-qa .avatar { background: var(--qa); }
+.role-qa .bubble .name { color: var(--qa); }
+.role-mkt .avatar { background: var(--mkt); }
+.role-mkt .bubble .name { color: var(--mkt); }
+.role-sec .avatar { background: var(--sec); }
+.role-sec .bubble .name { color: var(--sec); }
+
+footer.foot {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--mute);
+  text-align: center;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+  .wrap { padding: 16px 14px 60px; }
+  header.hero h1 { font-size: 24px; }
+  section.block h2 { font-size: 20px; }
+  .bubble { max-width: 80%; font-size: 14px; }
+  .avatar { width: 32px; height: 32px; font-size: 11px; }
+  section.block table { font-size: 13px; }
+  section.block pre { font-size: 11px; padding: 12px; }
+}
+
+/* 인쇄 */
+@media print {
+  body { background: white; }
+  .meeting { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="logo">심박</span>
+  <p class="subtitle">Heartbeat · 멀티 모임 플랫폼</p>
+  <h1>모임 생물학 — 카페의 생사를 책임지는 곳</h1>
+  <p class="meta">
+    프로젝트 기획안 · <strong>강팀</strong> 회의록 13건 ·
+    작성일 2026-05-21 · 작성자 강팀 (PM·아뱅·CEO보좌·UX·UI·개발·QA·마케터·보안)
+  </p>
+</header>
+
+<nav class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#identity">정체성·5계층 한눈에</a></li>
+    <li><a href="#decisions">결정 분기 12건 (강팀 추천 채택)</a></li>
+    <li><a href="#concept">컨셉 — 모임 생물학</a></li>
+    <li><a href="#constitution">헌법 6원칙</a></li>
+    <li><a href="#architecture">아키텍처 — secret-ad/apps/momcafe</a></li>
+    <li><a href="#boards">7+1 게시판·모듈 카탈로그</a></li>
+    <li><a href="#power">운영자 권력 + 견제 + 재미 8개</a></li>
+    <li><a href="#marketing">마케팅 4단계 로드맵</a></li>
+    <li><a href="#meetings">강팀 회의록 13건 (채팅)</a></li>
+  </ol>
+</nav>
+
+<!-- 1. 정체성 -->
+<section class="block" id="identity">
+<h2>1. 정체성 — 한눈에</h2>
+
+<div class="callout">
+<strong>네이버 카페·당근이 공간 임대업이면 우리는 모임 생물학이다.</strong>
+가입자는 살아있는 심박만 본다. 죽어가는 운영자는 처방을 받는다. 만들고 싶은 사람은 결핍 자극 + 씨앗 멤버로 만든다. 카페가 죽으면 장례식과 흡수가 일어난다.
+</div>
+
+<h3>피벗 요약</h3>
+<table>
+<tr><th>축</th><th>Before (1라운드)</th><th>After (피벗)</th></tr>
+<tr><td><strong>이름</strong></td><td>동네맘</td><td>심박 (Heartbeat)</td></tr>
+<tr><td><strong>정체성</strong></td><td>단일 동네 일일 의식 앱</td><td>누구나 카페 만드는 멀티 모임 플랫폼</td></tr>
+<tr><td><strong>4번째 안</strong></td><td>메인 기능</td><td>옵션 모듈 + 플랫폼 레벨 동시 가동</td></tr>
+<tr><td><strong>운영자</strong></td><td>우리가 큐레이션</td><td>유저가 자유 생성 (Owner / Co-Owner / Board Manager 위계)</td></tr>
+<tr><td><strong>코드베이스</strong></td><td>신규 0줄</td><td>secret-ad 모노레포의 apps/momcafe로 흡수 (3개월 → 0개월 단축)</td></tr>
+<tr><td><strong>셋로그</strong></td><td>참고 앱 (정신만 차용)</td><td>플랫폼 레벨 모듈 — 영상은 폰 저장 (메타만 서버)</td></tr>
+</table>
+
+<h3>수익 5종 — 광고 0</h3>
+<ol>
+<li><strong>운영자 SaaS</strong> — 심박·진단·처방·아이디어 4단계 (B2B 월 구독)</li>
+<li><strong>정체성 회복 프리미엄</strong> — 이름 회복실 무제한 (B2C 월 9,900원)</li>
+<li><strong>결정 데이터 외부 판매</strong> — 동네 가게·HR·교육·지자체 (리포트 단위)</li>
+<li><strong>장례식 흡수 모델</strong> — 죽은 카페 데이터 환금</li>
+<li><strong>거버넌스 SaaS</strong> — 아이디어 게시판 4단계 추적 (B2B)</li>
+</ol>
+</section>
+
+<!-- 2. 결정 분기 -->
+<section class="block" id="decisions">
+<h2>2. 결정 분기 12건 — 강팀 추천 그대로 채택</h2>
+<p>강팀이 사용자(CEO)에게 올린 12개의 분기. 강팀 추천안 <code>b · a · c · b · a · a · a · a · a · a · a · a</code> 그대로 채택됨.</p>
+<table>
+<tr><th>#</th><th>주제</th><th>채택안</th></tr>
+<tr class="q-row"><td>Q1</td><td>4번째 안 메커니즘 위치</td><td><strong>플랫폼 + 모듈 둘 다</strong></td></tr>
+<tr class="q-row"><td>Q2</td><td>MVP 게시판 조합</td><td><strong>4번째 안 3개 + 심박수 = 4개</strong></td></tr>
+<tr class="q-row"><td>Q3</td><td>강서구·3-7세 시범 운명</td><td><strong>강서구 1모임 Genesis 보존 + 자유 생성 허용</strong></td></tr>
+<tr class="q-row"><td>Q4</td><td>결제 시점</td><td><strong>정체성 프리미엄(월 9,900원)만 MVP, 데이터·SaaS는 v1.5</strong></td></tr>
+<tr class="q-row"><td>Q5</td><td>운영자 권한 견제 강도</td><td><strong>견제 4종 다 작동</strong> (아이디어 자동 채택·공개 로그·고백·사망 경고)</td></tr>
+<tr class="q-row"><td>Q6</td><td>마케팅 로드맵</td><td><strong>4단계 Phase 0→3 그대로</strong></td></tr>
+<tr class="q-row"><td>Q7</td><td>회원 관리 재미 요소</td><td><strong>재미 8개 + 자동 규칙 5개 다</strong></td></tr>
+<tr class="q-row"><td>Q8</td><td>비밀 무기 활용</td><td><strong>Public 전환 + 통합</strong> ✓ 완료</td></tr>
+<tr class="q-row"><td>Q9</td><td>코드베이스 통합 위치</td><td><strong>secret-ad/apps/momcafe</strong> (인프라·AI·Docker 재사용)</td></tr>
+<tr class="q-row"><td>Q10</td><td>서비스명</td><td><strong>"심박" (Heartbeat)</strong></td></tr>
+<tr class="q-row"><td>Q11</td><td>일반 게시판 기능 강도</td><td><strong>공통 7개 + 게시판별 특수 3개</strong></td></tr>
+<tr class="q-row"><td>Q12</td><td>셋로그 시간 단위</td><td><strong>모임 동네 시간 기준</strong></td></tr>
+</table>
+</section>
+
+<!-- 3. 컨셉 -->
+<section class="block" id="concept">
+<h2>3. 컨셉 — 모임 생물학</h2>
+
+<h3>네이버 카페가 진화하지 못한 진짜 이유</h3>
+<p>네이버 카페·당근의 본질은 <em>공간 제공자</em>다. "방을 줄게, 알아서 채워라." 모임이 만들어진 뒤엔 관여 안 한다. 결과:</p>
+<ul>
+<li>카페 99%가 <em>생성 → 며칠 활성 → 죽음</em> 사이클로 끝남</li>
+<li>운영자는 <em>왜 내 카페만 죽는지</em> 모름</li>
+<li>가입자는 <em>어느 카페가 진짜 살아있는지</em> 모름 (회원 30만 명이지만 죽은 카페에 낚임)</li>
+</ul>
+<p><strong>진짜 막힌 지점</strong>: 네이버 카페는 <em>카페의 생존</em>에 무관심. 우리가 끼어들 자리.</p>
+
+<h3>30~40대 엄마(타깃 #1)의 숨은 결핍 5</h3>
+<ol>
+<li><strong>사라진 1인칭</strong> — "○○맘"으로만 호명됨</li>
+<li><strong>판단 검증 결핍</strong> — 매일 수십 개 결정을 검증할 곳이 없음</li>
+<li><strong>시간 빈곤 + 인지 과부하</strong> — 5분 단위 멀티태스킹</li>
+<li><strong>죄책감 화폐</strong> — 모든 결정에 죄책감</li>
+<li><strong>수평 동료 부재</strong> — 같은 처지 친구를 새로 사귀기 어려움</li>
+</ol>
+
+<h3>강팀이 도입한 신규 심리 레버 2개</h3>
+<div class="callout">
+<strong>A. 대리 결정 (Decision Outsourcing)</strong> — 내가 결정하기 무서운 걸 집단의 판단으로 옮긴다. 매일의 결정을 집단 응답과 함께 → 죄책감·실패 책임 분산.
+</div>
+<div class="callout">
+<strong>B. 정체성 회복 (Identity Restoration)</strong> — "○○맘"이 아니라 결혼 전 직업·전공으로 호명되는 1분. 다른 어떤 앱도 못 주는 가치 → LTV 락인.
+</div>
+
+<h3>매일 들어오게 만드는 4중 조합</h3>
+<p>대리 결정(A) + 정체성 회복(B) + 호기심 갭(#11) + 인정(#2). 표준 12레버에 신규 2개를 더해 14레버 체계.</p>
+</section>
+
+<!-- 4. 헌법 -->
+<section class="block" id="constitution">
+<h2>4. 헌법 6원칙</h2>
+<div class="constitution">
+<ol>
+<li><strong>플랫폼은 게시판 위에 있다.</strong> 카페 안엔 게시판이 있고, 그 위에 심리 모듈을 카페가 켤 수 있다. <em>게시판 강화·검색·태그 단순 개선은 답이 아니다.</em></li>
+<li><strong>익명 + 정체성 회복은 카페별 옵션.</strong> 정체성 회복 모듈을 켠 카페만 결혼 전 직업·전공 호명. 기본은 닉네임. "○○맘" 호명은 전역 금지.</li>
+<li><strong>응답 전 결과 비공개 (커튼) — 결정 모듈에서만.</strong> 일반 게시판엔 해당 없음. 사회적 동조 편향 차단.</li>
+<li><strong>댓글권은 보상 — 심리 모듈에서.</strong> 공감 받은 한 줄 이유에만 댓글권. 일반 게시판은 자유 댓글.</li>
+<li><strong>수익은 광고가 아니다.</strong> 운영 SaaS / 정체성 프리미엄 / 데이터 자산 / 장례식 흡수 / 거버넌스 SaaS 5종.</li>
+<li><strong>영상은 폰에 산다.</strong> 셋로그 모듈의 영상은 폰에만 저장 + 메타만 서버. 사라짐이 <em>기능 약속</em>.</li>
+</ol>
+</div>
+</section>
+
+<!-- 5. 아키텍처 -->
+<section class="block" id="architecture">
+<h2>5. 아키텍처</h2>
+
+<h3>코드베이스 — secret-ad 모노레포에 흡수</h3>
+<pre><code>secret-ad/  (기존 모노레포, TypeScript + turbo 2.3 + npm workspaces)
+  apps/
+    web/        ← 기존 (secretAD 웹, Next.js, port 3000)
+    api/        ← 기존 (NestJS 백엔드, port 3001) — 심박 API 확장
+    desktop/    ← 기존 (Electron) — 운영자 SEO·심박 대시보드로 진화
+    momcafe/    ← 신규 (심박 프론트)
+  packages/
+    ai-services/    ← 기존 (OpenAI/Claude/Ollama 멀티 모델)
+    database/       ← 기존 + 신규 스키마 (모임·게시판·결정·심박·정체성·셋로그)
+    shared/         ← 기존
+    momcafe-core/   ← 신규 (심박 도메인 로직)
+  docker-compose.yml  ← Postgres 5432 + Redis 6379 + 심박 서비스 포트 3002</code></pre>
+
+<h3>앱 최상위 IA — 3탭</h3>
+<pre><code>[발견]                       [알림]                  [나]
+  ├ D01 발견 홈                ├ 가입 모임 활동         ├ 마이페이지
+  ├ D02 내 모임 전체           ├ 모듈 응답·결과         ├ 정체성 정보
+  ├ D03 검색                  ├ 운영 알림 (운영자)     ├ 설정
+  ├ D04 필터 상세              └ 시스템 (사망 경고 등)   └ 결제·구독
+  ├ D05 0건 결핍 카드
+  ├ D06 오늘의 모임 결정 (매일 19시)
+  └ D07 결핍 카드</code></pre>
+
+<h3>카페 내부 (C01)</h3>
+<pre><code>┌─────────────────────────────────────────────┐
+│ ← 강서구 7세 엄마 모임          ⚙ (운영자)   │
+│ 심박: ▲▲▲▲▲ 32 (지난 24h)                  │
+│                                              │
+│ ┌─[📹 지금 모임 동시 영상] ─ 셋로그 모듈──┐  │  ← 상시 가동
+│ │  ▶ 오후 3시 윈도우 (앞으로 12분 남음)    │  │
+│ │  [📷 촬영]   [□ 지난 영상 모음]         │  │
+│ └────────────────────────────────────────┘  │
+│                                              │
+│ ┌─[게시판] ─────────────────────────────┐   │
+│ │ 📌 공지 / 💬 자유 / ❓ 질문            │   │
+│ │ 💡 아이디어 게시판 (4단계 거버넌스)    │   │
+│ │                              [+게시판]   │   │
+│ └────────────────────────────────────────┘   │
+│                                              │
+│ ┌─[모듈] (켜진 것만) ──────────────────┐    │
+│ │ 🎯 오늘의 결정  ·  🌿 이름 회복실      │   │
+│ │ ✉ 내일의 나에게  ·  ♥ 심박 진단판       │   │
+│ └────────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘</code></pre>
+
+<h3>화면 ID 맵 (신규 30+ / 보존 18)</h3>
+<table>
+<tr><th>접두사</th><th>범위</th><th>설명</th></tr>
+<tr><td><code>D01~D07</code></td><td>7</td><td>디스커버리</td></tr>
+<tr><td><code>C01~C07</code></td><td>7</td><td>카페 내부 (C07 동시 영상 풀스크린)</td></tr>
+<tr><td><code>B01~B07</code></td><td>7</td><td>게시판 (B06 강퇴 다이얼로그, B07 동시 영상 게시판)</td></tr>
+<tr><td><code>M01~M05</code></td><td>5</td><td>모임 만들기 5단계</td></tr>
+<tr><td><code>M10~M12</code></td><td>3</td><td>게시판 생성</td></tr>
+<tr><td><code>M20·M21</code></td><td>2</td><td>모듈 허브 + 동시 영상 시간 설정</td></tr>
+<tr><td><code>M30</code></td><td>1</td><td>모임 삭제·양도(장례식)</td></tr>
+<tr><td><code>M40~M42</code></td><td>3</td><td>부운영자·게시판 담당 임명</td></tr>
+<tr><td><code>M50</code></td><td>1</td><td>자동 규칙 카탈로그</td></tr>
+<tr><td><code>S03~S32</code></td><td>18 보존</td><td>4번째 안 모듈 진입 시 등장하는 기존 화면</td></tr>
+</table>
+</section>
+
+<!-- 6. 게시판·모듈 -->
+<section class="block" id="boards">
+<h2>6. 7+1 게시판·모듈 카탈로그</h2>
+
+<h3>특수 게시판 7개 (옵션) + 셋로그 1 (상시)</h3>
+<table>
+<tr><th>#</th><th>게시판/모듈</th><th>정의</th><th>강한 모임</th></tr>
+<tr><td>1</td><td><strong>오늘의 결정</strong></td><td>매일 1개 결정, 30초 응답, 24h 후 결과</td><td>엄마·이직·운동·투자</td></tr>
+<tr><td>2</td><td><strong>이름 회복실</strong></td><td>주 1회 30분 익명 라운지, 현재 정체성 언급 금지</td><td>엄마·경단녀·은퇴자·동문</td></tr>
+<tr><td>3</td><td><strong>내일의 나에게</strong></td><td>어제 후회한 사람 → 내일 같은 일 할 사람에게 메모</td><td>이직·육아·등산·자취</td></tr>
+<tr><td>4</td><td><strong>심박수 게시판</strong></td><td>모임 활동 실시간 그래프 + "심폐소생술 신청"</td><td>모든 모임 (특히 대형)</td></tr>
+<tr><td>5</td><td>고백 게시판 (v1.5)</td><td>완전 익명(본인도 추적 불가), 주 1개 한도</td><td>회사·대형동호회·가족·종교</td></tr>
+<tr><td>6</td><td>예측 시장 (v1.5)</td><td>모임 안·외 사건에 명예 포인트(현금 X) 베팅</td><td>투자·스포츠·이직·입시</td></tr>
+<tr><td>7</td><td>교환 게시판 (v1.5)</td><td>시간·기술 교환 (돈 X), 호혜 포인트</td><td>동네·육아·프리랜서</td></tr>
+<tr><td>8</td><td><strong>셋로그 동시 영상</strong> (상시)</td><td>운영자가 시간 윈도우 설정 → 참여자가 그 시간에 2~10초 영상 → 세로 그리드. <em>영상은 폰 저장</em>, 메타만 서버</td><td>모든 모임 (기본 ON)</td></tr>
+</table>
+<p style="margin-top: 12px"><strong>MVP</strong>: 1·2·3·4 + 8 (4번째 안 3개 + 심박수 + 셋로그). 5·6·7은 v1.5.</p>
+
+<h3>아이디어 게시판 4단계 거버넌스 (운영자 폭정 해제)</h3>
+<table>
+<tr><th>단계</th><th>핵심</th></tr>
+<tr><td><strong>1. 제안</strong></td><td>제목 + 요약 + 예상 효과 + <em>내가 맡을 부분</em>(선택)</td></tr>
+<tr><td><strong>2. 양방향 투표</strong></td><td>찬성/반대 + <em>한 줄 이유 필수</em>. 반대표가 더 가치 있음. 응답 전 결과 비공개</td></tr>
+<tr><td><strong>3. 자동 채택</strong></td><td>활성 회원 30%+ 찬성 시 운영자 승인 없이 공식 안건. 운영자는 거부권만, 거부 사유 공개 의무</td></tr>
+<tr><td><strong>4. 실행 추적</strong></td><td>진행률 14일 0% 시 자동 재공모. 완료 아이디어는 모임 프로필에 영구 기록</td></tr>
+</table>
+
+<h3>일반 게시판 공통 기능 7개 + 게시판별 3</h3>
+<table>
+<tr><th>#</th><th>기능</th><th>핵심</th></tr>
+<tr><td>F1</td><td><strong>글 자동 만료</strong></td><td>3·7·30일·영구 선택. 만료 후 자동 보관 (통념 깸: 영구 글 더미 종식)</td></tr>
+<tr><td>F2</td><td>한 줄 요약 강제</td><td>AI 보조, 스캔 시간↓</td></tr>
+<tr><td>F3</td><td>글 온도계</td><td>찬·미지근·뜨거움 3단계 자동</td></tr>
+<tr><td>F4</td><td>미니 투표 임베드</td><td>A/B 인라인 + 커튼 P3 적용</td></tr>
+<tr><td>F5</td><td>댓글 접기·도배 방지</td><td>N개 이상 자동 접힘, 연속 댓글 N개 차단</td></tr>
+<tr><td>F6</td><td>무명 글쓰기 토글</td><td>게시판마다 익명/실명 선택</td></tr>
+<tr><td>F7</td><td>주제 키워드 잠금</td><td>화이트리스트·블랙리스트로 주제 이탈 차단</td></tr>
+<tr><td colspan="2">질문 게시판</td><td>답변 채택 + 명예 포인트 + 오답 표기</td></tr>
+<tr><td colspan="2">자유 게시판</td><td>감정 옵션 토글 (좋아요만 / 5감정)</td></tr>
+<tr><td colspan="2">공지 게시판</td><td>글 예약 게시</td></tr>
+</table>
+</section>
+
+<!-- 7. 운영자 권력 -->
+<section class="block" id="power">
+<h2>7. 운영자 권력 + 견제 + 재미 8개</h2>
+
+<h3>5계층 위계</h3>
+<pre><code>[Owner 운영자] 모임 만든 사람 (1명) — 모든 권한
+   ├ 부운영자·게시판 담당 임명·해임
+   ├ 강제 탈퇴 직권
+   └ 모임 폐쇄·양도(장례식)
+
+[Co-Owner 부운영자] 운영자가 수락한 사람 (N명)
+   └ 권한 프리셋 3종 + 커스텀 (글삭제/강퇴/게시판/가입승인/모듈토글)
+
+[Board Manager 게시판 담당] 게시판 1개당 N명
+   └ 자기 담당 게시판 안에서만 권한
+
+[Member 일반 멤버] / [Visitor 방문자]</code></pre>
+
+<h3>견제 4종</h3>
+<ol>
+<li><strong>아이디어 게시판 자동 채택</strong> — 멤버 30%+ 찬성 시 운영자 거부 외엔 강제 채택</li>
+<li><strong>공개 활동 로그</strong> — 강퇴·글삭제·임명 모두 공개 기록 (C06)</li>
+<li><strong>고백 게시판</strong> — 완전 익명. 운영자 비판이 물리적으로 가능</li>
+<li><strong>사망 경고</strong> — 운영자가 운영을 못 하면 심박이 떨어진다. 무능 가시화</li>
+</ol>
+
+<h3>회원 관리 재미 요소 8개 (무서움 → 문화)</h3>
+<table>
+<tr><th>#</th><th>이름</th><th>작동</th></tr>
+<tr><td>가</td><td><strong>옐로/레드 카드</strong></td><td>축구 카드 시각화 + 솟구치는 애니메이션 — 운영자가 심판</td></tr>
+<tr><td>나</td><td>반성문 모드</td><td>1줄 반성문 작성 시 정지 50% 단축 (선택)</td></tr>
+<tr><td>다</td><td><strong>마법의 봉인</strong></td><td>봉인된 두루마리 화면 + 카운트다운 — 판타지 연출</td></tr>
+<tr><td>라</td><td><strong>공개 재판</strong></td><td>2회 정지된 멤버의 3번째 위반은 멤버 30%+ 찬성으로만 강퇴</td></tr>
+<tr><td>마</td><td>위반 도감</td><td>위반 유형 수집형, 운영자에게 한눈에</td></tr>
+<tr><td>바</td><td><strong>회복의 길</strong></td><td>N일 무위반 시 카운트 1 차감 — 영구 낙인 방지</td></tr>
+<tr><td>사</td><td>오답 카드</td><td>정지 사유 한 줄 본인에게만 자동 노출 (학습)</td></tr>
+<tr><td>아</td><td>명예 회복 청원</td><td>부당 정지 시 멤버 30%+ 찬성으로 카운트 리셋</td></tr>
+</table>
+
+<h3>자동 회원 관리 규칙 5종 (운영자가 ON/OFF + 임계값 조정)</h3>
+<table>
+<tr><th>규칙</th><th>조건</th><th>자동 처분</th></tr>
+<tr><td>욕설 자동 옐로</td><td>키워드 사전 매칭 N회</td><td>옐로카드 7일</td></tr>
+<tr><td>도배 자동 옐로</td><td>5분 내 글 N개 작성</td><td>옐로카드 3일</td></tr>
+<tr><td>광고 자동 옐로</td><td>URL + 외부 도메인</td><td>옐로카드 7일</td></tr>
+<tr><td>신고 누적 옐로</td><td>한 글에 신고 5건+</td><td>옐로카드 14일 + 글 자동 숨김</td></tr>
+<tr><td><strong>3진 아웃</strong></td><td>옐로카드 누적 3개</td><td>즉시 탈퇴 + 14일 재가입 불가</td></tr>
+</table>
+
+<div class="callout">
+<strong>결론</strong>: 운영자는 막강하지만 <em>옐로카드를 꺼내는 심판</em>이지 폭군이 아니다. 권력이 공개되고 게임화되면 <em>모임 문화</em>가 된다.
+</div>
+</section>
+
+<!-- 8. 마케팅 -->
+<section class="block" id="marketing">
+<h2>8. 마케팅 — 4단계 로드맵 (광고비 0 지향)</h2>
+
+<table>
+<tr><th>Phase</th><th>기간</th><th>활동</th></tr>
+<tr><td><strong>0</strong></td><td>시범 3개월</td><td>④ 모범 운영자 키우기 + Genesis 1호 모임 배지</td></tr>
+<tr><td><strong>1</strong></td><td>출시 후 3개월</td><td>① 결핍 폭격 광고 + ③ 이름 회복실 무료 체험</td></tr>
+<tr><td><strong>2</strong></td><td>6개월</td><td>② 죽은 카페 백서 PR + ⑤ B2B 역방향 (가게가 우리를 추천)</td></tr>
+<tr><td><strong>3</strong></td><td>1년</td><td>⑥ 데이터 백서 연간 발행 + ⑦ 사망 모임 장례식 라이브</td></tr>
+</table>
+
+<h3>자동 홍보 메커니즘 7종 (광고 0)</h3>
+<ol>
+<li><strong>공유 가능한 정체성 카드</strong> — 이름 회복실 30분 후 예전 직업 호명 카드를 카톡 공유 (워터마크 + 가입 QR)</li>
+<li><strong>회원→회원 추천 사슬</strong> — 친구 1명 가입시 이름 회복실 무료 추가권</li>
+<li><strong>운영자→운영자 사슬</strong> — 추천자에게 심박 부스트 7일 + 프리미엄 30일 무료</li>
+<li><strong>SNS 자동 카드</strong> — 모임 심박 그래프가 주간 공유 카드로 자동 생성</li>
+<li><strong>결정 결과 카드</strong> — 24h 결과 푸시를 SNS 공유 카드로 (영향력 자랑)</li>
+<li><strong>주간 리포트 이메일</strong> — 자랑하고 싶은 형식</li>
+<li><strong>SEO 영구 자산</strong> — secret-ad SerpAPI + AI로 모든 모임 페이지 SEO 최적화. 동네·연령·관심사 롱테일 키워드 점령. 광고 0의 영구 자동 유입</li>
+</ol>
+
+<h3>Cold Start 3안</h3>
+<ol>
+<li><strong>CEO 본인 강서구 1호 모임</strong> — Genesis 신화화. 가장 가까운 50명에게 체험 부탁</li>
+<li><strong>인플루언서 1명 시드</strong> — 강서구 30~40대 엄마 인플루언서에게 이름 회복실 무료 체험 → 자발 후기</li>
+<li><strong>오프라인 QR 포스터</strong> — 주민센터·도서관·키즈카페. 결핍 폭격 카피</li>
+</ol>
+</section>
+
+<!-- 9. 강팀 회의록 -->
+<section class="block" id="meetings">
+<h2>9. 강팀 회의록 13건</h2>
+<p>강팀(PM·아뱅·CEO보좌·UX·UI·개발·QA·마케터·보안 9명)이 사람처럼 토론한 기록. 누가 무슨 안을 냈고 누가 반대했는지 그대로.</p>
+
+<!-- 회의 1 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 1</span>
+<h3>피벗 — 단일 동네 → 멀티 카페</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 14:10</span><span>👥 PM·UX·아뱅·CEO보좌·개발·보안</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>방금 CEO가 큰 결정 내렸어요. "한 동네 말고 누구나 카페처럼 만들 수 있게." 이건 정체성 자체가 바뀌는 거. 4번째 안은 어떻게 되는 거지</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>그럼 02~05번 문서 다 폐기인가요? 화면 ID 32개를 다 다시…</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>잠깐. 폐기 아니라고 봐요. CEO가 "한 동네 말고"라고 했지 "오늘의 결정 말고"라고 안 했어요. <em>동네 한정</em>이 풀린 거지, 메커니즘은 안 죽었음.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>아뱅 말이 맞다고 보고 정리하겠습니다. 4번째 안은 <em>옵션 모듈</em>로 흡수, 그 위에 <em>멀티 카페 호스팅 레이어</em>를 얹는다. 두 층 구조.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>두 층 구조면 데이터 모델이 바뀌어요. cafe 테이블 + modules 테이블이 필요할 것 같고…</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>개발 얘긴 나중에. 지금은 컨셉 단계. 일단 06번 피벗 문서로 박제하고 아뱅+UX 둘이 다시 도출.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>멀티 카페 되면 <em>카페별 익명성 정책</em>이 다 다를 텐데, 그건 운영자가 정합니까 우리가 정합니까. 헌법 P2가 흔들립니다.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>일단 <em>카페별 옵션</em>으로. 보안은 모듈 정의 라운드에 끼어주세요.</div></div>
+
+</div></article>
+
+<!-- 회의 2 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 2</span>
+<h3>"오늘의 결정" 메커니즘의 운명</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 14:45</span><span>👥 PM·아뱅·UI·UX·마케터·QA·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>이게 가장 큰 분기. 4번째 안의 핵심을 어디에 놓느냐.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>저는 <em>둘 다</em>에 놓자고 봐요. 옵션 모듈만 하면 사용자가 첫 화면 들어왔을 때 <em>왜 이 앱이 다른지</em> 안 보임. 그냥 네이버 카페 같음.</div></div>
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>첫 화면에 매일 19시 <em>한 모임을 클로즈업</em>해서 "가입할지 보류할지" 30초 결정하는 거요. 디자인 단계에서 <em>드라마틱한 한 장</em>이 가능.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>근데 그러면 D01 발견 홈의 <em>카드 리스트</em>와 충돌. 사용자가 이미 카드 형식으로 보여달라고 명시했음.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>충돌 아님. 카드 리스트 <em>위에 1장</em> 얹는 거. 풀스크린이 아니라 <em>최상단 한 장</em> + 그 아래 카드 리스트.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>19시는 식사 시간이라 푸시 열어볼 확률 낮을 수도. 7시 vs 21시 중 21시(아이 재운 뒤)가 더 강할 수도.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>그건 마케팅 라운드에서 A/B. 일단 <em>플랫폼 + 모듈 두 층</em>으로 가는 게 강팀 다수안.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>두 층이면 카페 안 결정 vs 플랫폼 가입 결정이 <em>어떻게 다른가</em>를 사용자가 헷갈리지 않게 <em>주제</em>를 명확히 갈라야 해요.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>플랫폼 = "어느 모임에 가입할지". 카페 안 = "이 모임 안에서 무엇을 할지". 같은 메커니즘, 다른 결정. 헷갈릴 일 없음.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>추천안으로 Q1 (b) 정리해서 CEO에게 올립니다.</div></div>
+
+</div></article>
+
+<!-- 회의 3 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 3</span>
+<h3>7개 특수 게시판 (아뱅 발산 라운드)</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 15:10</span><span>👥 아뱅·UX·보안·개발·마케터·QA·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>일단 7개 다 던집니다. 1.오늘의결정 2.이름회복실 3.내일의나에게 4.심박수 5.고백 6.예측시장 7.교환</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>이거 다 만들면 모임 안 IA가 폭발해요. 한 카페에 게시판 10개씩 있으면 사용자 인지 부하…</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>그래서 <em>옵션</em>. 운영자가 켜야 작동. 켜는 동기는 <em>처방</em> 형식으로. "당신 모임이 죽고 있으니 이걸 켜세요."</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>6번 예측시장은 <em>현금 베팅 절대 금지</em>. 명예 포인트로만. 안 그러면 사행성 규제 직격.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>처음부터 명예 포인트로 설계함. 보안 우려 반영.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>5번 고백 게시판의 <em>완전 익명(본인도 추적 불가)</em> 구현은 진짜 어려워요. 키 폐기 후 복구 불가 = 백업 복원도 불가. 데이터 손실 리스크.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>그게 <em>기능</em>임. 추적 가능하면 익명이 아님. 백업 복원 안 됨이 <em>기능 약속</em>.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>단, <em>위법 콘텐츠(아동·테러 등) 수사 협조 요청</em>이 들어왔을 때 <em>복원 불가</em>가 법적 리스크. 한국 통신비밀보호법·정보통신망법 확인 필요.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>이건 보안 라운드에서 본격 검토. MVP에 고백 게시판이 들어갈지부터 CEO에게 묻자.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>4번 심박수는 <em>플랫폼 자체의 마케팅 메시지</em>가 됨. "당신이 가입한 카페가 살아있는지 보세요" — 광고 카피 그대로 사용 가능.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>4번째 안 3개 + 심박수 4개가 <em>MVP 권장</em>. 1, 2, 3은 이미 검증된 메커니즘이고 4는 플랫폼 차별점. 5, 6, 7은 v1.5.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>Q2 추천안 (a)로 정리.</div></div>
+
+</div></article>
+
+<!-- 회의 4 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 4</span>
+<h3>모임 카드 레이아웃 — A안 vs B안</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 15:35</span><span>👥 UI·UX·아뱅·QA·개발·PM</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>CEO가 명시했어요. <em>좌측 로고, 우측에 최근글 2 + 인기글 2 위아래로</em>. 근데 360px 모바일에서 텍스트 4줄이 들어가면 한 줄에 글자 18자가 한계. 제목 잘림 우려.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>그러면 펼치기형으로 가야…</div></div>
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>잠깐. CEO가 <em>명시</em>했어요. 우리가 함부로 안 바꿉니다. 두 안 다 와이어로 그려서 CEO가 선택하게 하죠.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>CEO 명시 안을 <em>지키되</em> 비주얼 트릭으로 풀면? 제목을 그라데이션 페이드아웃으로 자르고 글자 작게(13px) 표시. 인지 부하는 <em>흥미로운 내용 4개 미리보기</em>라는 가치로 상쇄.</div></div>
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>좋아요. A안(CEO 명시) 베이스, 360px 풀스크린 와이어로 <em>살아있게 보이는지</em> 검증하고, 안 되면 B안(펼치기) 옵션 제시.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>카드에 흥미 유발하려면 <em>최근 2 + 인기 2</em>가 진짜 흥미로운 글이어야 함. 알고리즘이 <em>시선 잡는 한 줄</em>을 잘 골라야 함.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>인기 알고리즘은 <em>24시간 댓글수 + 좋아요 가중치</em>로 일단 단순하게. 머신러닝은 데이터 쌓인 뒤.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>UI 와이어 단계에서 A안 풀그림 + B안 옵션. CEO가 와이어 보고 결정.</div></div>
+
+</div></article>
+
+<!-- 회의 5 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 5</span>
+<h3>운영자 권력 구조 — 막강한 권력 + 공개된 권력</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 16:00</span><span>👥 PM·아뱅·CEO보좌·UX·UI·개발·QA·보안</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>방금 CEO 지시 들어왔어요. <em>운영자·부운영자·게시판 담당 + 강제 탈퇴 권한</em>. "막강한 권력자여야 한다"고 명시.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>잠깐. 헌법 P4 "댓글권은 보상이지 권력이 아니다"와 정면 충돌 아닌가요? 우리는 운영자 폭정을 <em>반대</em>하는 플랫폼이었는데.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>P4는 <em>멤버의 발언권</em>에 관한 규칙이고, <em>운영자 권한</em>에 관한 규칙은 따로. 모순 아닙니다. 다만 <em>견제 장치</em>가 함께 가야 함.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>견제 장치 후보: 1) 아이디어 게시판 자동 채택 2) 모든 권력 행사 공개 로그 3) 고백 게시판 4) 사망 경고. 네 개로 운영자 폭정을 견제.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>좋아요. "<em>막강한 권력 + 공개된 권력</em>"이 컨셉. 운영자는 강하지만 <em>모든 강함이 멤버에게 보인다</em>. 비공개 정치 불가.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>강제 탈퇴 시 <em>사유 1줄 필수</em>. 그리고 <em>공개 로그</em>. 누가 누구를 왜 강퇴했는지 보임. 운영자가 사유 거짓말하면 멤버 신뢰 자동 손실. 셀프 견제.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>부운영자 권한이 <em>체크박스 5종</em>인데 더 늘어날 수도. UI에서 권한 <em>그룹 프리셋</em>("일반·강퇴 전담·게시판 전담")을 만들어 두면 편함.</div></div>
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>채택. M40 화면에서 <em>프리셋 3종 + 커스텀</em>.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>강퇴 당한 멤버가 <em>복수 계정으로 재가입</em>하면? <em>기기/이메일/전화 다중 검사</em> 필요.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>메모. v1.5 보안 모듈에 <em>재가입 차단 기제</em> 검토.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>추천: MVP에 운영자·부운영자·게시판 담당·강퇴 <em>다 탑재</em>. 견제 장치 4종 동시 작동.</div></div>
+
+</div></article>
+
+<!-- 회의 6 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 6</span>
+<h3>"Ai팀 → 강팀" 명칭 변경</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 16:15</span><span>👥 PM·CEO보좌·아뱅·마케터·개발</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>짧게. CEO가 "Ai팀 → 강팀"으로 부르겠다고 했어요. 메모리에 박제 + 모든 문서에서 명칭 변경.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>모든 산출물 일괄 패치. 메모리 entry는 <em>사용자 선호</em> 카테고리로 박제.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>의미 부여 한 줄 — "강"은 "강하다"의 강일 것이고, "<em>같이 강해진다</em>"는 톤. 우리는 <em>CEO를 보좌해 강해지는 팀</em>. 좋은 이름.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>외부에 공개될 일 있으면 <em>"강팀"</em> 자체가 컨셉. "9명의 강팀이 만든다" 같은 카피 가능.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>한 줄: 코드베이스에 <em>agent ID</em>는 영문 그대로 두는 게 안전 (abang, pm, developer 등). 표시 이름만 한국어로.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>변경 범위: README.md / docs/*.md / 메모리 entry 두 개. 30분 작업.</div></div>
+
+</div></article>
+
+<!-- 회의 7 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 7</span>
+<h3>사용자에게 올릴 결정 분기 (1차 종합)</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 16:25</span><span>👥 CEO보좌·PM·아뱅</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>정리합니다. 사용자에게 올릴 결정 분기 5개. Q1 4번째 안 위치 (b 플랫폼+모듈) / Q2 MVP 게시판 (a 4번째 안 3개+심박수) / Q3 시범 운명 (c 보존+자유생성) / Q4 결제 시점 (b 정체성 프리미엄만) / Q5 운영자 권한 견제 강도.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>CEO에게 5개 분기 + 강팀 회의록 같이 올림. 끝.</div></div>
+
+</div></article>
+
+<!-- 회의 8 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 8</span>
+<h3>세분화 모임 + 홍보 4단계 로드맵</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 16:40</span><span>👥 PM·아뱅·UX·마케터·보안·개발·QA·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>CEO가 두 가지. 첫째, 모임 세분화 (예: "3~7세 미만 아이들 엄마 모임") 맞나? 둘째, 홍보 전략은?</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>첫째는 <em>그게 핵심</em>이에요. 네이버 카페가 죽는 이유 중 하나가 <em>너무 넓은 범위</em>("강서구 맘카페" 30만 명). 우리는 정반대. 좁을수록 살아남음. "강서구 7세 비건 엄마" 가입자 30명이라도 <em>심박수 100</em>이면 살아있는 거.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>그래서 <em>모임 만들기 5단계</em>에서 카테고리 + 세부 태그를 다 받음. 태그가 핵심.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>홍보는 안 7개. ① 결핍 폭격 광고 ② 죽은 카페 백서 PR ③ 이름 회복실 1시간 무료 체험 ④ 모범 운영자 인플루언서화 ⑤ B2B 역방향 마케팅 ⑥ 데이터 백서 연간 발행 ⑦ 사망 모임 장례식 라이브</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>7개 중 ①②⑤는 <em>광고가 아닌 자산 활용</em>. ③④⑥⑦은 <em>광고 없이도 외부 확산</em>. 헌법 P5(광고 아님)를 <em>마케팅에서도</em> 지킬 수 있다는 게 강팀의 차별점.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>안 ⑤(B2B 보고서)는 <em>데이터 익명화 + 가게 동의</em> 필요. 가게가 부정적 데이터 보고 <em>우리를 소송</em>할 가능성. 첫 가게에는 <em>동의서 + 무료 제공</em>으로 안전망.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>③(이름 회복실 무료 체험)은 <em>체험 자체가 모임 가입 안 해도 가능</em>해야 함. 가입 게이트가 있으면 마찰 발생.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>추가 안. <em>플랫폼 1호 모임에 영구 배지</em>. CEO 강서구 모임에 "Genesis 모임" 배지. 가입자가 "나는 1호다" 자긍심으로 SNS 자랑. #1 경쟁 + #8 자기효능감 + #12 우월감.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>강팀 추천 4단계: Phase 0 시범 ④+Genesis / Phase 1 ①+③ / Phase 2 ②+⑤ / Phase 3 ⑥+⑦</div></div>
+
+</div></article>
+
+<!-- 회의 9 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 9</span>
+<h3>회원 관리 자동화 + 재미 요소 8개</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 17:00</span><span>👥 PM·아뱅·보안·UX·UI·개발·QA·마케터·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>CEO 추가. 정지·강퇴·3진 아웃·자동 규칙. 자가 점검: "기능이 너무 무섭나? 재미있는 관리 기능은?"</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>처벌은 무섭다. 무서움을 <em>재미</em>로 바꾸면 관리가 <em>모임 문화</em>가 됩니다. 8개 가져왔어요. (가)옐로/레드 카드 (나)반성문 모드 (다)마법의 봉인 (라)공개 재판 (마)위반 도감 (바)회복의 길 (사)오답 카드 (아)명예 회복 청원</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>(라) 공개 재판이 <em>집단 따돌림 도구</em>로 악용될 위험. 첫 정지 발동 X. <em>2회 이상 정지된 멤버</em>에만 발동 제한.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>채택. (라)는 <em>3번째 위반 시</em>에만 발동. 그래서 <em>공개 재판</em>이라는 이름.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>(나) 반성문 모드는 심리적 부담 클 수도. <em>건너뛰기</em> 옵션. 건너뛰면 정지 기간 단축 없음. 선택권 주기.</div></div>
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>(가) 옐로/레드 카드, (다) 봉인 두루마리는 <em>애니메이션 자원</em> 필요. 처음엔 <em>간단한 일러스트</em>로 시작.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>자동 규칙 5개: 욕설/도배/광고/신고누적 자동 옐로 / 옐로 3장 자동 탈퇴 + 14일 재가입 불가.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>자동 처분 <em>오탐 가능성</em>. (사) 오답 카드 + (아) 명예 회복 청원이 <em>오탐 보정</em>. 시스템 + 견제가 짝.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>규칙 엔진은 <em>백그라운드 잡</em>으로. 실시간 처분은 <em>5분 지연</em> 허용.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>(가), (다)는 <em>마케팅 콘텐츠</em>가 됨. "심박은 도배꾼에게 두루마리를 던집니다" 같은 카피.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>CEO 우려에 답합니다. <em>재미 + 견제</em>로 <em>권력의 무거움</em>을 풉니다. 권력이 <em>공개되고 게임화</em>되면 <em>문화</em>가 됩니다.</div></div>
+
+</div></article>
+
+<!-- 회의 10 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 10</span>
+<h3>사용자에게 올릴 결정 분기 (2차 종합)</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 18:30</span><span>👥 PM·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>누적 11개 분기. Q1~Q11 추천안 b·a·c·b·a·a·a·a·a·a·a. CEO에게 회의록과 함께 올림.</div></div>
+
+</div></article>
+
+<!-- 회의 11 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 11</span>
+<h3>자동 홍보 + 시작 입소문 + 비밀 무기 가능성</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 18:50</span><span>👥 PM·아뱅·마케터·UX·보안·개발·QA·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>CEO가 또 추가. ①자동 홍보 ②시작 ③비밀 무기 레포 <code>1215kkm/secretAD.git</code>.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>비밀 무기 레포는 git 프로토콜로 <em>실존</em> 확인. 브랜치 <code>claude/ai-seo-saas-design-aEZQ7</code>. README 외부 접근 404 → 비공개. <em>AI SEO SaaS</em>일 가능성 95%.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>이건 <em>심박과 강력한 시너지</em>. 우리는 N개의 모임 페이지를 가지는데, 각 페이지가 <em>SEO 자산</em>이 되면 검색만으로 신규 유입이 끝없이 발생. <strong>광고 0, 마케팅비 0, 영구 자동 유입.</strong></div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>자동 홍보 7개: 정체성 카드 / 회원→회원 추천 / 운영자→운영자 추천 / SNS 자동 카드 / 결정 결과 카드 / 주간 리포트 이메일 / SEO 영구 자산</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>Cold Start 3안: ①CEO 본인 강서구 Genesis 신화화 ②인플루언서 1명 시드 ③오프라인 QR 포스터</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>정체성 카드에 <em>예전 직업</em> 같은 개인 정보 노출 가능. <em>익명화 옵션 + 공유 전 미리보기</em>.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>카드 생성 <em>기본 ON</em>, 공유 전 끌 수 있는 UI. 호혜성 디폴트.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>Cold Start ②(인플루언서)가 가장 검증 가능. CPA·전환율 측정 명확.</div></div>
+
+</div></article>
+
+<!-- 회의 11-B -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 11-B</span>
+<h3>비밀 무기 정체 확인 후 통합 설계</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 19:30</span><span>👥 개발·아뱅·UX·마케터·보안·QA·PM·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>비밀 무기 정체 <em>완전 확보</em>. secretAD = TypeScript 모노레포 (turbo + npm workspaces). apps 3개(web/api/desktop) + packages 3개(ai-services/database/shared). Docker + Postgres + Redis. AI 멀티 모델(OpenAI/Claude/Ollama). SerpAPI + Stability AI. 약 2개월 개발. <em>완성도 매우 높은 SaaS 베이스</em>.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>이건 <em>심박이 흡수해야 할 정도의 자산</em>이에요. 심박을 secretAD 모노레포의 <em>4번째 앱</em>(<code>apps/momcafe</code>)으로 얹는 게 최적. 처음부터 새로 짤 필요 없음.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>강한 옵션. <em>3개월 개발 분량을 0개월로 단축</em>.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>심박의 <em>디스커버리·카페·모듈</em>을 secretAD의 기존 web/api와 같은 코드베이스에서 구현. 로그인·결제·DB·AI 호출은 <em>이미 있는 인프라 재사용</em>.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>AI SEO SaaS가 동시에 작동. 모든 모임 페이지가 자동 SEO 최적화 + AI 콘텐츠 시드. <strong>광고비 0의 영구 자동 유입 채널.</strong></div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>두 제품이 한 코드베이스면 <em>권한 분리</em> 필요. 심박 사용자가 secretAD의 SEO 관리자 권한에 접근 못 하게 RBAC 명확히.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>시너지 5종: ①모임 생성 = 자동 SEO 자산화 ②심박 회복 처방에 SEO 분석 결합 ③Desktop 앱 = 운영자 SEO 대시보드 ④모든 모임 페이지 = 영구 SEO 자산 ⑤B2B 리포트 + SerpAPI 데이터 결합 (단가 2~3배↑)</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>통합 시 <em>기존 secretAD 사용자</em>에게 영향 없게 <em>피처 플래그</em> 분리. <em>Postgres 스키마 마이그레이션 절차</em> 명확히.</div></div>
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>Q8 (a) + Q9 (a) 강팀 추천 확정. 심박의 <em>물리적 코드 작업</em>은 secret-ad 레포 내부.</div></div>
+
+</div></article>
+
+<!-- 회의 12 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 12</span>
+<h3>서비스명 + 일반 게시판 기능</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 20:00</span><span>👥 PM·아뱅·마케터·UX·UI·보안·개발·QA·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>"동네맘"은 멀티 카페에 좁아요. 엄마 한정. 5후보: 하루모임 / <strong>심박</strong> / 이맘때 / 마을 / 본명</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>"<em>심박</em>"이 <em>마케팅 카피</em>로 압도적. "심박이 뛰는 곳" / "심박이 멈춘 카페에 빠졌나요?" 자연스러움. 죽은 카페 백서 PR과도 정합.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>발음·기억성도 <em>심박</em>이 강함. 두 음절. 도메인 확보 가능성도 동네맘보다 큼.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>의료 용어 연상 → 의료법 광고 규제와 혼동 가능성 검토. 단 "심박"은 일반어라 <em>상표 등록·서비스명 사용</em>에 큰 문제 없을 듯.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>코드 식별자 — <code>apps/shimbak</code> 또는 <code>apps/heartbeat</code>. 한국 노출명 <em>심박</em>.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>강팀 다수안 <strong>"심박"</strong>. 보조안 <em>하루모임</em>.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>일반 게시판 18개 → 7+3 압축. 공통 F1~F7 + 게시판별 3. <strong>F1 글 자동 만료</strong>가 가장 큰 통념 깸. 네이버 카페가 <em>영원히 안 사라지는 글 더미</em>인 점을 <em>시간 휘발성</em>으로 푼다. 인스타 스토리·스냅챗 층위.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>F2 한 줄 요약은 <em>작성자 부담</em>일 수도. 건너뛰기 옵션 + 폴백.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>F4 미니 투표는 <em>4번째 안 컴포넌트 재사용</em>. 구현 비용↓.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>F7 주제 키워드 잠금은 <em>오탐</em> 위험. 운영자가 <em>화이트리스트 추가</em> UI 필요.</div></div>
+
+</div></article>
+
+<!-- 회의 13 -->
+<article class="meeting">
+<div class="meeting-header">
+<span class="num">회의 13</span>
+<h3>셋로그 = 플랫폼 레벨 동시 영상 모듈</h3>
+<div class="info"><span>📅 2026-05-21</span><span>🕐 20:45</span><span>👥 PM·아뱅·개발·보안·UX·UI·마케터·QA·CEO보좌</span></div>
+</div>
+<div class="meeting-body">
+
+<div class="msg role-pm"><div class="avatar">PM</div><div class="bubble"><span class="name">PM</span>CEO 결정. <em>셋로그 = 플랫폼 레벨 모듈</em> (모든 모임 자동 사용 가능). 영상 저장 <em>옵션 B (메타만 서버)</em>. 코드 구현은 아직 보류.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>셋로그를 <em>옵션 모듈</em>보다 <em>모임 자체의 기본 기능</em>에 가깝게. 모임 만들면 <em>자동으로 켜져있고</em> 운영자가 끄고 싶으면 끄는 식. 4번째 안 3개는 옵션, 셋로그는 기본.</div></div>
+
+<div class="msg role-ux"><div class="avatar">UX</div><div class="bubble"><span class="name">UX</span>카페 홈 C01에 <em>동시 영상</em> 영역이 항상 보임. 신규 화면 M21(시간 설정), C07(풀스크린 보기), B07(동시 영상 게시판).</div></div>
+
+<div class="msg role-ui"><div class="avatar">UI</div><div class="bubble"><span class="name">UI</span>디자인 셋로그 그대로 — <em>세로 그리드</em>. 한 화면에 4~9개 영상 동시 재생. 자동 mute, 탭하면 소리. 2~10초 강제.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>WebRTC + 시그널링 서버. secret-ad 인프라에 추가 약 3주. 옵션 B — 영상은 폰 ↔ 폰 P2P, 우리는 <em>썸네일·시각·시간 윈도우</em> 메타만 저장. NestJS에 시그널링 모듈 한 개.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>세 가지. ①시간·위치 메타에서 추적 가능성 — 익명화 + 정밀도 다운(시간 ±5분, 위치 동네까지만). ②미성년자 보호 — 가입 시 연령 인증, 18세 미만 자동 모자이크. ③P2P 전송 암호화 필수 — WebRTC SRTP 기본.</div></div>
+
+<div class="msg role-qa"><div class="avatar">QA</div><div class="bubble"><span class="name">QA</span>시간대 차이 처리. <em>시간 약속 = 모임 동네 시간 기준</em>. 다른 지역 멤버도 <em>같은 동네 시간</em>에 찍어야 함. 동네 단위 동기성.</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>QA 좋아. 그게 셋로그의 정신. <em>지금 이 동네 풍경</em>을 같은 동네 사람만 본다.</div></div>
+
+<div class="msg role-mkt"><div class="avatar">마케</div><div class="bubble"><span class="name">마케터</span>셋로그 영상이 <em>공유 카드</em>로 변환되면 SNS 폭발. 단 본인 동의 필수.</div></div>
+
+<div class="msg role-sec"><div class="avatar">보안</div><div class="bubble"><span class="name">보안</span>공유 카드 변환은 <em>기본 OFF</em>. 본인 명시 동의 후에만. 다른 사람 영상은 <em>절대 외부 공유 불가</em>.</div></div>
+
+<div class="msg role-dev"><div class="avatar">개발</div><div class="bubble"><span class="name">개발</span>영상이 폰에만 저장 → 폰 분실·교체 시 영상 사라짐. 그것도 <em>기능 약속</em>. "그 순간 함께한 사람만 영원히 기억한다."</div></div>
+
+<div class="msg role-abang"><div class="avatar">아뱅</div><div class="bubble"><span class="name">아뱅</span>좋아요. <em>영상의 사라짐</em>이 셋로그의 정신. 헌법에 <em>영상 시간 휘발성</em> 추가 권장.</div></div>
+
+<div class="msg role-advisor"><div class="avatar">보좌</div><div class="bubble"><span class="name">CEO보좌</span>정리 — 셋로그는 <em>플랫폼 기본 기능</em>, 영상은 폰 저장 + 메타만 서버. 헌법에 P6 영상 시간 휘발성 추가. Q12 셋로그 시간 단위 — 강팀 추천 (a) 모임 동네 시간.</div></div>
+
+</div></article>
+
+</section>
+
+<footer class="foot">
+  <p>심박 (Heartbeat) 기획안 · 강팀 회의록 13건 · 2026-05-21<br>
+  레포지토리: <a href="https://github.com/1215kkm/Momcafe.git">github.com/1215kkm/Momcafe</a> · 흡수 예정: <a href="https://github.com/1215kkm/secretAD.git">github.com/1215kkm/secretAD</a></p>
+  <p>"같이 강해진다" — 9명의 강팀</p>
+</footer>
+
+</div>
+</body>
+</html>
