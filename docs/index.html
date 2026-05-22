@@ -4,36 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>심박 — 멀티 카페 플랫폼 기획안 · 강팀 회의록</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
 :root {
-  --moss: #3D5A47;
-  --clay: #C36B3C;
-  --paper: #FAFAF7;
-  --ink: #1F2A24;
-  --line: #E4E4DD;
-  --soft: #F4F4EE;
-  --mute: #6B7280;
-  --warn: #A65A4A;
-  /* 강팀 캐릭터별 색 */
-  --pm: #2563EB;
-  --abang: #C36B3C;
-  --advisor: #6B7280;
-  --ux: #0D9488;
-  --ui: #7C3AED;
-  --dev: #92400E;
-  --qa: #B91C1C;
-  --mkt: #BE185D;
-  --sec: #1F2937;
+  /* ━━━ 다크모드 + Crowny Class 라벤더-핑크 ━━━
+     변수 이름은 그대로 두되 값을 다크로 매핑. */
+  --moss: #A78BFA;            /* 메인 — 라벤더 */
+  --clay: #F4A6C7;            /* 강조 — 더스티 핑크 */
+  --paper: #1A1726;           /* 페이지 배경 — 보라 기운 다크 */
+  --ink: #F1F5F9;             /* 본문 텍스트 — 오프화이트 */
+  --line: #3A3349;            /* 보더 */
+  --soft: #252136;            /* 카드 배경 */
+  --mute: #94A3B8;            /* 보조 텍스트 */
+  --warn: #FC8181;            /* 경고·후회 */
+  --gradient: linear-gradient(135deg, #A78BFA 0%, #F4A6C7 100%);
+
+  /* 강팀 캐릭터별 색 — 다크에 잘 보이게 밝은 톤 */
+  --pm: #93C5FD;              /* 강팀장 — 밝은 파랑 */
+  --abang: #F4A6C7;           /* 아뱅 — 더스티 핑크 (강조) */
+  --advisor: #CBD5E1;         /* 강사장 — 밝은 회색 */
+  --ux: #5EEAD4;              /* 강디1 — 민트 */
+  --ui: #C4B5FD;              /* 강디2 — 라벤더 */
+  --dev: #FBBF24;             /* 강개발 — 옐로 */
+  --qa: #FCA5A5;              /* 강체크 — 살구 */
+  --mkt: #F9A8D4;             /* 강홍보 — 핑크 */
+  --sec: #FDE68A;             /* 강감시 — 부드러운 옐로 */
 }
 * { box-sizing: border-box; }
-html, body {
+html { font-size: 16px; }
+body {
   margin: 0; padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   background: var(--paper);
   color: var(--ink);
   line-height: 1.65;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
 }
 .wrap { max-width: 880px; margin: 0 auto; padding: 24px 20px 80px; }
 header.hero {
@@ -62,7 +69,7 @@ header.hero h1 {
   letter-spacing: -0.8px;
 }
 header.hero .meta {
-  font-size: 14px; color: var(--mute);
+  font-size: 16px; color: var(--mute);
 }
 header.hero .meta strong { color: var(--clay); }
 
@@ -74,7 +81,7 @@ nav.toc {
   border-radius: 0 8px 8px 0;
 }
 nav.toc h2 { font-size: 16px; margin: 0 0 12px; color: var(--moss); }
-nav.toc ol { margin: 0; padding-left: 18px; font-size: 15px; }
+nav.toc ol { margin: 0; padding-left: 18px; font-size: 16px; }
 nav.toc ol li { margin: 4px 0; }
 nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted transparent; }
 nav.toc a:hover { border-bottom-color: var(--clay); }
@@ -103,12 +110,13 @@ section.block code {
   color: var(--warn);
 }
 section.block pre {
-  background: var(--ink);
+  background: #14111F;
   color: #E6E1D2;
+  border: 1px solid var(--line);
   padding: 16px 20px;
   border-radius: 8px;
   overflow-x: auto;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.5;
 }
 section.block pre code { background: transparent; color: inherit; padding: 0; }
@@ -116,7 +124,7 @@ section.block table {
   width: 100%;
   border-collapse: collapse;
   margin: 16px 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 section.block table th {
   background: var(--moss);
@@ -135,12 +143,12 @@ section.block table td strong { color: var(--clay); }
 
 /* 강조 박스 */
 .callout {
-  background: #FFF8EC;
+  background: rgba(167, 139, 250, 0.10);
   border-left: 4px solid var(--clay);
   padding: 14px 18px;
   margin: 18px 0;
   border-radius: 0 6px 6px 0;
-  font-size: 15px;
+  font-size: 16px;
 }
 .callout strong { color: var(--clay); }
 
@@ -163,7 +171,7 @@ section.block table td strong { color: var(--clay); }
 
 /* ━━━ 채팅 회의록 ━━━ */
 .meeting {
-  background: white;
+  background: var(--soft);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 0;
@@ -181,7 +189,7 @@ section.block table td strong { color: var(--clay); }
   background: var(--clay);
   color: white;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 16px;
   padding: 3px 9px;
   border-radius: 10px;
   margin-bottom: 6px;
@@ -193,13 +201,13 @@ section.block table td strong { color: var(--clay); }
   border: 0;
 }
 .meeting-header .info {
-  font-size: 13px;
+  font-size: 16px;
   opacity: 0.85;
   line-height: 1.6;
 }
 .meeting-header .info span { margin-right: 14px; }
 .meeting-body {
-  background: #F0EDE3;
+  background: #1F1B2E;
   padding: 16px 12px;
 }
 
@@ -215,14 +223,14 @@ section.block table td strong { color: var(--clay); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   color: white;
   flex-shrink: 0;
   letter-spacing: -0.5px;
 }
 .bubble {
-  background: white;
+  background: var(--soft);
   border-radius: 0 12px 12px 12px;
   padding: 8px 14px 10px;
   max-width: 75%;
@@ -232,7 +240,7 @@ section.block table td strong { color: var(--clay); }
   box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 .bubble .name {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   margin-bottom: 3px;
   display: block;
@@ -242,7 +250,7 @@ section.block table td strong { color: var(--clay); }
 .role-pm .avatar { background: var(--pm); }
 .role-pm .bubble .name { color: var(--pm); }
 .role-abang .avatar { background: var(--abang); }
-.role-abang .bubble { background: #FFF4E8; border: 1px solid #F2DCBE; }
+.role-abang .bubble { background: rgba(244, 166, 199, 0.12); border: 1px solid rgba(244, 166, 199, 0.30); color: var(--ink); }
 .role-abang .bubble .name { color: var(--abang); }
 .role-advisor .avatar { background: var(--advisor); }
 .role-advisor .bubble .name { color: var(--advisor); }
@@ -263,7 +271,7 @@ footer.foot {
   margin-top: 80px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
-  font-size: 13px;
+  font-size: 16px;
   color: var(--mute);
   text-align: center;
 }
@@ -273,15 +281,15 @@ footer.foot {
   .wrap { padding: 16px 14px 60px; }
   header.hero h1 { font-size: 24px; }
   section.block h2 { font-size: 20px; }
-  .bubble { max-width: 80%; font-size: 14px; }
-  .avatar { width: 32px; height: 32px; font-size: 11px; }
-  section.block table { font-size: 13px; }
-  section.block pre { font-size: 11px; padding: 12px; }
+  .bubble { max-width: 80%; font-size: 16px; }
+  .avatar { width: 32px; height: 32px; font-size: 16px; }
+  section.block table { font-size: 16px; }
+  section.block pre { font-size: 16px; padding: 12px; }
 }
 
 /* 인쇄 */
 @media print {
-  body { background: white; }
+  body { background: var(--soft); }
   .meeting { break-inside: avoid; }
 }
 </style>
@@ -311,6 +319,7 @@ footer.foot {
     <li><a href="#power">운영자 권력 + 견제 + 재미 8개</a></li>
     <li><a href="#marketing">마케팅 4단계 로드맵</a></li>
     <li><a href="#meetings">강팀 회의록 13건 (채팅)</a></li>
+    <li><a href="#mockup">전체 UI 목업 (prototype 임베드)</a></li>
   </ol>
 </nav>
 
@@ -1005,10 +1014,21 @@ footer.foot {
 
 </section>
 
+<!-- 10. 전체 UI 목업 — 강팀 프로토콜대로 회의록 하단에 mockup 임베드 -->
+<section class="block" id="mockup">
+<h2>10. 전체 UI 목업 (prototype.html)</h2>
+<p>강팀 회의 13건의 결정이 화면으로 어떻게 풀렸는지 — 30+ 화면 모바일 프레임 단일 HTML. Crowny Class 디자인 시스템(라벤더-핑크 그라데이션 + Pretendard + Lucide) + 다크모드 적용. 새 탭에서 더 크게 보려면 <a href="prototype.html" target="_blank" style="color: var(--moss); font-weight: 600; border-bottom: 1px solid var(--moss)">prototype.html 직접 열기 →</a></p>
+<iframe
+  src="prototype.html"
+  style="width: 100%; height: 1400px; border: 1px solid var(--line); border-radius: 12px; margin-top: 16px; background: var(--paper);"
+  title="심박 전체 UI 프로토타입 (30+ 화면)"
+  loading="lazy"></iframe>
+</section>
+
 <footer class="foot">
-  <p>심박 (Heartbeat) 기획안 · 강팀 회의록 13건 · 2026-05-21<br>
-  레포지토리: <a href="https://github.com/1215kkm/Momcafe.git">github.com/1215kkm/Momcafe</a> · 흡수 예정: <a href="https://github.com/1215kkm/secretAD.git">github.com/1215kkm/secretAD</a></p>
-  <p>"같이 강해진다" — 9명의 강팀</p>
+  <p>심박 (Heartbeat) 기획안 · 강팀 회의록 13건 · 2026-05-21~22</p>
+  <p style="margin-top: 6px">레포지토리: <a href="https://github.com/1215kkm/Momcafe.git" style="color: var(--moss)">github.com/1215kkm/Momcafe</a> · 흡수 예정: <a href="https://github.com/1215kkm/secretAD.git" style="color: var(--clay)">github.com/1215kkm/secretAD</a></p>
+  <p style="margin-top: 12px; opacity: 0.7">"같이 강해진다" — 9명의 강팀</p>
 </footer>
 
 </div>
